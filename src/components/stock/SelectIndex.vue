@@ -3100,6 +3100,8 @@
             loopTime: Math.ceil(geneticLevel[that.geneticLevel] / dateRange)
           }).then(res => {
             //首先清空我的模型  再重新获取
+
+//            sdfdsf
 //            console.log(res);
             let data = res.data;
             if (data.status === 'SUCCESS') {
