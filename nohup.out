@@ -1,0 +1,2 @@
+build/dev-server.js: line 1: syntax error near unexpected token `'./check-versions''
+build/dev-server.js: line 1: `require('./check-versions')()'

@@ -1,0 +1,33 @@
+.hide{
+  display: none!important;
+}
+.pagination{
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+.pagination li{
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+  line-height: 30px;
+  margin: 0 5px 0 0;
+  font-size: 14px;
+  text-align: center;
+  border: 1px solid #00bc9b;
+  color: #00bc9b;
+  cursor: pointer;
+}
+.pagination li.current,
+.pagination li:hover{
+  background: #00bc9b;
+  color: #ffffff;
+}
+.demo {
+  margin: 10px 0;
+  padding: 10px;
+  background: #eeeeee;
+  text-align: center;
+}
