@@ -7,7 +7,8 @@
         <Spin fix size="large">
           <Icon type="load-c" size=18
 
-                                                                                             class="demo-spin-icon-load"
+
+                        class="demo-spin-icon-load"
                 style="line-height: 2rem;border-radius: 20px"></Icon>
           <!--<div style="font-size: 1rem;color: #000">{{runMessage}}</div>-->
 
@@ -82,8 +83,26 @@
 
 
 
+
+
+
+
+
+
+
+
+
         <router-link to="/personalInfo/buycard" style="font-weight: bold;">购买</router-link>
         此次回测区间的回测卡,您将消费<span style="color: #ff0000;font-weight: bold">{{needPoints}}</span>点数来完成本次回测,是否继续?
+
+
+
+
+
+
+
+
+
 
 
 
@@ -196,8 +215,26 @@
 
 
 
+
+
+
+
+
+
+
+
+
       </div>
       <p style="font-size: 1rem;">您没有本次回测区间的回测卡，点击
+
+
+
+
+
+
+
+
+
 
 
 
@@ -305,7 +342,25 @@
 
 
 
+
+
+
+
+
+
+
+
+
       <p style="font-size: 1rem;">本次回测需要<span style="color: #ff0000;font-weight: bold">{{needPoints}}</span>点数，您的点数已不足，点击
+
+
+
+
+
+
+
+
+
 
 
 
@@ -413,87 +468,49 @@
 
 
 
+
+
+
+
+
+
+
+
+
       </p>
       <div slot="footer" style="font-size: 1rem">
       </div>
     </Modal>
     <Modal :mask-closable="false" v-model="geneticModal"
-           @on-ok="okGeneticTest"
            width="600">
       <p slot="header" style="text-align:center">
-        <span>请选择智能回测次数</span>
+        <span>请选择智能回测等级</span>
       </p>
-      <Row type="flex" justify="center">
+      <Row type="flex" justify="center" style="font-size: 0.875rem;text-align: center;color: #ff0000">
         <i-col span="10">
-          <el-radio-group v-model="geneticLevel">
-            <el-radio-button label="0">初级</el-radio-button>
-            <el-radio-button label="1">中级</el-radio-button>
-            <el-radio-button label="2">高级</el-radio-button>
+          <el-radio-group v-model="geneticLevel" @change="changeGeneticLevel">
+            <Badge :count="primaryTimes">
+              <el-radio-button label="0">初级</el-radio-button>
+            </Badge>
+            <Badge :count="intermediateTimes">
+              <el-radio-button label="1">中级</el-radio-button>
+            </Badge>
+            <Badge :count="advancedTimes">
+              <el-radio-button label="2">高级</el-radio-button>
+            </Badge>
           </el-radio-group>
         </i-col>
-      </Row>
-      <Row type="flex" justify="center" style="font-size: 0.875rem;color: #ff0000">
-        <i-col span="16">
-          温馨提示：本次回测结果将覆盖上次回测结果
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        <i-col span="20" style="text-align: center">
+          <p v-html="geneticMessage"></p>
         </i-col>
       </Row>
+      <div slot="footer">
+        <Button type="primary" size="large" :loading="geneticLoading" :disabled="geneticPointInsuff"
+                @click="okGeneticTest">确定
+
+
+        </Button>
+      </div>
     </Modal>
     <transition name="el-zoom-in-top">
       <Row type="flex" justify="start" :gutter="16" v-show="myModelModal" style="width: 100%">
@@ -513,6 +530,15 @@
             <Submenu name="1">
               <template slot="title">
                 入市指标组合
+
+
+
+
+
+
+
+
+
 
 
 
@@ -616,6 +642,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
               </template>
               <Menu-item name="2-1">价格类指标</Menu-item>
               <Menu-item name="2-2">市值类指标</Menu-item>
@@ -644,12 +679,30 @@
 
 
 
+
+
+
+
+
+
+
+
+
               </template>
               <Menu-item name="4-1">趋势类指标</Menu-item>
               <Menu-item name="4-2">我的模型风控指标组合</Menu-item>
             </Submenu>
             <Menu-item name="3">
               二次筛选指标
+
+
+
+
+
+
+
+
+
 
 
 
@@ -739,6 +792,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
                   </Button>
                 </li>
               </ul>
@@ -764,6 +826,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
                   </Button>
                 </li>
               </ul>
@@ -773,6 +844,15 @@
                     style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
                   <Button size="large" style="width:35rem" @click="selectIndex('listing-date-index',indexClass.number)">
                     {{indexClass.message}}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -840,6 +920,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
                   </Button>
                 </li>
               </ul>
@@ -849,6 +938,15 @@
                     style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
                   <Button size="large" style="width:35rem" @click="selectIndex('trade-index',indexClass.number)">
                     {{indexClass.message}}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -915,6 +1013,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
                   </Button>
                 </li>
               </ul>
@@ -923,6 +1030,15 @@
                     style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
                   <Button size="large" style="width:35rem" @click="selectModel(index)">
                     {{item.modelName}}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -960,6 +1076,15 @@
                   <Button size="large" style="width:35rem"
                           @click="selectIndexSell('price-index',indexClass.number,'sell')">
                     {{indexClass.message}}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1028,6 +1153,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
                   </Button>
                 </li>
               </ul>
@@ -1037,6 +1171,15 @@
                   <Button size="large" style="width:35rem"
                           @click="selectIndexSell('listing-date-index',indexClass.number,'sell')">
                     {{indexClass.message}}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1103,6 +1246,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
                   </Button>
                 </li>
               </ul>
@@ -1113,6 +1265,15 @@
                   <Button size="large" style="width:35rem"
                           @click="selectIndexSell('trade-index',indexClass.number,'sell')">
                     {{indexClass.message}}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1214,6 +1375,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
                   </Button>
                 </li>
               </ul>
@@ -1222,6 +1392,15 @@
                     style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
                   <Button size="large" style="width:35rem" @click="selectModelOutMarket(index)">
                     {{item.modelName}}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1325,6 +1504,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
                   </Button>
                 </li>
               </ul>
@@ -1333,6 +1521,15 @@
                     style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
                   <Button size="large" style="width:35rem" @click="selectModelWindCtrl(index)">
                     {{item.modelName}}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1404,6 +1601,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
                   </Button>
                 </li>
               </ul>
@@ -1421,6 +1627,15 @@
                     style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
                   <Button size="large" style="width:35rem" @click="selectIndex('price-index',indexClass.number)">
                     {{indexClass.message}}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1530,6 +1745,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
                   </Button>
                 </li>
               </ul>
@@ -1541,6 +1765,15 @@
                     @click="selectIndex" style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
                   <Button size="large" style="width:35rem" @click="selectIndex('listing-date-index',indexClass.number)">
                     {{indexClass.message}}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1658,6 +1891,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
                   </Button>
                 </li>
               </ul>
@@ -1722,6 +1964,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
                   </Button>
                 </li>
               </ul>
@@ -1733,6 +1984,15 @@
                     style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
                   <Button size="large" style="width:35rem" @click="selectIndex('classic-index',indexClass.number)">
                     {{indexClass.message}}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1851,6 +2111,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
                   </Button>
                 </li>
               </ul>
@@ -1863,6 +2132,15 @@
                   <Button size="large" style="width:35rem" @click="selectIndex('wind-control',indexClass.number)"
                           :disabled="windControlOnlyOnce">
                     {{indexClass.message}}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1979,6 +2257,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
                   </Button>
                 </li>
               </ul>
@@ -2010,6 +2297,15 @@
                                         <br>其中左右括号均为英文括号，后三种符号依次表示“并且”、“或者”、“剔除掉”的意思；
                                         <br>入市、出市和风控是分开处理的；
                                         <br>二次筛选指标不介入该与或非组合计算。
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2095,6 +2391,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
                           </i-option>
                         </i-select>
                       </Tooltip>
@@ -2138,6 +2443,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
                         </i-option>
                       </i-select>
                     </Form-item>
@@ -2159,6 +2473,15 @@
                                 @on-change="getSelectIndex(select_2.value,indexs)">
                         <i-option v-for="option2 in select_2.optionList" :value="option2.value" :key="option2">
                           {{ option2.label }}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2392,6 +2715,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
                   </Button>
                   <Poptip placement="top">
                     <a style="text-decoration: solid">单次回测计费说明</a>
@@ -2410,19 +2742,6 @@
               <i-col span="4" v-if="$store.state.user.userType===0">
                 <Form-item style="margin-bottom: .5rem">
                   <Button type="success" size="large" @click="geneticTest" :disabled="!canRun" style="font-size:1rem">智能回测
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2627,6 +2946,12 @@
         }
       };
       return {
+        geneticMessage: '',
+        primaryTimes: 1,
+        intermediateTimes: 0,
+        advancedTimes: 0,
+        geneticPointInsuff: false,
+        geneticLoading: false,
         errorLogo: '',
         intoMarketCanRun: 1,
         outMarketCanRun: 1,
@@ -3046,6 +3371,75 @@
 
 //        getRunStatus();
       },
+//      改变智能回测的等级时   提示给用户不同的情况
+      changeGeneticLevel(level){
+        const that = this;
+        let modelPara = combineIndicator(that.formValidate, that.$store.state.controller);
+        let startDate = this.$store.state.controller.backStart;
+        let endDate = this.$store.state.controller.backEnd;
+        let dateRange = ((new Date(endDate).getTime() - new Date(startDate).getTime()) / 31536000000).toFixed(1);
+        let geneticLevel = [
+          {name: '初级', value: 300},
+          {name: '中级', value: 1000},
+          {name: '高级', value: 5000}
+        ];
+        postRemoteReqTodo('/stock/genetic/rungeneticmodel/checkauth', {
+          modelPara: modelPara,
+          level: that.geneticLevel,
+          loopTime: Math.ceil(geneticLevel[level].value / dateRange)
+        }).then(res => {
+          let data = res.data;
+          let geneticName = geneticLevel[level].name;
+          if (data.status === 'SUCCESS') {
+//                返回免费次数
+            if (Number(level) === 0) {
+              that.primaryTimes = data.message;
+            } else if (Number(level) === 1) {
+              that.intermediateTimes = data.message;
+            } else {
+              that.advancedTimes = data.message;
+            }
+            that.geneticPointInsuff = false;
+            that.geneticMessage = '您今日还剩' + data.message + '次' + geneticName + '智能回测';
+          } else if (data.status === 'ERROR') {
+//                运行出错
+            that.$message.error(data.message);
+          } else if (data.status === 'ERRORYES') {
+//                免费次数用完  可以扣点运行
+            that.geneticPointInsuff = false;
+            that.geneticMessage = '本次' + geneticName + '智能回测您将会消费' + Number(data.message).toFixed(0) + '个点数';
+          } else if (data.status === 'ERRORNO') {
+//              免费次数用完  点数不够用
+            that.geneticPointInsuff = true;
+            that.geneticMessage = '本次' + geneticName + '回测需要消费' + Number(data.message).toFixed(0) + '个点数，您的点数已不足，请及时' +
+              '<a href="/#/personalInfo/recharge">充值</a>或<a href="/#/personalInfo/buycard">购卡</a>';
+          } else if (data.status === 'USER_NOT_FOUND') {
+            jumpLogin(that);
+          }
+        }).catch(() => {
+          that.$message.error('连接服务器异常，请您稍后重试');
+        });
+      },
+      getGeneticTimes(){
+        const that = this;
+        postRemoteReqTodo('/stock/genetic/rungeneticmodel/getgenetictime', {}).then(res => {
+          let data = res.data;
+          let status = data.status;
+          if (status === 'SUCCESS') {
+            that.primaryTimes = data.message[0];
+            that.intermediateTimes = data.message[1];
+            that.advancedTimes = data.message[2];
+            that.geneticPointInsuff = false;
+            that.geneticMessage = '您今日还剩' + data.message[0] + '次初级智能回测';
+          } else if (status === 'ERROR') {
+            that.$message.error(data.message);
+          } else if (status === 'USER_NOT_FOUND') {
+            jumpLogin(that);
+          }
+        }).catch(() => {
+          that.$message.error('连接服务器异常，请您稍后重试');
+        });
+      },
       geneticTest(){
         const that = this;
         const hasA = that.formValidate.selectedIndexs.some(function (item) {
@@ -3079,6 +3473,7 @@
                 that.$message.error('您所选的指标过多，无法回测');
               } else {
 //               填写回测次数
+                that.getGeneticTimes();
                 that.geneticModal = true;
               }
             }
@@ -3088,6 +3483,7 @@
       okGeneticTest(){
 //          填写好次数后  进行智能回测
         const that = this;
+        that.geneticLoading = true;
         let modelPara = combineIndicator(that.formValidate, that.$store.state.controller);
         let geneticLevel = [300, 1000, 5000];
         let startDate = this.$store.state.controller.backStart;
@@ -3100,13 +3496,9 @@
             loopTime: Math.ceil(geneticLevel[that.geneticLevel] / dateRange)
           }).then(res => {
             //首先清空我的模型  再重新获取
-
-//            sdfdsf
-//            console.log(res);
             let data = res.data;
             if (data.status === 'SUCCESS') {
               clearTimeout(that.geneticSetTime);
-//              localStorage.setItem('times',true);
               that.$router.push('/model/genetictest');
             } else if (data.status === 'WAITING') {
 //            若没有计算资源  每隔2s请求一次
@@ -3122,7 +3514,6 @@
             that.$message.error('连接服务器异常，请您稍后重试');
           });
         })();
-//        geneticRun();
       },
       // 指标还原
       indexRevert() {

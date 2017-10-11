@@ -47,25 +47,11 @@
                          v-if="!buttonDisabled"></el-table-column>
         <el-table-column align="center" label="操作">
           <template scope="scope">
-            <!--<el-button size="small" type="primary" @click="rebuildModel(scope.$index)"-->
-                       <!--:disabled="buttonDisabled">重建模型-->
-            <!--</el-button>-->
+
             <router-link :to="{path:'/model',query:{temp_sa_build:geneticModels[scope.$index+(currentPage - 1) * pageSize].geneticModelId}}"
-                         target="_blank">重建模型
+                         target="_blank" :disabled="buttonDisabled">重建模型
             </router-link>
             <el-button size="small" type="success" @click="save(scope.$index,scope.row)" :disabled="buttonDisabled">保存
-
-
-
-
-
-
-
-
-
-
-
-
             </el-button>
           </template>
         </el-table-column>
@@ -131,7 +117,7 @@
         buttonDisabled: true,
         status: false,
         controller: [],
-        dataText: '',
+        dataText: '...',
         geneticModels: [],
         geneticSetTime: '',
         modal: false,
@@ -344,7 +330,7 @@
             that.geneticSetTime = setTimeout(
               that.getGenetic, 2000);
           } else if (data.status === '') {
-            that.dataText = '暂无数据';
+//            that.dataText = '暂无数据';
             that.$message.warning('您还没有进行过智能回测，暂无数据');
             that.geneticModels = [];
           } else if (data.status === 'USER_NOT_FOUND') {
