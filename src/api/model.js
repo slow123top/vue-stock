@@ -81,6 +81,25 @@ function getLockedLogo(formValidate) {
   locked += intoMarketLocked + '|' + outMarketLocked + '|' + windCtrlLocked + '|' + secondLocked;
   return locked;
 }
+export const resolveLocked = function (modelPara, selectedIndexs) {
+  let lockStr = modelPara.substring(modelPara.indexOf('[LOCK]') + 6, modelPara.lastIndexOf('[LOCK]'));
+  let lockArr = lockStr.split('|');
+  let intoMarketLock = lockArr[0].split('-');
+  let outMarketLock = [];
+  let windCtrlLock = [];
+  if (modelPara.indexOf('[SELL]') !== -1) {
+    outMarketLock = outMarketLock.concat(lockArr[1].split('-'));
+
+  }
+  if (modelPara.indexOf('[DAN_CON]') !== -1) {
+    windCtrlLock = windCtrlLock.concat(lockArr[2].split('-'));
+  }
+  let secondLock = lockArr[3].split('-');
+  let lock = intoMarketLock.concat(outMarketLock).concat(windCtrlLock).concat(secondLock);
+  for (let i = 0; i < selectedIndexs.length; i++) {
+    selectedIndexs[i].locked = Number(lock[i]);
+  }
+}
 function notIncludeRelationship(model, includeLogo) {
   let a;
   if (includeLogo === '[IN]') {
@@ -197,7 +216,7 @@ const splitABC = (para, selectedIndexs, symbol) => {
     select2: [],
     selects: [],
     locked: 0,
-    type:index.indexName
+    type: index.indexName
   });
   //因为有出市指标
   index.indexName = index.indexName.replace('sell', 'A');
@@ -373,9 +392,7 @@ export const resolveIndicator = (selectedIndicator, modelPara, controller, symbo
   symbol.andOrNotIntoMarketLeft = leftBracket;
   pos += leftBracket.length;
   let intoMarketArr = intoMarket.replace(/\(|\)/g, '').split(/\&|\||\$/);
-  // console.log(modelPara);
-  // console.log(intoMarket);
-  // console.log(intoMarketArr);
+
   //解析每一个指标  加入到已选指标中
   for (let i = 0; i < intoMarketArr.length; i++) {
     pos += intoMarketArr[i].length;

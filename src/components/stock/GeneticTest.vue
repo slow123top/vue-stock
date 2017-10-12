@@ -21,7 +21,6 @@
           <i-input type="text" v-model="controller[5]" readonly></i-input>
         </Form-item>
       </i-form>
-      <!--<i-table border :columns="columns" :data="data"></i-table>-->
     </i-col>
     <i-col span="24">
       <el-table :data="tableData" border style="width: 100%" :empty-text="dataText" @sort-change="sortChange">
@@ -51,8 +50,6 @@
             <router-link :to="{path:'/model',query:{temp_sa_build:geneticModels[scope.$index+(currentPage - 1) * pageSize].geneticModelId}}"
                          target="_blank" :disabled="buttonDisabled">重建模型
             </router-link>
-            <el-button size="small" type="success" @click="save(scope.$index,scope.row)" :disabled="buttonDisabled">保存
-            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -60,23 +57,6 @@
         <Button type="primary" size="large" @click="exportData" :disabled="!status">
           <Icon type="ios-download-outline"></Icon>
           导出
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         </Button>
         <div style="float: right;">
@@ -221,30 +201,6 @@
       }
     },
     methods: {
-//        重建模型
-      rebuildModel(index){
-        let realIndex = index + (this.currentPage - 1) * this.pageSize;
-        this.$store.state.andOrNot = 'customize';
-        resolveIndicator(this.$store.state.selectedIndexs, this.geneticModels[realIndex].modelPara, this.$store.state.controller, this.$store.state.symbol);
-        window.open('/#/model?temp_sa_build=' + this.geneticModels[realIndex].geneticModelId);
-      },
-      save(index, row){
-//        console.log(index + (this.currentPage - 1) * this.pageSize);
-//        保存单个模型
-//        const that = this;
-//        getRemoteReqTodo('/stock/genetic/savegeneticmodel', ['geneticModelId'], [that.geneticModels[index].geneticModelId]).then(res => {
-//          let data = res.data;
-//          if (data['status'] === 'SUCCESS') {
-//            that.geneticModels[index].disabled = true;
-//          } else if (data['status'] === 'USER_NOT_FOUND') {
-//            loginTimeoutPrompt(that);
-//          } else {
-//            that.$message.error(data['message']);
-//          }
-//        }).catch(() => {
-//          that.$message.error('链接服务器异常，请您稍后重试');
-//        });
-      },
       getGenetic(){
         const that = this;
         getRemoteReqTodo('/stock/genetic/getgeneticreport', [], []).then(res => {

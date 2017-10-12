@@ -1,14 +1,12 @@
 <template>
   <div>
-    <!--进入创建模型页面-->
-    <!--回测时跳出提示-->
     <Modal v-model="modal" :mask-closable="false" :closable="false" width="360">
       <div slot="header">
         <Spin fix size="large">
           <Icon type="load-c" size=18
 
 
-                        class="demo-spin-icon-load"
+                               class="demo-spin-icon-load"
                 style="line-height: 2rem;border-radius: 20px"></Icon>
           <!--<div style="font-size: 1rem;color: #000">{{runMessage}}</div>-->
 
@@ -29,131 +27,8 @@
       <p style="font-size: 1rem">您还没有
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         <router-link to="/personalInfo/buycard" style="font-weight: bold;">购买</router-link>
         此次回测区间的回测卡,您将消费<span style="color: #ff0000;font-weight: bold">{{needPoints}}</span>点数来完成本次回测,是否继续?
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
       </p>
@@ -165,318 +40,15 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       </div>
-      <p style="font-size: 1rem;">您没有本次回测区间的回测卡，点击
+      <p style="font-size: 1rem;">您没有本次回测区间的回测卡，请
 
 
+        <router-link to="/personalInfo/buycard">购买回测卡</router-link>
+      <p style="font-size: 1rem;">本次回测需要<span style="color: #ff0000;font-weight: bold">{{needPoints}}</span>点数，您的点数已不足，请
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <router-link to="/personalInfo/buycard">这里</router-link>
-        购买回测卡。
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      <p style="font-size: 1rem;">本次回测需要<span style="color: #ff0000;font-weight: bold">{{needPoints}}</span>点数，您的点数已不足，点击
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <router-link to="/personalInfo/recharge">这里</router-link>
-        充值。
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        <router-link to="/personalInfo/recharge">充值</router-link>
       </p>
       <div slot="footer" style="font-size: 1rem">
       </div>
@@ -525,1755 +97,245 @@
         <!--<Button type="text" style="font-weight: bold;font-size: 1rem;text-decoration: solid" @click="indexDes">指标说明?-->
         <!--</Button>-->
         <!--</i-col>-->
+        <!--<i-col span="24" style="padding: .5rem;border-radius: 10px;background-color: #495060;margin-bottom:.5rem">-->
+        <!--<Menu mode="horizontal" :active-name="activeName" @on-select="select">-->
+        <!--<Submenu name="1">-->
+        <!--<template slot="title">-->
+        <!--入市指标组合-->
+
+        <!--</template>-->
+        <!--<Menu-item name="1-1">价格类指标</Menu-item>-->
+        <!--<Menu-item name="1-2">市值类指标</Menu-item>-->
+        <!--<Menu-item name="1-3">上市日期类指标</Menu-item>-->
+        <!--<Menu-item name="1-4">股票池筛选指标</Menu-item>-->
+        <!--<Menu-item name="1-5">交易量类指标</Menu-item>-->
+        <!--<Menu-item name="1-6">经典指标</Menu-item>-->
+        <!--&lt;!&ndash;<Menu-item name="1-7">定制指标</Menu-item>&ndash;&gt;-->
+        <!--<Menu-item name="1-8">我的模型入市指标组合</Menu-item>-->
+        <!--</Submenu>-->
+        <!--<Submenu name="2">-->
+        <!--<template slot="title">-->
+        <!--出市指标组合-->
+
+        <!--</template>-->
+        <!--<Menu-item name="2-1">价格类指标</Menu-item>-->
+        <!--<Menu-item name="2-2">市值类指标</Menu-item>-->
+        <!--<Menu-item name="2-3">上市日期类指标</Menu-item>-->
+        <!--<Menu-item name="2-4">股票池筛选指标</Menu-item>-->
+        <!--<Menu-item name="2-5">交易量类指标</Menu-item>-->
+        <!--<Menu-item name="2-6">经典指标</Menu-item>-->
+        <!--&lt;!&ndash;<Menu-item name="2-7">定制指标</Menu-item>&ndash;&gt;-->
+        <!--<Menu-item name="2-8">我的模型出市指标组合</Menu-item>-->
+        <!--</Submenu>-->
+        <!--<Submenu name="4">-->
+        <!--<template slot="title">-->
+        <!--风控指标组合-->
+
+        <!--</template>-->
+        <!--<Menu-item name="4-1">趋势类指标</Menu-item>-->
+        <!--<Menu-item name="4-2">我的模型风控指标组合</Menu-item>-->
+        <!--</Submenu>-->
+        <!--<Menu-item name="3">-->
+        <!--二次筛选指标-->
+
+        <!--</Menu-item>-->
+        <!--&lt;!&ndash;<Submenu name="4">&ndash;&gt;-->
+        <!--&lt;!&ndash;<template slot="title">&ndash;&gt;-->
+        <!--&lt;!&ndash;风控指标&ndash;&gt;-->
+
+
+        <!--&lt;!&ndash;</template>&ndash;&gt;-->
+        <!--&lt;!&ndash;<Menu-item name="4-1">我的模型风控指标组合</Menu-item>&ndash;&gt;-->
+        <!--&lt;!&ndash;</Submenu>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<Menu-item style="float: right">&ndash;&gt;-->
+        <!--&lt;!&ndash;<i-select v-model="queryIndexInit" filterable placeholder="搜索选股指标,仅支持中文搜索" @on-change="queryIndexChange">&ndash;&gt;-->
+        <!--&lt;!&ndash;<i-option v-for="item1 in queryIndexs" :value="item1.value" :key="item1">&ndash;&gt;-->
+        <!--&lt;!&ndash;{{ item1.label }}&ndash;&gt;-->
+        <!--&lt;!&ndash;</i-option>&ndash;&gt;-->
+        <!--&lt;!&ndash;</i-select>&ndash;&gt;-->
+        <!--&lt;!&ndash;</Menu-item>&ndash;&gt;-->
+        <!--</Menu>-->
+        <!--<Row type="flex" justify="center">-->
+        <!--<i-col span="24" style="height: 15rem;overflow:auto;background-color: #ffffff;padding: .5rem">-->
+        <!--<ul class="index" v-if="activeName === '1-1'">-->
+        <!--<li :id="indexClass.number" v-for="indexClass in indexs['price']" class="price-index" :key="indexClass"-->
+        <!--style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">-->
+        <!--<Button size="large" style="width:35rem" @click="selectIndex(indexClass.number)">-->
+        <!--{{indexClass.message}}-->
+
+        <!--</Button>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--<ul class="index" v-if="activeName === '1-2'">-->
+        <!--<li :id="indexClass.number" v-for="indexClass in indexs.marketValue" class="market-value-index"-->
+        <!--:key="indexClass"-->
+        <!--style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">-->
+        <!--<Button size="large" style="width:35rem" @click="selectIndex(indexClass.number)">-->
+        <!--{{indexClass.message}}-->
+
+
+        <!--</Button>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--<ul class="index" v-if="activeName === '1-3'">-->
+        <!--<li :id="indexClass.number" v-for="indexClass in indexs.listingDate" class="listing-date-index"-->
+        <!--:key="indexClass"-->
+        <!--style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">-->
+        <!--<Button size="large" style="width:35rem" @click="selectIndex(indexClass.number)">-->
+        <!--{{indexClass.message}}-->
+
+
+        <!--</Button>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--<ul class="index" v-if="activeName === '1-4'">-->
+        <!--<li :id="indexClass.number" v-for="indexClass in indexs.code" class="code-index"-->
+        <!--:key="indexClass"-->
+        <!--style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">-->
+        <!--<Button size="large" style="width:35rem" @click="selectIndex(indexClass.number)">-->
+        <!--{{indexClass.message}}-->
+
+        <!--</Button>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--<ul class="index" v-if="activeName === '1-5'">-->
+        <!--<li :id="indexClass.number" v-for="indexClass in indexs.trade" class="trade-index"-->
+        <!--:key="indexClass"-->
+        <!--style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">-->
+        <!--<Button size="large" style="width:35rem" @click="selectIndex(indexClass.number)">-->
+        <!--{{indexClass.message}}-->
+
+        <!--</Button>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--<ul class="index" v-if="activeName === '1-6'">-->
+        <!--<li :id="indexClass.number" v-for="indexClass in indexs.classic" class="classic-index" :key="indexClass"-->
+        <!--style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">-->
+        <!--<Button size="large" style="width:35rem" @click="selectIndex(indexClass.number)">-->
+        <!--{{indexClass.message}}-->
+
+        <!--</Button>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--<ul class="my-model" v-if="activeName === '1-8'">-->
+        <!--<li v-for="(item,index) in myModels" :key="item"-->
+        <!--style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">-->
+        <!--<Button size="large" style="width:35rem" @click="selectModel(index)">-->
+        <!--{{item.modelName}}-->
+
+        <!--</Button>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--<ul class="index" v-if="activeName === '2-1'">-->
+        <!--<li :id="indexClass.number" v-for="indexClass in indexs['price']" class="price-index" :key="indexClass"-->
+        <!--style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">-->
+        <!--<Button size="large" style="width:35rem"-->
+        <!--@click="selectIndexSell(indexClass.number,'sell')">-->
+        <!--{{indexClass.message}}-->
+
+        <!--</Button>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--<ul class="index" v-if="activeName === '2-2'">-->
+        <!--<li :id="indexClass.number" v-for="indexClass in indexs.marketValue" class="market-value-index"-->
+        <!--:key="indexClass"-->
+        <!--style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">-->
+        <!--<Button size="large" style="width:35rem"-->
+        <!--@click="selectIndexSell(indexClass.number,'sell')">-->
+        <!--{{indexClass.message}}-->
+
+        <!--</Button>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--<ul class="index" v-if="activeName === '2-3'">-->
+        <!--<li :id="indexClass.number" v-for="indexClass in indexs.listingDate" class="listing-date-index"-->
+        <!--:key="indexClass" style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">-->
+        <!--<Button size="large" style="width:35rem"-->
+        <!--@click="selectIndexSell(indexClass.number,'sell')">-->
+        <!--{{indexClass.message}}-->
+
+        <!--</Button>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--<ul class="index" v-if="activeName === '2-4'">-->
+        <!--<li :id="indexClass.number" v-for="indexClass in indexs.code" class="code-index"-->
+        <!--:key="indexClass"-->
+        <!--style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">-->
+        <!--<Button size="large" style="width:35rem"-->
+        <!--@click="selectIndexSell(indexClass.number,'sell')">-->
+        <!--{{indexClass.message}}-->
+
+        <!--</Button>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--<ul class="index" v-if="activeName === '2-5'">-->
+        <!--<li :id="indexClass.number" v-for="indexClass in indexs.trade" class="trade-index"-->
+        <!--:key="indexClass"-->
+        <!--style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">-->
+        <!--<Button size="large" style="width:35rem"-->
+        <!--@click="selectIndexSell(indexClass.number,'sell')">-->
+        <!--{{indexClass.message}}-->
+
+        <!--</Button>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--<ul class="index" v-if="activeName === '2-6'">-->
+        <!--<li :id="indexClass.number" v-for="indexClass in indexs.classic" class="classic-index" :key="indexClass"-->
+        <!--style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">-->
+        <!--<Button size="large" style="width:35rem"-->
+        <!--@click="selectIndexSell(indexClass.number,'sell')">-->
+        <!--{{indexClass.message}}-->
+
+        <!--</Button>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--<ul class="my-model" v-if="activeName === '2-8'">-->
+        <!--<li v-for="(item,index) in myModels" :key="item"-->
+        <!--style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">-->
+        <!--<Button size="large" style="width:35rem" @click="selectModelOutMarket(index)">-->
+        <!--{{item.modelName}}-->
+
+        <!--</Button>-->
+        <!--</li>-->
+        <!--</ul>-->
+
+        <!--<ul class="index" v-if="activeName === '4-1'">-->
+        <!--<li :id="indexClass.number" v-for="indexClass in indexs.windControl" class="classic-index"-->
+        <!--:key="indexClass"-->
+        <!--style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">-->
+        <!--<Button size="large" style="width:35rem" @click="selectIndex(indexClass.number)">-->
+        <!--{{indexClass.message}}-->
+
+        <!--</Button>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--<ul class="my-model" v-if="activeName === '4-2'">-->
+        <!--<li v-for="(item,index) in myModels" :key="item"-->
+        <!--style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">-->
+        <!--<Button size="large" style="width:35rem" @click="selectModelWindCtrl(index)">-->
+        <!--{{item.modelName}}-->
+
+        <!--</Button>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--<ul class="index" v-if="activeName === '3'">-->
+        <!--<li :id="indexClass.number" v-for="indexClass in indexs.secondaryScreen" class="classic-index"-->
+        <!--:key="indexClass"-->
+        <!--style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">-->
+        <!--<Button size="large" style="width:35rem" @click="selectIndex('secondary-screen',indexClass.number)"-->
+        <!--:disabled="secondaryScreenOnlyOnce">-->
+        <!--{{indexClass.message}}-->
+
+        <!--</Button>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--</i-col>-->
+        <!--</Row>-->
+        <!--</i-col>-->
         <i-col span="24" style="padding: .5rem;border-radius: 10px;background-color: #495060;margin-bottom:.5rem">
-          <Menu mode="horizontal" :active-name="activeName" @on-select="select">
-            <Submenu name="1">
-              <template slot="title">
-                入市指标组合
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-              </template>
-              <Menu-item name="1-1">价格类指标</Menu-item>
-              <Menu-item name="1-2">市值类指标</Menu-item>
-              <Menu-item name="1-3">上市日期类指标</Menu-item>
-              <Menu-item name="1-4">股票池筛选指标</Menu-item>
-              <Menu-item name="1-5">交易量类指标</Menu-item>
-              <Menu-item name="1-6">经典指标</Menu-item>
-              <!--<Menu-item name="1-7">定制指标</Menu-item>-->
-              <Menu-item name="1-8">我的模型入市指标组合</Menu-item>
-            </Submenu>
-            <Submenu name="2">
-              <template slot="title">
-                出市指标组合
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-              </template>
-              <Menu-item name="2-1">价格类指标</Menu-item>
-              <Menu-item name="2-2">市值类指标</Menu-item>
-              <Menu-item name="2-3">上市日期类指标</Menu-item>
-              <Menu-item name="2-4">股票池筛选指标</Menu-item>
-              <Menu-item name="2-5">交易量类指标</Menu-item>
-              <Menu-item name="2-6">经典指标</Menu-item>
-              <!--<Menu-item name="2-7">定制指标</Menu-item>-->
-              <Menu-item name="2-8">我的模型出市指标组合</Menu-item>
-            </Submenu>
-            <Submenu name="4">
-              <template slot="title">
-                风控指标组合
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-              </template>
-              <Menu-item name="4-1">趋势类指标</Menu-item>
-              <Menu-item name="4-2">我的模型风控指标组合</Menu-item>
-            </Submenu>
-            <Menu-item name="3">
-              二次筛选指标
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            </Menu-item>
-            <!--<Submenu name="4">-->
-            <!--<template slot="title">-->
-            <!--风控指标-->
-
-
-            <!--</template>-->
-            <!--<Menu-item name="4-1">我的模型风控指标组合</Menu-item>-->
-            <!--</Submenu>-->
-
-            <!--<Menu-item style="float: right">-->
-            <!--<i-select v-model="queryIndexInit" filterable placeholder="搜索选股指标,仅支持中文搜索" @on-change="queryIndexChange">-->
-            <!--<i-option v-for="item1 in queryIndexs" :value="item1.value" :key="item1">-->
-            <!--{{ item1.label }}-->
-            <!--</i-option>-->
-            <!--</i-select>-->
-            <!--</Menu-item>-->
-          </Menu>
-          <Row type="flex" justify="center">
-            <i-col span="24" style="height: 15rem;overflow:auto;background-color: #ffffff;padding: .5rem">
-              <ul class="index" v-if="activeName === '1-1'">
-                <li :id="indexClass.number" v-for="indexClass in indexs['price']" class="price-index" :key="indexClass"
-                    style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
-                  <Button size="large" style="width:35rem" @click="selectIndex('price-index',indexClass.number)">
-                    {{indexClass.message}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  </Button>
-                </li>
-              </ul>
-              <ul class="index" v-if="activeName === '1-2'">
-                <li :id="indexClass.number" v-for="indexClass in indexs.marketValue" class="market-value-index"
-                    :key="indexClass"
-                    style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
-                  <Button size="large" style="width:35rem" @click="selectIndex('market-value-index',indexClass.number)">
-                    {{indexClass.message}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  </Button>
-                </li>
-              </ul>
-              <ul class="index" v-if="activeName === '1-3'">
-                <li :id="indexClass.number" v-for="indexClass in indexs.listingDate" class="listing-date-index"
-                    :key="indexClass"
-                    style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
-                  <Button size="large" style="width:35rem" @click="selectIndex('listing-date-index',indexClass.number)">
-                    {{indexClass.message}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  </Button>
-                </li>
-              </ul>
-              <ul class="index" v-if="activeName === '1-4'">
-                <li :id="indexClass.number" v-for="indexClass in indexs.code" class="code-index"
-                    :key="indexClass"
-                    style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
-                  <Button size="large" style="width:35rem" @click="selectIndex('code-index',indexClass.number)">
-                    {{indexClass.message}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  </Button>
-                </li>
-              </ul>
-              <ul class="index" v-if="activeName === '1-5'">
-                <li :id="indexClass.number" v-for="indexClass in indexs.trade" class="trade-index"
-                    :key="indexClass"
-                    style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
-                  <Button size="large" style="width:35rem" @click="selectIndex('trade-index',indexClass.number)">
-                    {{indexClass.message}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  </Button>
-                </li>
-              </ul>
-              <ul class="index" v-if="activeName === '1-6'">
-                <li :id="indexClass.number" v-for="indexClass in indexs.classic" class="classic-index" :key="indexClass"
-                    style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
-                  <Button size="large" style="width:35rem" @click="selectIndex('classic-index',indexClass.number)">
-                    {{indexClass.message}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  </Button>
-                </li>
-              </ul>
-              <ul class="my-model" v-if="activeName === '1-8'">
-                <li v-for="(item,index) in myModels" :key="item"
-                    style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
-                  <Button size="large" style="width:35rem" @click="selectModel(index)">
-                    {{item.modelName}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  </Button>
-                </li>
-              </ul>
-              <ul class="index" v-if="activeName === '2-1'">
-                <li :id="indexClass.number" v-for="indexClass in indexs['price']" class="price-index" :key="indexClass"
-                    style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
-                  <Button size="large" style="width:35rem"
-                          @click="selectIndexSell('price-index',indexClass.number,'sell')">
-                    {{indexClass.message}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  </Button>
-                </li>
-              </ul>
-              <ul class="index" v-if="activeName === '2-2'">
-                <li :id="indexClass.number" v-for="indexClass in indexs.marketValue" class="market-value-index"
-                    :key="indexClass"
-                    style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
-                  <Button size="large" style="width:35rem"
-                          @click="selectIndexSell('market-value-index',indexClass.number,'sell')">
-                    {{indexClass.message}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  </Button>
-                </li>
-              </ul>
-              <ul class="index" v-if="activeName === '2-3'">
-                <li :id="indexClass.number" v-for="indexClass in indexs.listingDate" class="listing-date-index"
-                    :key="indexClass" style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
-                  <Button size="large" style="width:35rem"
-                          @click="selectIndexSell('listing-date-index',indexClass.number,'sell')">
-                    {{indexClass.message}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  </Button>
-                </li>
-              </ul>
-              <ul class="index" v-if="activeName === '2-4'">
-                <li :id="indexClass.number" v-for="indexClass in indexs.code" class="code-index"
-                    :key="indexClass"
-                    style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
-                  <Button size="large" style="width:35rem"
-                          @click="selectIndexSell('code-index',indexClass.number,'sell')">
-                    {{indexClass.message}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  </Button>
-                </li>
-              </ul>
-              <ul class="index" v-if="activeName === '2-5'">
-                <li :id="indexClass.number" v-for="indexClass in indexs.trade" class="trade-index"
-                    :key="indexClass"
-                    style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
-                  <Button size="large" style="width:35rem"
-                          @click="selectIndexSell('trade-index',indexClass.number,'sell')">
-                    {{indexClass.message}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  </Button>
-                </li>
-              </ul>
-              <ul class="index" v-if="activeName === '2-6'">
-                <li :id="indexClass.number" v-for="indexClass in indexs.classic" class="classic-index" :key="indexClass"
-                    style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
-                  <Button size="large" style="width:35rem"
-                          @click="selectIndexSell('classic-index',indexClass.number,'sell')">
-                    {{indexClass.message}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  </Button>
-                </li>
-              </ul>
-              <ul class="my-model" v-if="activeName === '2-8'">
-                <li v-for="(item,index) in myModels" :key="item"
-                    style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
-                  <Button size="large" style="width:35rem" @click="selectModelOutMarket(index)">
-                    {{item.modelName}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  </Button>
-                </li>
-              </ul>
-
-              <ul class="index" v-if="activeName === '4-1'">
-                <li :id="indexClass.number" v-for="indexClass in indexs.windControl" class="classic-index"
-                    :key="indexClass"
-                    style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
-                  <Button size="large" style="width:35rem" @click="selectIndex('wind-control',indexClass.number)">
-                    {{indexClass.message}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  </Button>
-                </li>
-              </ul>
-              <ul class="my-model" v-if="activeName === '4-2'">
-                <li v-for="(item,index) in myModels" :key="item"
-                    style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
-                  <Button size="large" style="width:35rem" @click="selectModelWindCtrl(index)">
-                    {{item.modelName}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  </Button>
-                </li>
-              </ul>
-              <ul class="index" v-if="activeName === '3'">
-                <li :id="indexClass.number" v-for="indexClass in indexs.secondaryScreen" class="classic-index"
-                    :key="indexClass"
-                    style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
-                  <Button size="large" style="width:35rem" @click="selectIndex('secondary-screen',indexClass.number)"
-                          :disabled="secondaryScreenOnlyOnce">
-                    {{indexClass.message}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  </Button>
-                </li>
-              </ul>
-            </i-col>
-          </Row>
+          <indicator-list :secondaryScreenOnlyOnce="secondaryScreenOnlyOnce"></indicator-list>
         </i-col>
-
-        <i-col span="24" class="demo-tabs-style1"
-               style="background:#BDC3C7;border-radius:10px;margin-bottom:.5rem">
-          <Tabs type="card" :animated="false" v-if="false">
-
-            <Tab-pane label="价格类指标">
-              <ul class="index">
-                <li :id="indexClass.number" v-for="indexClass in indexs['price']" class="price-index" :key="indexClass"
-                    style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
-                  <Button size="large" style="width:35rem" @click="selectIndex('price-index',indexClass.number)">
-                    {{indexClass.message}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  </Button>
-                </li>
-              </ul>
-            </Tab-pane>
-            <Tab-pane label="市值类指标">
-              <ul class="index">
-                <li :id="indexClass.number" v-for="indexClass in indexs.marketValue" class="market-value-index"
-                    :key="indexClass"
-                    style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
-                  <Button size="large" style="width:35rem" @click="selectIndex('market-value-index',indexClass.number)">
-                    {{indexClass.message}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  </Button>
-                </li>
-              </ul>
-            </Tab-pane>
-            <Tab-pane label="上市日期类指标">
-              <ul class="index">
-                <li :id="indexClass.number" v-for="indexClass in indexs.listingDate" class="listing-date-index"
-                    :key="indexClass"
-                    @click="selectIndex" style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
-                  <Button size="large" style="width:35rem" @click="selectIndex('listing-date-index',indexClass.number)">
-                    {{indexClass.message}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  </Button>
-                </li>
-              </ul>
-            </Tab-pane>
-            <Tab-pane label="股票池筛选指标">
-              <ul class="index">
-                <li :id="indexClass.number" v-for="indexClass in indexs.code" class="code-index" @click="selectIndex"
-                    :key="indexClass"
-                    style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
-                  <Button size="large" style="width:35rem" @click="selectIndex('code-index',indexClass.number)">
-                    {{indexClass.message}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  </Button>
-                </li>
-              </ul>
-            </Tab-pane>
-            <Tab-pane label="交易量类指标">
-              <ul class="index">
-                <li :id="indexClass.number" v-for="indexClass in indexs.trade" class="trade-index" @click="selectIndex"
-                    :key="indexClass"
-                    style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
-                  <Button size="large" style="width:35rem" @click="selectIndex('trade-index',indexClass.number)">
-                    {{indexClass.message}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  </Button>
-                </li>
-              </ul>
-            </Tab-pane>
-            <Tab-pane label="经典指标">
-              <ul class="index">
-                <li :id="indexClass.number" v-for="indexClass in indexs.classic" class="classic-index" :key="indexClass"
-                    @click="selectIndex"
-                    style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
-                  <Button size="large" style="width:35rem" @click="selectIndex('classic-index',indexClass.number)">
-                    {{indexClass.message}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  </Button>
-                </li>
-              </ul>
-            </Tab-pane>
-            <Tab-pane label="二次筛选指标" name="secondary">
-              <ul class="index">
-                <li :id="indexClass.number" v-for="indexClass in indexs.secondaryScreen" class="classic-index"
-                    :key="indexClass"
-                    @click="selectIndex" style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
-                  <Button size="large" style="width:35rem" @click="selectIndex('secondary-screen',indexClass.number)"
-                          :disabled="secondaryScreenOnlyOnce">
-                    {{indexClass.message}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  </Button>
-                </li>
-              </ul>
-            </Tab-pane>
-            <Tab-pane label="风控指标" name="wind-control">
-              <ul class="index">
-                <li :id="indexClass.number" v-for="indexClass in indexs.windControl" class="classic-index"
-                    :key="indexClass"
-                    @click="selectIndex" style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
-                  <Button size="large" style="width:35rem" @click="selectIndex('wind-control',indexClass.number)"
-                          :disabled="windControlOnlyOnce">
-                    {{indexClass.message}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  </Button>
-                </li>
-              </ul>
-            </Tab-pane>
-            <Tab-pane label="我的模型">
-              <ul class="my-model">
-                <li v-for="(item,index) in myModels" :key="item"
-                    style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
-                  <Button size="large" style="width:35rem" @click="selectModel(index)">
-                    {{item.modelName}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  </Button>
-                </li>
-              </ul>
-            </Tab-pane>
-            <!-- <Input type="text" size="large"/></Input> -->
-          </Tabs>
-        </i-col>
-        <!--#2C3E50-->
         <i-col span="24" style="background: #2C3E50;padding:.5rem;border-radius:10px;margin-bottom:.5rem">
           <i-form ref="formValidate" :label-width="200" :model="formValidate" inline>
             <Row type="flex" justify="start" style="background:#fff;margin-bottom:1rem;border-radius:10px">
@@ -2297,28 +359,6 @@
                                         <br>其中左右括号均为英文括号，后三种符号依次表示“并且”、“或者”、“剔除掉”的意思；
                                         <br>入市、出市和风控是分开处理的；
                                         <br>二次筛选指标不介入该与或非组合计算。
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
                       </div>
@@ -2373,33 +413,6 @@
                             {{ option.label }}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                           </i-option>
                         </i-select>
                       </Tooltip>
@@ -2426,32 +439,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         </i-option>
                       </i-select>
                     </Form-item>
@@ -2475,35 +462,6 @@
                           {{ option2.label }}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         </i-option>
                       </i-select>
                     </Form-item>
@@ -2520,13 +478,11 @@
                             @click="handleRemove(indexs)"></Button>
                     <el-tooltip v-if="$store.state.user.userType===0&&!item.locked" class="item" effect="dark"
                                 content="该锁定仅用于智能回测锁定指标参数" placement="top" :enterable="false" style="float: right">
-                      <Button type="text" shape="circle" size="large" icon="unlocked"
-                              @click="lockIndicator(indexs)"></Button>
+                      <el-button type="text" shape="circle" icon="my-unlock" @click="lockIndicator(indexs)"
+                                 style="color: #000000"></el-button>
                     </el-tooltip>
-                    <Button v-if="$store.state.user.userType===0&&item.locked" type="text" shape="circle" size="large"
-                            style="float: right"
-                            icon="locked"
-                            @click="unlockIndicator(indexs)"></Button>
+                    <el-button v-if="$store.state.user.userType===0&&item.locked" type="text" icon="my-lock3"
+                               style="float: right;color: #000000" @click="unlockIndicator(indexs)"></el-button>
                   </li>
                 </ul>
                 <ul style="border-top: 1px solid;padding: .5rem">
@@ -2608,7 +564,6 @@
                     </Form-item>
                     <Form-item :label="secondList[0].className" prop="andOrNotOutMarketLeft" :label-width=".5">
                     </Form-item>
-                    <!--<span>{{secondList[0].className}}</span>-->
                   </li>
                 </ul>
               </i-col>
@@ -2622,16 +577,19 @@
                 </Form-item>
                 <Form-item prop="controller.backStart" style="margin-bottom: 1rem" :label-width="10">
                   <Tooltip content="回测起点 （最早从 2006-01-04 开始）" placement="left">
-                    <Date-picker v-model="$store.state.controller.backStart" :options="startTimeOption"
-                                 type="date" placeholder="回测起点,格式:2011-01-01"></Date-picker>
+                    <Date-picker v-model="$store.state.controller.backStart" :editable="false" :clearable="false"
+                                 :options="startTimeOption"
+                                 type="date" placeholder="回测起点,格式:2011-01-01"
+                                 @on-change="changeStartDate"></Date-picker>
                   </Tooltip>
                 </Form-item>
                 <Form-item prop="controller.backEnd" style="margin-bottom: 1rem"
                            :label-width="10">
                   <Tooltip :content="'回测终点 （最晚到 ' +$store.state.model.endTime+' 结束）'" placement="left">
-                    <Date-picker v-model="$store.state.controller.backEnd" :options="endTimeOption"
+                    <Date-picker v-model="$store.state.controller.backEnd" :editable="false" :clearable="false"
+                                 :options="endTimeOption"
                                  type="date"
-                                 placeholder="回测终点,格式:2011-01-01"></Date-picker>
+                                 placeholder="回测终点,格式:2011-01-01" @on-change="changeEndDate"></Date-picker>
                   </Tooltip>
                 </Form-item>
                 <Form-item prop="controller.buyRate" style="margin-bottom: 1rem" :rules="controllerValidator.buyRate"
@@ -2697,33 +655,6 @@
                           style="font-size:1rem">单次回测
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                   </Button>
                   <Poptip placement="top">
                     <a style="text-decoration: solid">单次回测计费说明</a>
@@ -2742,11 +673,6 @@
               <i-col span="4" v-if="$store.state.user.userType===0">
                 <Form-item style="margin-bottom: .5rem">
                   <Button type="success" size="large" @click="geneticTest" :disabled="!canRun" style="font-size:1rem">智能回测
-
-
-
-
-
 
 
                   </Button>
@@ -2780,12 +706,14 @@
     combineIndicator,
     resolveIndicator,
     classifyIndicator,
-    indicatorToDes
+    indicatorToDes,
+    resolveLocked
   } from '../../api/model'
   //  远程调用接口
   import {postRemoteReqTodo, getRemoteReqTodo} from '../../api/api'
   //  import uuid from 'uuid/v1'
   import {generateUUID, loginTimeoutPrompt, jumpLogin, checkStr, isBracketBalance} from '../../api/tools'
+  import IndicatorList from './IndicatorList'
   //  import $ from 'jquery'
   //  加密算法
   //  import {AES,enc} from 'crypto-js'
@@ -2841,13 +769,15 @@
         let modelId = that.$route.query.temp_sa_build.replace(/\%/g, '-');
         getRemoteReqTodo('/stock/genetic/getgeneticreport', [], []).then(res => {
           if (res.data.status === 'SUCCESS') {
-
-
             let getgeneticModel = res.data.geneticModels.filter(function (item) {
               return item.intelligentModelId === modelId;
             });
             that.$store.state.andOrNot = 'customize';
+
             resolveIndicator(that.$store.state.selectedIndexs, getgeneticModel[0].modelPara, that.$store.state.controller, that.formValidate);
+            if (getgeneticModel[0].modelPara.indexOf('[LOCK]') !== -1) {
+              resolveLocked(getgeneticModel[0].modelPara, that.formValidate.selectedIndexs);
+            }
           } else {
             that.$message.error('重建模型失败，请您稍后重试');
           }
@@ -2855,8 +785,6 @@
       }).catch(function () {
         that.$message.error('连接异常，请您稍后重试');
       });
-
-
     },
     data() {
       let that = this;
@@ -2960,7 +888,6 @@
         modalNoPoint: false,
         needPoints: '',
         geneticSetTime: '',
-//        geneticSetTime: '',
         geneticModal: false,
         geneticLevel: 0,
         loopTime: '',
@@ -3133,7 +1060,7 @@
       select(name){
         this.activeName = name;
       },
-      selectIndex: function (indexClass, indexId, index) {
+      selectIndex: function (indexId) {
 //        触发vuex 选择指标
         this.$store.commit('SELECT_INDICATOR', {
           indicators: this.indicators,
@@ -3141,8 +1068,25 @@
         });
 
       },
+//修改回测日期触发
+      changeStartDate(date){
+        let start = new Date(date).getTime();
+        let end = new Date(this.formValidate.controller.backEnd).getTime();
+        if ((end - start) / 86400000 < 30) {
+          this.$message.error('回测区间最小是30天');
+          this.formValidate.controller.backEnd = new Date(date).setDate(new Date(date).getDate() + 30);
+        }
+      },
+      changeEndDate(date){
+        let start = new Date(this.formValidate.controller.backStart).getTime();
+        let end = new Date(date).getTime();
+        if ((end - start) / 86400000 < 30) {
+          this.$message.error('回测区间最小是30天');
+          this.formValidate.controller.backStart = new Date(date).setDate(new Date(date).getDate() - 30);
+        }
+      },
 //      选择出市值标
-      selectIndexSell(indexClass, indexId, sell){
+      selectIndexSell(indexId, sell){
 //        标识出出市指标
         let temp = indexId.replace('A', sell);
 //        触发vuex 选择指标
@@ -3169,121 +1113,109 @@
         } else if (!hasB) {
           that.$message.warning('请选择二次筛选指标');
         } else {
-          if (!that.$store.state.controller.backStart || !that.$store.state.controller.backEnd) {
-            that.$message.warning('请填写回测起点和回测终点');
-          } else {
-            //          判断回测起点和回测终点的大小间隔必须大于等于30天
-            const start = new Date(new Date(that.formValidate.controller.backStart).format('yyyy-MM-dd'));
-            const end = new Date(new Date(that.formValidate.controller.backEnd).format('yyyy-MM-dd'));
-            if ((end - start) / 1000 / 86400 < 30) {
-              that.$message.warning('回测区间最小是30天');
-            } else {
-//              let {modelPara, modelInfo} = runParam(that.$store.state.selectedIndexs, that.$store.state.controller, that.andOrNot);
-              let modelPara = combineIndicator(that.formValidate, that.$store.state.controller);
-              if (modelPara.split(/A|B|C/).length - 1 > 60) {
+          let modelPara = combineIndicator(that.formValidate, that.$store.state.controller);
+          if (modelPara.split(/A|B|C/).length - 1 > 60) {
 //                  若最后的选股指标个数超过20个，报错
-                that.$message.error('您所选的指标过多，无法回测');
-              } else {
-//                console.log(modelPara);
+            that.$message.error('您所选的指标过多，无法回测');
+          } else {
 //                  判断自定义的指标之间的关系格式是否正确
-                //              满足回测条件  开始回测
-                that.modal = true;
+            //              满足回测条件  开始回测
+            that.modal = true;
 //                取消回测按钮先屏蔽
-                that.isRunning = true;
+            that.isRunning = true;
 //                  选股指标不超过20个
-                that.modelId = generateUUID();
+            that.modelId = generateUUID();
+            console.log(modelPara);
 //            请求接口获取是否能计算的状态  立即执行函数
-                (function getRunStatus() {
-                  postRemoteReqTodo(
-                    '/stock/runmodel',
-                    {
-                      modelId: that.modelId,
-                      modelPara: modelPara,
-                      modelInfo: '',
-                      startTime: new Date(that.formValidate.controller.backStart).format('yyyy-MM-dd'),
-                      endTime: new Date(that.formValidate.controller.backEnd).format('yyyy-MM-dd'),
-                      loopType: 0,
-                      useCard: 1
-                    }
-                  ).then(response => {
-                    const data = response.data;
-                    if (data['status'] === 'SUCCESS') {
-//                    设置正在运行的标志位
-                      that.isRunning = true;
-                      that.runMessage = '正在为您计算，请耐心等待...';
-//                  清除timeout 避免内存泄漏
-                      clearTimeout(that.isGetRunStatus);
-                      that.runPoll = setTimeout(getRunResult, 2000);
-                    } else if (data['status'] === 'ERROR') {
-                      that.isRunning = true;
-                      that.$message.error(data['message']);
-                      that.modal = false;
-                      that.modalRedPoint = false;
-                      clearTimeout(that.isGetRunStatus);
-                    } else if (data['status'] === 'ERRORYES') {
-                      that.needPoints = data['needPoints'];
-                      that.isRunning = true;
-                      that.modal = false;
-//                    只能扣点操作 弹出提示
-                      that.modalRedPoint = true;
-                      clearTimeout(that.isGetRunStatus);
-                    } else if (data['status'] === 'ERRORNO') {
-                      that.needPoints = data['needPoints'];
-                      clearTimeout(that.isGetRunStatus);
-                      that.isRunning = true;
-                      that.modal = false;
-                      that.modalNoPoint = true;
-                    } else if (data['status'] === 'WAITING') {
-//                        取消回测按钮在获取资源时出现
-                      that.isRunning = false;
-                      that.runMessage = '正在为您获取计算资源，请耐心等待...';
-//                      clearTimeout(that.isGetRunStatus);
-                      that.isGetRunStatus = setTimeout(getRunStatus, 2000);
-                    } else if (data['status'] === 'USER_NOT_FOUND') {
-//                        若session过期  跳转到登录页面
-                      loginTimeoutPrompt(that);
-                    }
-                  }).catch((response) => {
-                    that.$message.error('连接异常，请您稍后再试');
-                  })
-                })();
-
-                function getRunResult() {
-                  postRemoteReqTodo('/stock/getreport',
-                    {
-                      modelId: that.modelId,
-                      loopType: 0
-                    }
-                  ).then(response => {
-                    const data = response.data;
-                    if (data['status'] === 'SUCCESS') {
-                      clearTimeout(that.runPoll);
-                      let report = data['report']['report'].replace(/\'/g, '\"');
-                      //                  必须转换成JSON标准格式  存放在localstorage
-                      that.modal = false;
-                      that.$store.state.model.isRun = true;
-//                  回测结果暂存在localstorage
-                      localStorage.clear();
-                      localStorage.setItem(that.modelId.replace(/\-/g, '%'), report);
-                      that.$router.push({
-                        path: '/model/singletest',
-                        query: {temp_sa_asd: that.modelId.replace(/\-/g, '%')}
-                      });
-                    } else if (data['status'] === 'RUNNING') {
-                      that.runMessage = '正在为您计算，请耐心等待...';
-                      that.runPoll = setTimeout(getRunResult, 2000);
-                    } else if (data['status'] === 'ERROR') {
-                      that.$message.error(data['message']);
-                      that.modal = false;
-                      clearTimeout(that.runPoll);
-                    } else if (data['status'] === 'USER_NOT_FOUND') {
-                      loginTimeoutPrompt(that);
-                    }
-                  }).catch(() => {
-                    that.$message.error('连接异常，请您稍后再试');
-                  })
+            (function getRunStatus() {
+              postRemoteReqTodo(
+                '/stock/runmodel',
+                {
+                  modelId: that.modelId,
+                  modelPara: modelPara,
+                  modelInfo: '',
+                  startTime: new Date(that.formValidate.controller.backStart).format('yyyy-MM-dd'),
+                  endTime: new Date(that.formValidate.controller.backEnd).format('yyyy-MM-dd'),
+                  loopType: 0,
+                  useCard: 1
                 }
-              }
+              ).then(response => {
+                const data = response.data;
+                if (data['status'] === 'SUCCESS') {
+//                    设置正在运行的标志位
+                  that.isRunning = true;
+                  that.runMessage = '正在为您计算，请耐心等待...';
+//                  清除timeout 避免内存泄漏
+                  clearTimeout(that.isGetRunStatus);
+                  that.runPoll = setTimeout(getRunResult, 2000);
+                } else if (data['status'] === 'ERROR') {
+                  that.isRunning = true;
+                  that.$message.error(data['message']);
+                  that.modal = false;
+                  that.modalRedPoint = false;
+                  clearTimeout(that.isGetRunStatus);
+                } else if (data['status'] === 'ERRORYES') {
+                  that.needPoints = data['needPoints'];
+                  that.isRunning = true;
+                  that.modal = false;
+//                    只能扣点操作 弹出提示
+                  that.modalRedPoint = true;
+                  clearTimeout(that.isGetRunStatus);
+                } else if (data['status'] === 'ERRORNO') {
+                  that.needPoints = data['needPoints'];
+                  clearTimeout(that.isGetRunStatus);
+                  that.isRunning = true;
+                  that.modal = false;
+                  that.modalNoPoint = true;
+                } else if (data['status'] === 'WAITING') {
+//                        取消回测按钮在获取资源时出现
+                  that.isRunning = false;
+                  that.runMessage = '正在为您获取计算资源，请耐心等待...';
+//                      clearTimeout(that.isGetRunStatus);
+                  that.isGetRunStatus = setTimeout(getRunStatus, 2000);
+                } else if (data['status'] === 'USER_NOT_FOUND') {
+//                        若session过期  跳转到登录页面
+                  loginTimeoutPrompt(that);
+                }
+              }).catch((response) => {
+                that.$message.error('连接异常，请您稍后再试');
+              })
+            })();
+
+            function getRunResult() {
+              postRemoteReqTodo('/stock/getreport',
+                {
+                  modelId: that.modelId,
+                  loopType: 0
+                }
+              ).then(response => {
+                const data = response.data;
+                if (data['status'] === 'SUCCESS') {
+                  clearTimeout(that.runPoll);
+                  let report = data['report']['report'].replace(/\'/g, '\"');
+                  //                  必须转换成JSON标准格式  存放在localstorage
+                  that.modal = false;
+                  that.$store.state.model.isRun = true;
+//                  回测结果暂存在localstorage
+                  localStorage.clear();
+                  localStorage.setItem(that.modelId.replace(/\-/g, '%'), report);
+                  that.$router.push({
+                    path: '/model/singletest',
+                    query: {temp_sa_asd: that.modelId.replace(/\-/g, '%')}
+                  });
+                } else if (data['status'] === 'RUNNING') {
+                  that.runMessage = '正在为您计算，请耐心等待...';
+                  that.runPoll = setTimeout(getRunResult, 2000);
+                } else if (data['status'] === 'ERROR') {
+                  that.$message.error(data['message']);
+                  that.modal = false;
+                  clearTimeout(that.runPoll);
+                } else if (data['status'] === 'USER_NOT_FOUND') {
+                  loginTimeoutPrompt(that);
+                }
+              }).catch(() => {
+                that.$message.error('连接异常，请您稍后再试');
+              })
             }
           }
         }
@@ -3400,7 +1332,7 @@
               that.advancedTimes = data.message;
             }
             that.geneticPointInsuff = false;
-            that.geneticMessage = '您今日还剩' + data.message + '次' + geneticName + '智能回测';
+            that.geneticMessage = '您今日可免费使用' + data.message + '次' + geneticName + '智能回测';
           } else if (data.status === 'ERROR') {
 //                运行出错
             that.$message.error(data.message);
@@ -3425,12 +1357,14 @@
         postRemoteReqTodo('/stock/genetic/rungeneticmodel/getgenetictime', {}).then(res => {
           let data = res.data;
           let status = data.status;
+//          console.log(data);
           if (status === 'SUCCESS') {
-            that.primaryTimes = data.message[0];
-            that.intermediateTimes = data.message[1];
-            that.advancedTimes = data.message[2];
+            let times = data.message.split('-');
+            that.primaryTimes = times[0];
+            that.intermediateTimes = times[1];
+            that.advancedTimes = times[2];
             that.geneticPointInsuff = false;
-            that.geneticMessage = '您今日还剩' + data.message[0] + '次初级智能回测';
+            that.geneticMessage = '您今日可免费使用' + times[0] + '次初级智能回测';
           } else if (status === 'ERROR') {
             that.$message.error(data.message);
           } else if (status === 'USER_NOT_FOUND') {
@@ -3457,31 +1391,19 @@
         } else if (!hasB) {
           that.$message.warning('请选择二次筛选指标');
         } else {
-          if (!that.$store.state.controller.backStart || !that.$store.state.controller.backEnd) {
-            that.$message.warning('请填写回测起点和回测终点');
-          } else {
-            //          判断回测起点和回测终点的大小间隔必须大于等于30天
-            const start = new Date(new Date(that.formValidate.controller.backStart).format('yyyy-MM-dd'));
-            const end = new Date(new Date(that.formValidate.controller.backEnd).format('yyyy-MM-dd'));
-            if ((end - start) / 1000 / 86400 < 30) {
-              that.$message.warning('回测区间最小是30天');
-            } else {
-              let modelPara = combineIndicator(that.formValidate, that.$store.state.controller);
-//              let {modelPara, modelInfo} = runParam(that.$store.state.selectedIndexs, that.$store.state.controller, that.andOrNot);
-              if (modelPara.split('A').length - 1 > 20) {
+          let modelPara = combineIndicator(that.formValidate, that.$store.state.controller);
+          if (modelPara.split(/A|B|C/).length - 1 > 60) {
 //                  若智能回测的指标个数超过20个，报错
-                that.$message.error('您所选的指标过多，无法回测');
-              } else {
+            that.$message.error('您所选的指标过多，无法回测');
+          } else {
 //               填写回测次数
-                that.getGeneticTimes();
-                that.geneticModal = true;
-              }
-            }
+            that.getGeneticTimes();
+            that.geneticModal = true;
           }
         }
       },
       okGeneticTest(){
-//          填写好次数后  进行智能回测
+//          选择好等级后  进行智能回测
         const that = this;
         that.geneticLoading = true;
         let modelPara = combineIndicator(that.formValidate, that.$store.state.controller);
@@ -3683,9 +1605,6 @@
             indexClass = 'wind-control';
           }
         });
-        //        console.log(value);
-
-//        this.$store.state.selectIndex(indexClass, value, this.indexs, this.formValidate.selectedIndexs, this.formValidate.secondaryScreen);
         this.$store.commit('SELECTINDEXS', {
 
           indexClass: indexClass,
@@ -3761,7 +1680,7 @@
           duration: 0
         });
       },
-      changeAndOrNot(andOrNot){
+      changeAndOrNot(){
 
       }
     },
@@ -3961,6 +1880,9 @@
       },
 
     },
+    components: {
+      IndicatorList
+    }
   }
 </script>
 <style rel="stylesheet" lang="scss" scoped>
