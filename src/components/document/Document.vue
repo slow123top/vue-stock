@@ -3,26 +3,30 @@
     <i-col span="3">
       <i-menu width="auto" @on-select="selectTitle">
         <Menu-item name="question">
-        <Icon type="help-circled"></Icon>
-        <span class="layout-text">常见问题</span>
+          <Icon type="help-circled"></Icon>
+          <span class="layout-text">常见问题</span>
+        </Menu-item>
+        <Menu-item name="special">
+          <Icon type="jet"></Icon>
+          <span class="layout-text">智能回测</span>
         </Menu-item>
         <Menu-item name="guide">
-        <Icon type="arrow-right-c"></Icon>
-        <span class="layout-text">新手指南</span>
+          <Icon type="arrow-right-c"></Icon>
+          <span class="layout-text">新手指南</span>
         </Menu-item>
         <Menu-item name="about">
-        <Icon type="ios-people"></Icon>
-        <span class="layout-text">关于我们</span>
+          <Icon type="ios-people"></Icon>
+          <span class="layout-text">关于我们</span>
         </Menu-item>
         <Menu-item name="company-statement">
-        <Icon type="playstation"></Icon>
-        <span class="layout-text">公司声明</span>
+          <Icon type="playstation"></Icon>
+          <span class="layout-text">公司声明</span>
         </Menu-item>
       </i-menu>
     </i-col>
     <i-col span="21" style="padding: 1rem;background-color: #e3e8ee">
       <div>
-      <router-view></router-view>
+        <router-view></router-view>
       </div>
     </i-col>
   </Row>
@@ -47,6 +51,8 @@
           return 'guide'
         } else if (routePath === '/help/about') {
           return 'about'
+        } else if (routePath === '/help/geneticdoc') {
+          return 'special'
         }
       }
     },
@@ -67,6 +73,9 @@
           case 'about':
 //            this.modal = true;
             this.$router.push('/help/about');
+            break;
+          case 'special':
+            this.$router.push('/help/geneticdoc');
             break;
           default:
             break;

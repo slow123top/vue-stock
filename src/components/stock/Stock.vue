@@ -1,30 +1,33 @@
 <template>
   <div style="width:100%;background:#f5f7f9">
     <Affix :offset-top="100" style="position: absolute;z-index:999;">
-      <Poptip placement="right-start" trigger="hover" style="padding:0">
-        <Button type="info" shape="circle" icon="chevron-right">
-        </Button>
+      <Tooltip placement="right-start" style="padding:0">
+        <Button type="primary" icon="chevron-right"></Button>
         <div class="api" slot="content" style="font-size:14px;">
           <i-menu theme="dark" width="auto" @on-select="selectTitle" :active-name="activeName">
-            <Menu-item name="1">
+            <Menu-item name="create-model">
               <Icon type="arrow-graph-up-right"></Icon>
               <span>创建模型</span>
             </Menu-item>
-            <Menu-item name="2">
+            <Menu-item name="model-storage">
+              <Icon type="home"></Icon>
+              <span>模型仓库</span>
+            </Menu-item>
+            <Menu-item name="my-model">
               <Icon type="ios-home"></Icon>
               <span>我的模型</span>
             </Menu-item>
-            <Menu-item name="3">
+            <Menu-item name="once-test">
               <Icon type="ios-analytics"></Icon>
               <span>单次回测记录</span>
             </Menu-item>
-            <Menu-item name="4" v-if="$store.state.user.userType===0">
+            <Menu-item name="intelligent-test">
               <Icon type="outlet"></Icon>
               <span>智能回测记录</span>
             </Menu-item>
           </i-menu>
         </div>
-      </Poptip>
+      </Tooltip>
     </Affix>
     <Row type="flex" justify="start">
       <i-col span="24" style="padding:1rem;min-height:40rem">
@@ -34,6 +37,7 @@
   </div>
 </template>
 <script>
+  import {getRandomModel} from '../../api/api'
   export default {
     data() {
       return {}
@@ -41,35 +45,40 @@
     computed: {
       activeName() {
         if (this.$route.path === '/model/history') {
-          return '3';
+          return 'once-test';
         } else if (this.$route.path === '/model/myModel') {
 
-          return '2';
+          return 'my-model';
         } else if (this.$route.path === '/model/newModel') {
-          return '1';
+          return 'create-model';
         } else if (this.$route.path === '/model/genetictest') {
-          return '4';
+          return 'intelligent-test';
+        } else if (this.$route.path === '/model/modelstorage') {
+          return 'model-storage';
         } else {
-          return '1';
+          return 'create-model';
         }
       },
     },
     methods: {
       selectTitle(name) {
         switch (name) {
-          case '1':
-            this.$store.state.selectedIndexs.splice(0, this.$store.state.selectedIndexs.length);
+          case 'create-model':
+            getRandomModel(this.$store.state.selectedIndexs, this);
             this.$router.push('/model/newModel');
             break;
-          case '2':
+          case 'my-model':
             this.$store.state.model.isRun = false;
             this.$router.push('/model/myModel');
             break;
-          case '3':
+          case 'once-test':
             this.$router.push('/model/history');
             break;
-          case '4':
+          case 'intelligent-test':
             this.$router.push('/model/genetictest');
+            break;
+          case 'model-storage':
+            this.$router.push('/model/modelstorage');
             break;
           default:
             break;

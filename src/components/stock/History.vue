@@ -3,6 +3,18 @@
     <Row type="flex" justify="center" v-show="historyModelModal"
          style="min-height:45rem;padding: 1rem;background: #fff;border-radius: 10px">
       <i-col span="24">
+        <div class="s-history">
+          <span>搜索历史回测模型（支持模糊搜索、多选）：</span>
+          <el-select size="large" v-model="search" filterable multiple placeholder="请输入模型名称" @change="getFilterHistory" style="width: 30rem">
+            <el-option
+              v-for="item in filterHistory"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </div>
+
         <i-table size="large" border :columns="columns" :data="tableData" @on-sort-change="sortChange"></i-table>
         <div style="margin: 10px;overflow: hidden">
           <div style="float: right;">
@@ -27,6 +39,15 @@
           this.$store.commit('GET_HISTORYS', {
             returnModel: res.data.returnModel
           });
+          this.data = this.$store.state.historyModels;
+          this.tableData = this.data.slice(0, 10);
+          this.historyModels = JSON.parse(JSON.stringify(this.$store.state.historyModels));
+//          this.$store.state.historyModels.forEach(item => {
+//            this.filterHistory.push({
+//              label: item.model_name,
+//              value: item.modelId
+//            });
+//          });
         } else if (res.data.status === 'ERROR') {
           this.$message.error(res.data.message);
         } else if (res.data.status === 'USER_NOT_FOUND') {
@@ -41,11 +62,15 @@
     },
     data() {
       return {
+//        filterHistory: [],
+        search: '',
         historyModelModal: false,
-        historyModels: this.$store.state.historyModels,
+        historyModels: [],
         pageSize: 10,
         currentPage: 1,
         nest: [],
+        data: [],
+        tableData: [],
         columns: [
           {
             title: '时间',
@@ -126,20 +151,46 @@
       }
     },
     computed: {
-//        历史模型的全部数据
-      data(){
-        return this.historyModels;
-      },
-//      某一页的历史模型数据
-      tableData(){
-        return this.historyModels.slice((this.currentPage - 1) * 10, this.currentPage * 10);
+      filterHistory(){
+        let temp = [];
+        this.$store.state.historyModels.forEach(item => {
+          temp.push({
+            label: item.model_name,
+            value: item.modelId
+          });
+        });
+        return temp;
       }
+//        历史模型的全部数据
+//      data(){
+//        return this.historyModels;
+//      },
+////      某一页的历史模型数据
+//      tableData(){
+//        return this.historyModels.slice((this.currentPage - 1) * 10, this.currentPage * 10);
+//      }
     },
     methods: {
+
+//        筛选出搜索出的历史模型
+      getFilterHistory(arg){
+        if (arg.length === 0) {
+          this.data = this.$store.state.historyModels;
+          this.tableData = this.data.slice(0, 10);
+        } else {
+          this.data = [];
+          for (let i = 0; i < arg.length; i++) {
+            this.data.push(this.historyModels.filter(item => {
+              return item.modelId === arg[i];
+            })[0]);
+          }
+          this.tableData = this.data.slice(0, 10);
+        }
+      },
 //        重建模型
       show (index) {
         this.$store.state.andOrNot = 'customize';
-        resolveIndicator(this.$store.state.selectedIndexs, this.data[index].model_para,  this.$store.state.controller, this.$store.state.symbol);
+        resolveIndicator(this.$store.state.selectedIndexs, this.data[index].model_para, this.$store.state.controller, this.$store.state.symbol);
         this.$router.push('/model');
       },
       remove (index) {
@@ -160,12 +211,15 @@
       },
       changePage (current) {
         this.currentPage = current;
+        this.tableData = this.data.slice((this.currentPage - 1) * 10, this.currentPage * 10);
       },
       sortChange(param){
         if (param.order === 'desc') {
-          this.historyModels = this.historyModels.sort(descObj(param.key));
+          this.data.sort(descObj(param.key));
+          this.tableData = this.data.slice((this.currentPage - 1) * 10, this.currentPage * 10);
         } else if (param.order === 'asc') {
-          this.historyModels = this.historyModels.sort(ascObj(param.key));
+          this.data.sort(ascObj(param.key));
+          this.tableData = this.data.slice((this.currentPage - 1) * 10, this.currentPage * 10);
         } else {
           return true;
         }
@@ -174,3 +228,13 @@
 
   }
 </script>
+<style scoped>
+  span {
+    font-size: 1rem;
+  }
+
+  .s-history {
+    margin-bottom: 1rem;
+    text-align: right;
+  }
+</style>

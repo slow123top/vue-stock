@@ -89,6 +89,12 @@
   export default {
     mounted(){
       this.getGenetic();
+      this.$notify({
+        title: '温馨提示',
+        message: '您可以任意切换页面，智能回测运行不会受任何影响',
+        type:'warning',
+//        duration: 4000
+      });
     },
     data() {
       return {
@@ -218,7 +224,6 @@
 
           let data = res.data;
           if (data.status === 'SUCCESS') {
-
             that.geneticModels.splice(0, that.geneticModels.length);
             clearTimeout(that.geneticSetTime);
 //                结束状态
@@ -227,15 +232,16 @@
               let statisticalInfo;
               data.geneticModels.forEach(function (geneticModel, index) {
                 resolveIndicator(selectedIndexsTemp, geneticModel.modelPara, conCtrl, symbol);
-
                 statisticalInfo = JSON.parse(geneticModel.report.replace(/\'/g, '\"'));
                 that.geneticModels.push({
                   geneticModelId: geneticModel.intelligentModelId.replace(/\-/g,'%'),
                   time: new Date(geneticModel.returnTime).format('yyyy-MM-dd hh:mm:ss'),
                   stock_index: indicatorToDes(classifyIndicator(selectedIndexsTemp, 'A', 'intoMarket'), symbol.andOrNotIntoMarketLeft, symbol.andOrNotIntoMarketRight),
-                  out_index: geneticModel.modelPara.indexOf('[SELL]') !== -1 ? indicatorToDes(classifyIndicator(selectedIndexsTemp, 'sell', 'outMarket'), symbol.andOrNotOutMarketLeft, symbol.andOrNotOutMarketRight) : '无',
+                  out_index: geneticModel.modelPara.indexOf('[SELL]') !== -1 ? indicatorToDes(classifyIndicator(selectedIndexsTemp, 'sell', 'outMarket'),
+                    symbol.andOrNotOutMarketLeft, symbol.andOrNotOutMarketRight) : '无',
                   second_index: indicatorToDes(classifyIndicator(selectedIndexsTemp, 'B', 'second'), '', ''),
-                  wind_index: geneticModel.modelPara.indexOf('[DAN_CON]') !== -1 ? indicatorToDes(classifyIndicator(selectedIndexsTemp, 'C', 'windCtrl'), symbol.andOrNotWindCtrlLeft, symbol.andOrNotWindCtrlRight) : '无',
+                  wind_index: geneticModel.modelPara.indexOf('[DAN_CON]') !== -1 ? indicatorToDes(classifyIndicator(selectedIndexsTemp, 'C', 'windCtrl'),
+                    symbol.andOrNotWindCtrlLeft, symbol.andOrNotWindCtrlRight) : '无',
                   year_profit: statisticalInfo['score'],
                   max_back: statisticalInfo['drop'],
                   win_rate: statisticalInfo['win'],
@@ -333,15 +339,15 @@
         })
       },
       sortChange(param){
-        if (param.order === 'descending') {
-          this.geneticModels = this.geneticModels.sort(descObj(param.prop));
-        } else if (param.order === 'ascending') {
-          this.geneticModels = this.geneticModels.sort(ascObj(param.prop));
-        } else {
-          this.geneticModels = this.geneticModels.sort(descObj('time'));
-        }
+      if (param.order === 'descending') {
+        this.geneticModels = this.geneticModels.sort(descObj(param.prop));
+      } else if (param.order === 'ascending') {
+        this.geneticModels = this.geneticModels.sort(ascObj(param.prop));
+      } else {
+        this.geneticModels = this.geneticModels.sort(descObj('time'));
       }
     }
+  }
 
   }
 </script>

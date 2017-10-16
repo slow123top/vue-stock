@@ -22,7 +22,7 @@
     }
   }
 </script>
-<style scoped>
+<style>
   .not-found {
     font-size: 10rem;
     font-weight: bold;
@@ -34,5 +34,8 @@
 
   .not-found-description {
     font-size: 1.5rem;
+  }
+  .ivu-col .ivu-menu{
+    z-index:3
   }
 </style>

@@ -23,10 +23,12 @@
   </Row>
 </template>
 <script>
+  import {getRandomModel} from '../../api/api'
   export default {
     methods: {
       createModel(){
         this.$store.commit('EMPTY_INDEX');
+        getRandomModel(this.$store.state.selectedIndexs,this);
         this.$router.push('model');
       },
       myModel(){

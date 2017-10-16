@@ -4,7 +4,7 @@
 import axios from 'axios'
 //传递数据转换类
 import qs from 'qs'
-
+import {resolveIndicator} from './model.js'
 function toQs(param) {
   return qs.stringify(param);
 }
@@ -30,13 +30,31 @@ export const postRemoteReqTodo = (url, params) => {
 //测试远程调用 异步请求 get方法
 export const getRemoteReqTodo = (url, params, values) => {
   if (params.length !== 0) {
-    let a;
+    let a = '';
     for (let i = 0; i < params.length; i++) {
-      a = '&' + params[i] + '=' + values[i];
+      a = a+'&' + params[i] + '=' + values[i];
     }
     return axiosInstance.get(url + '?a=' + Math.random() + '&' + a.substring(1));
   }
   return axiosInstance.get(url + '?a=' + Math.random());
 };
+
+//创建模型获取随机默认模型  并解析出来
+export const getRandomModel = function (selectedIndicatorList,that) {
+  getRemoteReqTodo('/stock/randommodel', ['number','type'], [1,1]).then(res => {
+    let data =res.data;
+    let modelPara = data.modelStorages[0].modelPara;
+    // console.log(data);
+    that.$store.state.andOrNot = 'customize';
+    resolveIndicator(that.$store.state.selectedIndexs, modelPara,  that.$store.state.controller, that.$store.state.symbol);
+  })
+}
+
+//模型仓库
+// export const getModelStroage = function () {
+//   getRemoteReqTodo('/stock/modelstorage',[],[]).then(res=>{
+//     console.log(res);
+//   });
+// }
 
 

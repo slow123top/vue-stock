@@ -24,6 +24,7 @@ import Result from '../components/stock/Result'
 import MyModel from '../components/stock/MyModel'
 import Track from '../components/stock/Track'
 import History from '../components/stock/History'
+import ModelStorage from '../components/stock/ModelStroage.vue'
 // import GeneticTest from '../components/stock/GeneticTest'
 import GeneticTest from '../components/stock/GeneticTest'
 
@@ -44,6 +45,7 @@ import CompanyState from '../components/document/CompanyState'
 import Question from '../components/document/Question'
 import Guide from '../components/document/Guide'
 import About from '../components/document/About'
+import GeneticDoc from '../components/document/GeneticDoc'
 Vue.use(Router)
 const router = new Router({
   //创建路由
@@ -111,6 +113,10 @@ const router = new Router({
         {
           path: 'about',
           component: About
+        },
+        {
+          path: 'geneticdoc',
+          component: GeneticDoc
         }
         // {
         //   name: 'exemption',
@@ -139,6 +145,10 @@ const router = new Router({
         path: 'myModel',
         component: MyModel
       },
+        {
+          path: 'modelstorage',
+          component: ModelStorage
+        },
         {
           path: 'trackmodel',
           component: Track

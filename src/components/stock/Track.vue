@@ -1,7 +1,7 @@
 <template>
   <div>
-    <Modal v-model="myModelModal" :mask-closable="false" width="360">
-      <Spin fix size="large">
+    <Modal v-model="myModelModal" :mask-closable="false" :closable="false" width="360">
+      <Spin size="large">
         <Icon type="load-c" size=18
                                                        class="demo-spin-icon-load"
               style="line-height: 2rem;border-radius: 20px"></Icon>

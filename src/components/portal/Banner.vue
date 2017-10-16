@@ -36,7 +36,7 @@
   </div>
 </template>
 <script>
-  import {BASE_API_URL} from '../../api/api'
+  import {BASE_API_URL,getRandomModel} from '../../api/api'
   export default {
     data(){
       return {}
@@ -46,6 +46,7 @@
 //            创建模型
         if (this.$store.state.user.isLogin) {
           this.$store.commit('EMPTY_INDEX');
+          getRandomModel(this.$store.state.selectedIndexs,this);
           this.$router.push('/model');
         } else {
           this.$router.push('/login');

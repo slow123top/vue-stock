@@ -12,7 +12,17 @@
           <a class="m-children" @click="createModel">创建模型</a>
         </i-col>
         <i-col span="3">
-          <a class="m-children" @click="myModel">我的模型</a>
+          <Dropdown trigger="click" @on-click="useModel">
+            <a class="m-children" href="javascript:void(0)">
+              使用模型
+
+              <Icon type="arrow-down-b"></Icon>
+            </a>
+            <Dropdown-menu slot="list">
+              <Dropdown-item name="my-model">我的模型</Dropdown-item>
+              <Dropdown-item name="model-storage">模型仓库</Dropdown-item>
+            </Dropdown-menu>
+          </Dropdown>
         </i-col>
         <i-col span="3">
           <a class="m-children" @click="getTrackModel">实盘跟踪</a>
@@ -21,6 +31,9 @@
           <Dropdown trigger="click" @on-click="selectReacharge">
             <a class="m-children" href="javascript:void(0)">
               充值中心
+
+
+
               <Icon type="arrow-down-b"></Icon>
             </a>
             <Dropdown-menu slot="list">
@@ -33,10 +46,14 @@
           <Dropdown trigger="click" @on-click="selectHelp">
             <a class="m-children" href="javascript:void(0)">
               更多
+
+
+
               <Icon type="arrow-down-b"></Icon>
             </a>
             <Dropdown-menu slot="list">
               <Dropdown-item name="guide">新手指南</Dropdown-item>
+              <Dropdown-item name="intelligent">智能回测</Dropdown-item>
               <Dropdown-item name="question">常见问题</Dropdown-item>
               <Dropdown-item name="about">关于我们</Dropdown-item>
             </Dropdown-menu>
@@ -60,12 +77,16 @@
             </span>
             <Icon type="arrow-down-b"></Icon>
           </a>
-          <Dropdown-menu slot="list">
+          <Dropdown-menu slot="list" style="z-index: 999">
             <Dropdown-item name="personal-main">个人主页</Dropdown-item>
             <Dropdown-item name="recharge">充值点数</Dropdown-item>
             <Dropdown-item name="buycard">购买回测卡</Dropdown-item>
+            <Dropdown-item name="once">单次回测记录</Dropdown-item>
+            <Dropdown-item name="intelligent">智能回测记录</Dropdown-item>
             <Dropdown-item name="logout">
               注销
+
+
             </Dropdown-item>
           </Dropdown-menu>
         </Dropdown>
@@ -75,7 +96,7 @@
 </template>
 <script>
   import Login from './user/Login'
-  import {getRemoteReqTodo, BASE_API_URL} from '../api/api'
+  import {getRemoteReqTodo, BASE_API_URL, getRandomModel} from '../api/api'
   import {jumpLogin} from '../api/tools'
   export default{
     mounted(){
@@ -130,18 +151,13 @@
       createModel(){
         if (this.$store.state.user.isLogin) {
           this.$store.commit('EMPTY_INDEX');
+          getRandomModel(this.$store.state.selectedIndexs, this);
           this.$router.push('/model');
         } else {
           jumpLogin(this);
         }
       },
-      myModel(){
-        if (this.$store.state.user.isLogin) {
-          this.$router.push('/model/myModel');
-        } else {
-          jumpLogin(this);
-        }
-      },
+
       getTrackModel(){
 //          进入实盘跟踪
         if (this.$store.state.user.isLogin) {
@@ -157,6 +173,18 @@
       register(){
         this.$router.push('/register');
       },
+      useModel(name){
+        switch (name) {
+          case 'my-model':
+            this.$router.push('/model/myModel');
+            break;
+          case 'model-storage':
+            this.$router.push('/model/modelstorage');
+            break;
+          default:
+            break;
+        }
+      },
       selectReacharge(name){
         switch (name) {
           case 'point':
@@ -164,6 +192,8 @@
             break;
           case 'card':
             this.$router.push('/personalInfo/buycard');
+            break;
+          default:
             break;
         }
       },
@@ -175,11 +205,11 @@
           case 'personal-model':
             this.$router.push('/model/myModel');
             break;
-          case 'personal-history':
+          case 'once':
             this.$router.push('/model/history');
             break;
-          case 'personal-create':
-            this.$router.push('/model/newModel');
+          case 'intelligent':
+            this.$router.push('/model/genetictest');
             break;
           case 'recharge':
             this.$router.push('/personalInfo/recharge');
@@ -201,6 +231,8 @@
             location.href = BASE_API_URL + '/user/logout';
 //            this.$router.push('/portal');
             break;
+          default:
+            break;
         }
       },
       selectHelp(name){
@@ -210,6 +242,9 @@
             break;
           case 'guide':
             this.$router.push('/help/guide');
+            break;
+          case 'intelligent':
+            this.$router.push('/help/geneticdoc');
             break;
           case 'about':
             this.$router.push('/help/about');
@@ -235,15 +270,17 @@
     height: 4rem;
     background-color: #FFFFFF;
   }
-  .menu{
+
+  .menu {
     font-size: 1rem;
     color: #000000;
 
   }
 
-  a.m-children{
+  a.m-children {
     color: #495060;
   }
+
   img {
     width: 12rem;
     height: 3.5rem;
