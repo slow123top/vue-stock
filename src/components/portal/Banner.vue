@@ -21,13 +21,29 @@
       <el-carousel-item>
         <Row class="layout-banner2" type="flex" justify="center">
           <i-col span="24" style="text-align: center;font-size: 2rem;color: #FFFFFF;margin-bottom: 10rem">
-            <span style="font-family: sans-serif;font-size: 3rem;">单次回测卡</span><br>
-            <span style="font-size: 1.5rem">一次购买，无限回测，按年购买更有好礼享不停</span>
+            <span style="font-family: sans-serif;font-size: 3rem;">回测卡</span><br>
+            <span style="font-size: 1.5rem">单次回测不限量，智能回测量更多</span>
           </i-col>
           <i-col span="5" style="text-align: center">
             <Button type="primary" size="large"
                     style="width: 10rem;font-size: 1.2rem;background: transparent;border: 1px solid #ffffff"
                     @click="guide">了解详情
+            </Button>
+          </i-col>
+        </Row>
+      </el-carousel-item>
+      <el-carousel-item>
+        <Row class="layout-banner3" type="flex" justify="center">
+          <i-col span="24" style="text-align: center;font-size: 2rem;color: #FFFFFF;margin-bottom: 10rem">
+            <span style="font-family: sans-serif;font-size: 3rem;">注册福利</span><br>
+            <span style="font-size: 1.5rem">注册享好礼，智能回测天天送</span>
+          </i-col>
+          <i-col span="5" style="text-align: center">
+            <Button type="error" size="large" style="width: 10rem;font-size: 1.2rem" @click="createModel">智能回测
+            </Button>
+          </i-col>
+          <i-col span="5" style="text-align: center">
+            <Button size="large" style="width: 10rem;font-size: 1.2rem" @click="getMore">查看更多
             </Button>
           </i-col>
         </Row>
@@ -61,6 +77,10 @@
       },
       guide(){
         this.$router.push('/help/guide');
+      },
+//      查看更多智能回测
+      getMore(){
+        this.$router.push('/help/geneticdoc');
       }
     }
   }
@@ -76,6 +96,10 @@
   .layout-banner2 {
     @extend .layout-banner;
     background: url("../../img/banner2.png");
+  }
+  .layout-banner3 {
+    @extend .layout-banner;
+    background: url("../../img/banner3.png");
   }
 
   .slogan {

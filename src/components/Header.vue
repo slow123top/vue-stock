@@ -8,21 +8,28 @@
         <i-col span="3">
           <router-link to="/" style="color: #000000">首页</router-link>
         </i-col>
-        <i-col span="3" style="color: #000000">
-          <a class="m-children" @click="createModel">创建模型</a>
-        </i-col>
         <i-col span="3">
-          <Dropdown trigger="click" @on-click="useModel">
+          <Dropdown trigger="click" @on-click="createModel">
             <a class="m-children" href="javascript:void(0)">
-              使用模型
+              创建模型
+
 
               <Icon type="arrow-down-b"></Icon>
             </a>
             <Dropdown-menu slot="list">
-              <Dropdown-item name="my-model">我的模型</Dropdown-item>
-              <Dropdown-item name="model-storage">模型仓库</Dropdown-item>
+              <Dropdown-item name="once">单次回测</Dropdown-item>
+              <Dropdown-item name="intelligent">智能回测</Dropdown-item>
+              <Dropdown-item name="once-record">单次回测记录</Dropdown-item>
+              <Dropdown-item name="intelligent-record">智能回测记录</Dropdown-item>
             </Dropdown-menu>
           </Dropdown>
+
+        </i-col>
+        <i-col span="3" style="color: #000000">
+          <a class="m-children" @click="modelStorage">模型仓库</a>
+        </i-col>
+        <i-col span="3">
+          <a class="m-children" @click="myModel">我的模型</a>
         </i-col>
         <i-col span="3">
           <a class="m-children" @click="getTrackModel">实盘跟踪</a>
@@ -31,6 +38,7 @@
           <Dropdown trigger="click" @on-click="selectReacharge">
             <a class="m-children" href="javascript:void(0)">
               充值中心
+
 
 
 
@@ -46,6 +54,7 @@
           <Dropdown trigger="click" @on-click="selectHelp">
             <a class="m-children" href="javascript:void(0)">
               更多
+
 
 
 
@@ -81,10 +90,9 @@
             <Dropdown-item name="personal-main">个人主页</Dropdown-item>
             <Dropdown-item name="recharge">充值点数</Dropdown-item>
             <Dropdown-item name="buycard">购买回测卡</Dropdown-item>
-            <Dropdown-item name="once">单次回测记录</Dropdown-item>
-            <Dropdown-item name="intelligent">智能回测记录</Dropdown-item>
             <Dropdown-item name="logout">
               注销
+
 
 
             </Dropdown-item>
@@ -148,16 +156,42 @@
       }
     },
     methods: {
-      createModel(){
+      createModel(name){
         if (this.$store.state.user.isLogin) {
-          this.$store.commit('EMPTY_INDEX');
-          getRandomModel(this.$store.state.selectedIndexs, this);
-          this.$router.push('/model');
+          switch (name) {
+            case 'once':
+              this.$store.commit('EMPTY_INDEX');
+              getRandomModel(this.$store.state.selectedIndexs, this);
+              this.$router.push('/model');
+              break;
+            case 'intelligent':
+              this.$store.commit('EMPTY_INDEX');
+              getRandomModel(this.$store.state.selectedIndexs, this);
+              this.$router.push('/model');
+              break;
+            case 'once-record':
+              this.$router.push('/model/history');
+              break;
+            case 'intelligent-record':
+              this.$router.push('/model/genetictest');
+              break;
+            default:
+              break;
+          }
         } else {
           jumpLogin(this);
         }
       },
-
+      modelStorage(){
+        this.$router.push('/model/modelstorage');
+      },
+      myModel(){
+        if (this.$store.state.user.isLogin) {
+          this.$router.push('/model/myModel');
+        } else {
+          jumpLogin(this);
+        }
+      },
       getTrackModel(){
 //          进入实盘跟踪
         if (this.$store.state.user.isLogin) {
@@ -193,8 +227,7 @@
           case 'card':
             this.$router.push('/personalInfo/buycard');
             break;
-          default:
-            break;
+
         }
       },
       selectMenu(name){
@@ -204,12 +237,6 @@
             break;
           case 'personal-model':
             this.$router.push('/model/myModel');
-            break;
-          case 'once':
-            this.$router.push('/model/history');
-            break;
-          case 'intelligent':
-            this.$router.push('/model/genetictest');
             break;
           case 'recharge':
             this.$router.push('/personalInfo/recharge');
@@ -230,8 +257,6 @@
 //            getRemoteReqTodo('/user/logout',[],[]);
             location.href = BASE_API_URL + '/user/logout';
 //            this.$router.push('/portal');
-            break;
-          default:
             break;
         }
       },

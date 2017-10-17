@@ -6,7 +6,7 @@
           <Icon type="load-c" size=18
 
 
-                                  class="demo-spin-icon-load"
+                                     class="demo-spin-icon-load"
                 style="line-height: 2rem;border-radius: 20px"></Icon>
           <!--<div style="font-size: 1rem;color: #000">{{runMessage}}</div>-->
 
@@ -15,6 +15,25 @@
       <div style="font-size: 1rem;color: #000;text-align: center">{{runMessage}}</div>
       <div slot="footer" style="font-size: 1rem">
         <Button size="large" type="error" long v-if="!isRunning" @click="cancelTest">取消回测</Button>
+        <!--<Button size="large" type="error" long @click="cancelTest">取消回测</Button>-->
+      </div>
+    </Modal>
+    <!--取消智能回测-->
+    <Modal v-model="geneticWaitingModal" :mask-closable="false" :closable="false" width="360">
+      <div slot="header">
+        <Spin size="large">
+          <Icon type="load-c" size=18
+
+
+                                     class="demo-spin-icon-load"
+                style="line-height: 2rem;border-radius: 20px"></Icon>
+          <!--<div style="font-size: 1rem;color: #000">{{runMessage}}</div>-->
+
+        </Spin>
+      </div>
+      <div style="font-size: 1rem;color: #000;text-align: center">正在为您获取计算资源，请耐心等待...</div>
+      <div slot="footer" style="font-size: 1rem">
+        <Button size="large" type="error" long @click="cancelGeneticTest">取消智能回测</Button>
         <!--<Button size="large" type="error" long @click="cancelTest">取消回测</Button>-->
       </div>
     </Modal>
@@ -30,8 +49,14 @@
 
 
 
+
+
+
         <router-link to="/personalInfo/buycard" style="font-weight: bold;">购买</router-link>
         此次回测区间的回测卡,您将消费<span style="color: #ff0000;font-weight: bold">{{needPoints}}</span>点数来完成本次回测,是否继续?
+
+
+
 
 
 
@@ -49,6 +74,9 @@
 
 
 
+
+
+
       </div>
       <p style="font-size: 1rem;">您没有本次回测区间的回测卡，请
 
@@ -56,8 +84,14 @@
 
 
 
+
+
+
         <router-link to="/personalInfo/buycard">购买回测卡</router-link>
       <p style="font-size: 1rem;">本次回测需要<span style="color: #ff0000;font-weight: bold">{{needPoints}}</span>点数，您的点数已不足，请
+
+
+
 
 
 
@@ -99,6 +133,9 @@
 
 
 
+
+
+
         </Button>
       </div>
     </Modal>
@@ -130,6 +167,9 @@
                                         <br>其中左右括号均为英文括号，后三种符号依次表示“并且”、“或者”、“剔除掉”的意思；
                                         <br>入市、出市和风控是分开处理的；
                                         <br>二次筛选指标不介入该与或非组合计算。
+
+
+
 
 
 
@@ -190,6 +230,9 @@
 
 
 
+
+
+
                           </i-option>
                         </i-select>
                       </Tooltip>
@@ -219,6 +262,9 @@
 
 
 
+
+
+
                         </i-option>
                       </i-select>
                     </Form-item>
@@ -240,6 +286,9 @@
                                 @on-change="getSelectIndex(select_2.value,indexs)">
                         <i-option v-for="option2 in select_2.optionList" :value="option2.value" :key="option2">
                           {{ option2.label }}
+
+
+
 
 
 
@@ -437,7 +486,7 @@
                 <Form-item style="margin-bottom: .5rem">
                   <el-popover
                     ref="popover"
-                    placement="top"
+                    placement="bottom"
                     title="单次回测说明"
                     width="600"
                     trigger="click">
@@ -454,8 +503,11 @@
                     <Button type="success" size="large" @click="run('formValidate')" :disabled="!canRun"
                             style="font-size:1rem">单次回测
 
+
+
+
                     </Button>
-                    <Button type="success" size="large" icon="arrow-up-b" v-popover:popover
+                    <Button type="success" size="large" icon="arrow-down-b" v-popover:popover
                             style="font-size:1rem;opacity: .9"></Button>
                   </Button-group>
                 </Form-item>
@@ -465,7 +517,7 @@
                 <Form-item style="margin-bottom: .5rem">
                   <el-popover
                     ref="popover1"
-                    placement="top"
+                    placement="bottom"
                     title="智能回测说明"
                     width="600"
                     trigger="click">
@@ -481,8 +533,11 @@
                   <Button-group>
                     <Button type="success" size="large" @click="geneticTest" :disabled="!canRun" style="font-size:1rem">智能回测
 
+
+
+
                     </Button>
-                    <Button type="success" size="large" icon="arrow-up-b" v-popover:popover1
+                    <Button type="success" size="large" icon="arrow-down-b" v-popover:popover1
                             style="font-size:1rem;opacity: .9"></Button>
                   </Button-group>
                 </Form-item>
@@ -682,6 +737,7 @@
         }
       };
       return {
+        geneticWaitingModal: false,
         geneticMessage: '',
         primaryTimes: 1,
         intermediateTimes: 0,
@@ -1122,6 +1178,22 @@
 
 //        getRunStatus();
       },
+//      正在排队时，取消智能回测  通知后端停止
+      cancelGeneticTest(){
+        const that = this;
+        postRemoteReqTodo('/stock/genetic/cancelgeneticcalculation', {}).then(res => {
+          let data = res.data;
+          that.geneticWaitingModal = false;
+          clearTimeout(that.geneticSetTime);
+          if (data.status === 'SUCCESS') {
+            that.$message.success('您已成功取消本次智能回测');
+          } else if (data.status === 'USER_NOT_FOUND') {
+            jumpLogin(that);
+          } else {
+            that.$message.error(data.status);
+          }
+        })
+      },
 //      改变智能回测的等级时   提示给用户不同的情况
       changeGeneticLevel(level){
         const that = this;
@@ -1257,17 +1329,22 @@
           }).then(res => {
             //首先清空我的模型  再重新获取
             let data = res.data;
+            that.geneticModal =false;
             if (data.status === 'SUCCESS') {
+              that.geneticWaitingModal = false;
               clearTimeout(that.geneticSetTime);
               that.$router.push('/model/genetictest');
               that.geneticLoading = false;
             } else if (data.status === 'WAITING') {
+              that.geneticWaitingModal = true;
 //            若没有计算资源  每隔2s请求一次
               that.geneticSetTime = setTimeout(geneticRun, 2000);
             } else if (data.status === 'USER_NOT_FOUND') {
+              that.geneticWaitingModal = false;
               loginTimeoutPrompt(that);
               that.geneticLoading = false;
             } else {
+              that.geneticWaitingModal = false;
               clearTimeout(that.geneticSetTime);
               that.$message.error(data.message);
               that.geneticLoading = false;
