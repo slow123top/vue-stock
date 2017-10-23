@@ -30,6 +30,10 @@
           <div>空仓占比</div>
           <div :style="profitStyle[isEqualZero(statisticalInfo[4].replace('%',''))]">{{statisticalInfo[4]}}</div>
         </i-col>
+        <i-col span="3" v-if="statisticalInfo.length >6">
+          <div>平均每日选股数量</div>
+          <div :style="profitStyle[isEqualZero(statisticalInfo[6].replace('%',''))]">{{statisticalInfo[6]}}</div>
+        </i-col>
       </Row>
     </i-col>
   </Row>

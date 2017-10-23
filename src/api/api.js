@@ -48,7 +48,7 @@ export const getRandomModel = function (selectedIndicatorList,that) {
     that.$store.state.andOrNot = 'customize';
     resolveIndicator(that.$store.state.selectedIndexs, modelPara,  that.$store.state.controller, that.$store.state.symbol);
   })
-}
+};
 
 //模型仓库
 // export const getModelStroage = function () {

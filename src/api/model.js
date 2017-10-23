@@ -89,7 +89,6 @@ export const resolveLocked = function (modelPara, selectedIndexs) {
   let windCtrlLock = [];
   if (modelPara.indexOf('[SELL]') !== -1) {
     outMarketLock = outMarketLock.concat(lockArr[1].split('-'));
-
   }
   if (modelPara.indexOf('[DAN_CON]') !== -1) {
     windCtrlLock = windCtrlLock.concat(lockArr[2].split('-'));
@@ -99,7 +98,63 @@ export const resolveLocked = function (modelPara, selectedIndexs) {
   for (let i = 0; i < selectedIndexs.length; i++) {
     selectedIndexs[i].locked = Number(lock[i]);
   }
-}
+};
+
+export const resolveParaLock = function (modelPara, selectedIndexs) {
+  let tempArr = [];
+  let indicator = {};
+  let lockStr = modelPara.substring(modelPara.indexOf('[LOCK]') + 6, modelPara.lastIndexOf('[LOCK]'));
+  let lockArr = lockStr.split('|');
+  let intoMarketLock = lockArr[0].split('-');
+  intoMarketLock.forEach(ele => {
+    tempArr.push(ele.split('_'));
+  });
+  let outMarketLock = [];
+  let windCtrlLock = [];
+  if (modelPara.indexOf('[SELL]') !== -1) {
+    outMarketLock = outMarketLock.concat(lockArr[1].split('-'));
+    outMarketLock.forEach(ele => {
+      tempArr.push(ele.split('_'));
+    });
+  }
+  if (modelPara.indexOf('[DAN_CON]') !== -1) {
+    windCtrlLock = windCtrlLock.concat(lockArr[2].split('-'));
+    windCtrlLock.forEach(ele => {
+      tempArr.push(ele.split('_'));
+    });
+  }
+  let secondLock = lockArr[3].split('-');
+  secondLock.forEach(ele => {
+    tempArr.push(ele.split('_'));
+  });
+  for (let i = 0; i < selectedIndexs.length; i++) {
+    indicator = selectedIndexs[i];
+    if (indicator.selects.length !== 0) {
+      for (let j = 0; j < indicator.selects.length; j++) {
+        selectedIndexs[i].selects[j].locked = Number(tempArr[i][j]);
+      }
+      tempArr[i].splice(0, indicator.selects.length);
+    }
+    if (indicator.params.length !== 0) {
+      for (let j = 0; j < indicator.params.length; j++) {
+        selectedIndexs[i].params[j].locked = Number(tempArr[i][j]);
+      }
+      tempArr[i].splice(0, indicator.params.length);
+    }
+    if (indicator.params2.length !== 0) {
+      for (let j = 0; j < indicator.params2.length; j++) {
+        selectedIndexs[i].params2[j].locked = Number(tempArr[i][j]);
+      }
+      tempArr[i].splice(0, indicator.params2.length);
+    }
+    if (indicator.radios.length !== 0) {
+      for (let j = 0; j < indicator.radios.length; j++) {
+        selectedIndexs[i].radios[j].locked = Number(tempArr[i][j]);
+      }
+      tempArr[i].splice(0, indicator.radios.length);
+    }
+  }
+};
 function notIncludeRelationship(model, includeLogo) {
   let a;
   if (includeLogo === '[IN]') {
@@ -110,18 +165,7 @@ function notIncludeRelationship(model, includeLogo) {
     a = model.modelPara.substring(model.modelPara.indexOf('[DAN_CON]') + 9, model.modelPara.lastIndexOf('[DAN_CON]'));
   }
   return '(' + a + ')';
-}
-function includeRelationship(model, includeLogo) {
-  let a;
-  if (includeLogo === '[IN]') {
-    a = model.modelPara.substring(model.modelPara.indexOf('[IN]') + 4, model.modelPara.lastIndexOf('[IN]'));
-  } else if (includeLogo === '[SELL]') {
-    a = model.modelPara.substring(model.modelPara.indexOf('[SELL]') + 6, model.modelPara.lastIndexOf('[SELL]'));
-  } else if (includeLogo === '[DAN_CON]') {
-    a = model.modelPara.substring(model.modelPara.indexOf('[DAN_CON]') + 9, model.modelPara.lastIndexOf('[DAN_CON]'));
-  }
-  return a + model.nextRelationship;
-}
+};
 function str(leftBracket, rightBracket, arr, includeLogo) {
   let tempA = '';
   let end = 0;
@@ -163,6 +207,121 @@ function str(leftBracket, rightBracket, arr, includeLogo) {
   });
   tempA = tempA.substring(0, tempA.lastIndexOf(arr[end].nextRelationship));
   return tempA === '' ? tempA : leftBracket + tempA + rightBracket;
+};
+//组合参数锁定功能
+function combineParaLock(indicator) {
+  let lock = '';
+  indicator.selects.forEach(ele => {
+    lock += ele.locked + '_';
+  });
+  indicator.params.forEach(ele => {
+    lock += ele.locked + '_';
+  });
+  indicator.params2.forEach(ele => {
+    lock += ele.locked + '_';
+  });
+  indicator.radios.forEach(ele => {
+    lock += ele.locked + '_';
+  });
+  return lock.substring(0, lock.length - 1);
+
+};
+export const combineLockStr = function (formValidate) {
+  let arr = [];
+  let locked = '';
+  let intoMarketLocked = '';
+  let outMarketLocked = '';
+  let windCtrlLocked = '';
+  let secondLocked = '';
+  let temp = [];
+  let indicatorStr = '';
+//  入市指标
+  formValidate.intoMarketListTemp.forEach((ele) => {
+    indicatorStr = ele.modelPara;
+    if (ele.className === '') {
+      //  有嵌套模型的状况下 对嵌套模型里面的每一个指标的每一个参数进行锁定组合
+      arr = indicatorStr.substring(indicatorStr.indexOf('[IN]') + 4, indicatorStr.lastIndexOf('[IN]')).replace(/\(|\)/g, '').split(/\&|\||\$/);
+      for (let i = 0; i < arr.length; i++) {
+        temp = arr[i].substring(arr[i].indexOf('-') + 1).split('_');
+        for (let j = 0; j < temp.length; j++) {
+          intoMarketLocked += ele.locked + '_';
+        }
+        intoMarketLocked += intoMarketLocked + '-';
+      }
+    } else {
+      //单个指标
+      intoMarketLocked += combineParaLock(ele) + '-';
+    }
+  });
+  intoMarketLocked = intoMarketLocked.substring(0, intoMarketLocked.length - 1);
+//  出市指标
+  if (formValidate.outMarketListTemp.length === 0) {
+    outMarketLocked = '1';
+  } else {
+    formValidate.outMarketListTemp.forEach((ele) => {
+      indicatorStr = ele.modelPara;
+      if (ele.className === '') {
+        if (indicatorStr.indexOf('[SELL]') !== -1) {
+          arr = indicatorStr.substring(indicatorStr.indexOf('[SELL]') + 6, indicatorStr.lastIndexOf('[SELL]')).replace(/\(|\)/g, '').split(/\&|\||\$/);
+          for (let i = 0; i < arr.length; i++) {
+            temp = arr[i].substring(arr[i].indexOf('-') + 1).split('_');
+            for (let j = 0; j < temp.length; j++) {
+              outMarketLocked += ele.locked + '_';
+            }
+            outMarketLocked += outMarketLocked + '-';
+          }
+        }
+      } else {
+        outMarketLocked += combineParaLock(ele) + '-';
+      }
+    });
+    outMarketLocked = outMarketLocked === '' ? '1' : outMarketLocked.substring(0, outMarketLocked.length - 1);
+  }
+//  风控指标
+  if (formValidate.windCtrlListTemp.length === 0) {
+    windCtrlLocked = '1';
+  } else {
+    formValidate.windCtrlListTemp.forEach((ele) => {
+      indicatorStr = ele.modelPara;
+      if (ele.className === '') {
+        if (indicatorStr.indexOf('[DAN_CON]') !== -1) {
+          arr = indicatorStr.substring(indicatorStr.indexOf('[DAN_CON]') + 9, indicatorStr.lastIndexOf('[DAN_CON]')).replace(/\(|\)/g, '').split(/\&|\||\$/);
+          for (let i = 0; i < arr.length; i++) {
+            temp = arr[i].substring(arr[i].indexOf('-') + 1).split('_');
+            for (let j = 0; j < temp.length; j++) {
+              windCtrlLocked += ele.locked + '_';
+            }
+            windCtrlLocked += windCtrlLocked + '-';
+          }
+        }
+      } else {
+        windCtrlLocked += combineParaLock(ele) + '-';
+      }
+    });
+    windCtrlLocked = windCtrlLocked === '' ? '1' : windCtrlLocked.substring(0, windCtrlLocked.length - 1);
+  }
+//  二次筛选指标
+  formValidate.secondListTemp.forEach((ele) => {
+    indicatorStr = ele.modelPara;
+    if (ele.className === '') {
+      //  有嵌套模型的状况下
+      arr = indicatorStr.substring(indicatorStr.indexOf('[SECOND]') + 8, indicatorStr.lastIndexOf('[SECOND]')).replace(/\(|\)/g, '').split(/\&|\||\$/);
+      for (let i = 0; i < arr.length; i++) {
+        temp = arr[i].substring(arr[i].indexOf('-') + 1).split('_');
+        for (let j = 0; j < temp.length; j++) {
+          secondLocked += ele.locked + '_';
+        }
+        secondLocked += secondLocked + '-'
+      }
+    } else {
+      //单个指标
+      secondLocked += combineParaLock(ele) + '-';
+    }
+    secondLocked = secondLocked.substring(0, secondLocked.length - 1);
+  });
+  locked += intoMarketLocked + '|' + outMarketLocked + '|' + windCtrlLocked + '|' + secondLocked;
+  return locked;
+
 };
 //日期格式化
 Date.prototype.format = function (fmt) { //author: meizz
@@ -230,7 +389,8 @@ const splitABC = (para, selectedIndexs, symbol) => {
       value: index.indexValue[0].toString() < 9 ? index.indexValue[0] / 1000000 : index.indexValue[0] / 100000000,
       validator: myModelIndexs[index.indexName].params[0].validator,
       errorType: 0,
-      showMessage: true
+      showMessage: true,
+      locked: 0
     });
     // 第一个select
     selectedIndexs[selectedIndexs.length - 1].select1.push({
@@ -265,8 +425,9 @@ const splitABC = (para, selectedIndexs, symbol) => {
       value: index.indexValue[1].toString() < 9 ? index.indexValue[1] / 1000000 : index.indexValue[1] / 100000000,
       validator: myModelIndexs[index.indexName].params2[0].validator,
       errorType: 0,
-      showMessage: true
-    })
+      showMessage: true,
+      locked: 0
+    });
 
     // 第二个select
 
@@ -301,7 +462,8 @@ const splitABC = (para, selectedIndexs, symbol) => {
     selectedIndexs[selectedIndexs.length - 1].selects.push({
       value: index.indexValue[0],
       label: myModelIndexs[index.indexName].selects[0].label,
-      optionList: []
+      optionList: [],
+      locked: 0
     });
     for (let t = 0; t < myModelIndexs[index.indexName].selects[0].optionList.length; t++) {
       const optionLists = myModelIndexs[index.indexName].selects[0].optionList;
@@ -317,7 +479,8 @@ const splitABC = (para, selectedIndexs, symbol) => {
       value: index.indexValue[1],
       validator: myModelIndexs[index.indexName].params[0].validator,
       errorType: 0,
-      showMessage: true
+      showMessage: true,
+      locked: 0
     });
     //添加C0001 radios
     selectedIndexs[selectedIndexs.length - 1].radios.push({
@@ -328,7 +491,8 @@ const splitABC = (para, selectedIndexs, symbol) => {
       label2: myModelIndexs[index.indexName].radios[0].label2,
       value2: myModelIndexs[index.indexName].radios[0].value2,
       label3: myModelIndexs[index.indexName].radios[0].threeFlag ? myModelIndexs[index.indexName].radios[0].label3 : '',
-      value3: myModelIndexs[index.indexName].radios[0].threeFlag ? myModelIndexs[index.indexName].radios[0].value3 : ''
+      value3: myModelIndexs[index.indexName].radios[0].threeFlag ? myModelIndexs[index.indexName].radios[0].value3 : '',
+      locked: 0
     })
   } else {
     if (myModelIndexs[index.indexName].params.length !== 0) {
@@ -341,7 +505,8 @@ const splitABC = (para, selectedIndexs, symbol) => {
           value: index.indexValue[j],
           validator: myModelIndexs[index.indexName].params[j].validator,
           errorType: 0,
-          showMessage: true
+          showMessage: true,
+          locked: 0
         });
         // console.log(myModelIndexs[index.indexName]);
       }
@@ -356,7 +521,8 @@ const splitABC = (para, selectedIndexs, symbol) => {
         label2: myModelIndexs[index.indexName].radios[0].label2,
         value2: myModelIndexs[index.indexName].radios[0].value2,
         label3: myModelIndexs[index.indexName].radios[0].threeFlag ? myModelIndexs[index.indexName].radios[0].label3 : '',
-        value3: myModelIndexs[index.indexName].radios[0].threeFlag ? myModelIndexs[index.indexName].radios[0].value3 : ''
+        value3: myModelIndexs[index.indexName].radios[0].threeFlag ? myModelIndexs[index.indexName].radios[0].value3 : '',
+        locked: 0
       })
     }
   }
@@ -521,7 +687,6 @@ export const combineIndicator = (formValidate, ctrl) => {
 
   }
 //  二次筛选指标
-//   secondComb =
   formValidate.secondListTemp.forEach((ele) => {
     if (!ele.params.length && !ele.radios.length) {
       secondComb += ele.className + '-0';
@@ -540,7 +705,7 @@ export const combineIndicator = (formValidate, ctrl) => {
       secondComb = secondComb.substring(0, secondComb.length - 1);
     }
   });
-  locked = getLockedLogo(formValidate);
+  locked = combineLockStr(formValidate);
 //  最后返回组合的字符串
   return '[NAME]' + ctrl.modelName + '[NAME]' + '[IN]' + intoMarketComb + '[IN]' + '[OUT]'
     + controller + '[OUT]' + '[SECOND]' + secondComb + '[SECOND]' + (windCtrlComb === '' ? '' : '[DAN_CON]' + windCtrlComb + '[DAN_CON]')

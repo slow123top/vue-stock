@@ -1,6 +1,6 @@
 <template>
   <Row type="flex" justify="center" style="padding: 1rem 20rem;background-color: #333;">
-    <i-col span="4">
+    <i-col :xs="5" :sm="5" :lg="4">
       <div class="f-title">
         关于
       </div>
@@ -13,7 +13,7 @@
         </li>
       </ul>
     </i-col>
-    <i-col span="4">
+    <i-col :xs="5" :sm="5" :lg="4">
       <div class="f-title">
         帮助中心
       </div>
@@ -26,8 +26,7 @@
         </li>
       </ul>
     </i-col>
-    <i-col span="8">
-
+    <i-col :xs="14" :sm="14" :lg="4">
       <Row type="flex" justify="start">
         <i-col span="10">
           <div class="f-title">关注我们</div>
@@ -43,7 +42,7 @@
         </i-col>
       </Row>
     </i-col>
-    <i-col span="16"
+    <i-col :xs="24" :sm="24" :lg="16"
            style="border-top: 1px solid #fff;color:#797a8d;font-size: 0.875rem;padding:.5rem 0;margin-top: 1rem">
       <span>&copy 2016-2017 qiantoulianghua.com 版权所有</span>
       <a href="http://www.miibeian.gov.cn/" target="_blank">鲁ICP备17005873号</a>

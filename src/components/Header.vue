@@ -1,9 +1,9 @@
 <template>
   <Row type="flex" justify="space-between" style="height: 4rem;border-bottom: 1px solid #e3e8ee">
-    <i-col span="4" offset="2">
+    <i-col :xs="1" :sm="3" :lg="4" offset="2">
       <router-link to="/portal"><img src="../img/logo.png" alt="千投量化"></router-link>
     </i-col>
-    <i-col span="12" style="padding: 1rem 0">
+    <i-col :xs="17" :sm="16" :lg="12" style="padding: 1rem 0">
       <Row class="menu" type="flex" justify="end">
         <i-col span="3">
           <router-link to="/" style="color: #000000">首页</router-link>
@@ -12,8 +12,6 @@
           <Dropdown trigger="click" @on-click="createModel">
             <a class="m-children" href="javascript:void(0)">
               创建模型
-
-
               <Icon type="arrow-down-b"></Icon>
             </a>
             <Dropdown-menu slot="list">
@@ -70,7 +68,7 @@
         </i-col>
       </Row>
     </i-col>
-    <i-col span="5" style="padding: .5rem 0">
+    <i-col :xs="3" :sm="3" :lg="5" style="padding: .5rem 0">
       <Button type="primary" size="large" style="width: 5rem" @click="login" v-if="!isLogin">登录</Button>
       <Button size="large" style="width: 5rem" @click="register" v-if="!isLogin">注册</Button>
       <!--我的点数-->

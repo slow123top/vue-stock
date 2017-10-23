@@ -6,7 +6,7 @@
           <Icon type="load-c" size=18
 
 
-                                     class="demo-spin-icon-load"
+                                            class="demo-spin-icon-load"
                 style="line-height: 2rem;border-radius: 20px"></Icon>
           <!--<div style="font-size: 1rem;color: #000">{{runMessage}}</div>-->
 
@@ -25,7 +25,7 @@
           <Icon type="load-c" size=18
 
 
-                                     class="demo-spin-icon-load"
+                                            class="demo-spin-icon-load"
                 style="line-height: 2rem;border-radius: 20px"></Icon>
           <!--<div style="font-size: 1rem;color: #000">{{runMessage}}</div>-->
 
@@ -52,8 +52,22 @@
 
 
 
+
+
+
+
+
+
+
         <router-link to="/personalInfo/buycard" style="font-weight: bold;">购买</router-link>
         此次回测区间的回测卡,您将消费<span style="color: #ff0000;font-weight: bold">{{needPoints}}</span>点数来完成本次回测,是否继续?
+
+
+
+
+
+
+
 
 
 
@@ -77,6 +91,13 @@
 
 
 
+
+
+
+
+
+
+
       </div>
       <p style="font-size: 1rem;">您没有本次回测区间的回测卡，请
 
@@ -87,8 +108,22 @@
 
 
 
+
+
+
+
+
+
+
         <router-link to="/personalInfo/buycard">购买回测卡</router-link>
       <p style="font-size: 1rem;">本次回测需要<span style="color: #ff0000;font-weight: bold">{{needPoints}}</span>点数，您的点数已不足，请
+
+
+
+
+
+
+
 
 
 
@@ -136,6 +171,13 @@
 
 
 
+
+
+
+
+
+
+
         </Button>
       </div>
     </Modal>
@@ -167,6 +209,13 @@
                                         <br>其中左右括号均为英文括号，后三种符号依次表示“并且”、“或者”、“剔除掉”的意思；
                                         <br>入市、出市和风控是分开处理的；
                                         <br>二次筛选指标不介入该与或非组合计算。
+
+
+
+
+
+
+
 
 
 
@@ -221,7 +270,7 @@
                     <Form-item v-for="(select,index) in item.selects"
                                :prop="'selectedIndexs.'+indexs+'.selects.'+index+'.value'" :label-width="5"
                                :key="select" style="float: left;margin: 0">
-                      <Tooltip :content="select.label" placement="left">
+                      <el-tooltip :content="select.label" :enterable="false" placement="left">
                         <i-select v-model="select.value" filterable style="width:15rem">
                           <i-option v-for="option in select.optionList" :value="option.value" :key="option">
                             {{ option.label }}
@@ -235,18 +284,31 @@
 
                           </i-option>
                         </i-select>
-                      </Tooltip>
+                      </el-tooltip>
+                      <Button v-if="!select.locked" size="small" icon="ios-unlocked-outline"
+                              @click="lockPara(indexs,index,'selects')"></Button>
+                      <Button v-else size="small" icon="locked" @click="unlockPara(indexs,index,'selects')"></Button>
+
                     </Form-item>
                     <Form-item v-for="(param,index) in item.params"
                                :prop="'selectedIndexs.'+indexs+'.params.'+index+'.value'" :label-width="5"
                                :rules="param.validator" :key="param" style="float: left;margin: 0;font-size:1rem"
                                :show-message="param.showMessage">
-                      <Tooltip :content="param.label" placement="left">
+                      <el-tooltip :content="param.label" :enterable="false" placement="left">
                         <i-input type="text" v-model="param.value"
                                  style="width: 5rem;padding: 0;text-align: center;"
                                  @on-blur="getParentIndex(indexs,index)">
+                          <!--<i-select size="small" v-model="select33" slot="append" style="width: 3rem">-->
+                          <!--<i-option value="0">锁</i-option>-->
+                          <!--<i-option value="1">不锁</i-option>-->
+                          <!--</i-select>-->
+                          <Button v-if="!param.locked" slot="append" type="primary" size="small"
+                                  icon="ios-unlocked-outline"
+                                  @click="lockPara(indexs,index,'params')"></Button>
+                          <Button v-else slot="append" size="small" icon="locked"
+                                  @click="unlockPara(indexs,index,'params')"></Button>
                         </i-input>
-                      </Tooltip>
+                      </el-tooltip>
                     </Form-item>
                     <Form-item v-for="(select_1,index) in item.select1"
                                :prop="'selectedIndexs.'+indexs+'.select1.'+index+'.value'" :label-width="5"
@@ -263,8 +325,6 @@
 
 
 
-
-
                         </i-option>
                       </i-select>
                     </Form-item>
@@ -272,11 +332,17 @@
                                :prop="'selectedIndexs.'+indexs+'.params2.'+index+'.value'" :label-width="5"
                                :rules="param_2.validator" :key="param_2" :show-message="param_2.showMessage"
                                style="float: left;margin: 0">
-                      <Tooltip :content="param_2.label" placement="left">
+                      <el-tooltip :content="param_2.label" :enterable="false" placement="left">
                         <i-input type="text" v-model="param_2.value"
                                  style="width: 5rem;padding: 0;text-align: center"
-                                 @on-blur="getParentIndex(indexs,index)"></i-input>
-                      </Tooltip>
+                                 @on-blur="getParentIndex(indexs,index)">
+                          <Button v-if="!param_2.locked" slot="append" type="primary" size="small"
+                                  icon="ios-unlocked-outline"
+                                  @click="lockPara(indexs,index,'params2')"></Button>
+                          <Button v-else slot="append" size="small" icon="locked"
+                                  @click="unlockPara(indexs,index,'params2')"></Button>
+                        </i-input>
+                      </el-tooltip>
                     </Form-item>
                     <Form-item v-for="(select_2,index) in item.select2"
                                :prop="'selectedIndexs.'+indexs+'.select2.'+index+'.value'" :label-width="5"
@@ -286,11 +352,6 @@
                                 @on-change="getSelectIndex(select_2.value,indexs)">
                         <i-option v-for="option2 in select_2.optionList" :value="option2.value" :key="option2">
                           {{ option2.label }}
-
-
-
-
-
 
 
 
@@ -304,11 +365,14 @@
                         <Radio :label="radio.value2">{{radio.label2}}</Radio>
                         <Radio v-if="radio.threeFlag" :label="radio.value3">{{radio.label3}}</Radio>
                       </Radio-group>
+                      <Button v-if="!radio.locked" size="small" icon="ios-unlocked-outline"
+                              @click="lockPara(indexs,index,'radios')"></Button>
+                      <Button v-else size="small" icon="locked" @click="unlockPara(indexs,index,'radios')"></Button>
                     </Form-item>
                     <!-- <Button type="primary" shape="circle" icon="ios-search"></Button> -->
                     <Button type="text" shape="circle" size="large" style="float: right" icon="close"
                             @click="handleRemove(indexs)"></Button>
-                    <el-tooltip v-if="!item.locked" class="item" effect="dark"
+                    <el-tooltip v-if="item.className===''&&!item.locked" class="item" effect="dark"
                                 content="该锁定仅用于智能回测锁定指标参数" placement="top" :enterable="false" style="float: right">
                       <el-button type="text" shape="circle" icon="my-unlock" @click="lockIndicator(indexs)"
                                  style="color: #000000"></el-button>
@@ -506,6 +570,13 @@
 
 
 
+
+
+
+
+
+
+
                     </Button>
                     <Button type="success" size="large" icon="arrow-down-b" v-popover:popover
                             style="font-size:1rem;opacity: .9"></Button>
@@ -532,6 +603,13 @@
                   </el-popover>
                   <Button-group>
                     <Button type="success" size="large" @click="geneticTest" :disabled="!canRun" style="font-size:1rem">智能回测
+
+
+
+
+
+
+
 
 
 
@@ -571,7 +649,9 @@
     resolveIndicator,
     classifyIndicator,
     indicatorToDes,
-    resolveLocked
+    resolveLocked,
+    combineLockStr,
+    resolveParaLock
   } from '../../api/model'
   //  远程调用接口
   import {postRemoteReqTodo, getRemoteReqTodo, getRandomModel} from '../../api/api'
@@ -639,7 +719,7 @@
             that.$store.state.andOrNot = 'customize';
             resolveIndicator(that.$store.state.selectedIndexs, getgeneticModel[0].modelPara, that.$store.state.controller, that.formValidate);
             if (getgeneticModel[0].modelPara.indexOf('[LOCK]') !== -1) {
-              resolveLocked(getgeneticModel[0].modelPara, that.formValidate.selectedIndexs);
+              resolveParaLock(getgeneticModel[0].modelPara, that.formValidate.selectedIndexs);
             }
           } else {
             that.$message.error('您的模型已不存在，重建失败，请您稍后重试');
@@ -737,6 +817,7 @@
         }
       };
       return {
+        select33: '0',
         geneticWaitingModal: false,
         geneticMessage: '',
         primaryTimes: 1,
@@ -992,6 +1073,7 @@
             } else if (!isBracketBalance(windCtrlStr)) {
               this.windCtrlCanRun = 0;
             } else {
+//              console.log(combineLockStr(that.formValidate));
               //                  判断自定义的指标之间的关系格式是否正确
               //              满足回测条件  开始回测
               that.modal = true;
@@ -1184,6 +1266,7 @@
         postRemoteReqTodo('/stock/genetic/cancelgeneticcalculation', {}).then(res => {
           let data = res.data;
           that.geneticWaitingModal = false;
+          that.geneticLoading = false;
           clearTimeout(that.geneticSetTime);
           if (data.status === 'SUCCESS') {
             that.$message.success('您已成功取消本次智能回测');
@@ -1317,6 +1400,7 @@
         const that = this;
         that.geneticLoading = true;
         let modelPara = combineIndicator(that.formValidate, that.$store.state.controller);
+        console.log(modelPara);
         let geneticLevel = [300, 5000, 20000];
         let startDate = this.$store.state.controller.backStart;
         let endDate = this.$store.state.controller.backEnd;
@@ -1329,12 +1413,12 @@
           }).then(res => {
             //首先清空我的模型  再重新获取
             let data = res.data;
-            that.geneticModal =false;
+            that.geneticModal = false;
+            that.geneticLoading = false;
             if (data.status === 'SUCCESS') {
               that.geneticWaitingModal = false;
               clearTimeout(that.geneticSetTime);
               that.$router.push('/model/genetictest');
-              that.geneticLoading = false;
             } else if (data.status === 'WAITING') {
               that.geneticWaitingModal = true;
 //            若没有计算资源  每隔2s请求一次
@@ -1342,12 +1426,10 @@
             } else if (data.status === 'USER_NOT_FOUND') {
               that.geneticWaitingModal = false;
               loginTimeoutPrompt(that);
-              that.geneticLoading = false;
             } else {
               that.geneticWaitingModal = false;
               clearTimeout(that.geneticSetTime);
               that.$message.error(data.message);
-              that.geneticLoading = false;
             }
           }).catch(() => {
             clearTimeout(that.geneticSetTime);
@@ -1420,6 +1502,15 @@
           this.outMarketCanRun = 1;
           this.windCtrlCanRun = 1;
         }
+      },
+//解锁某一个指标的参数
+      unlockPara(indexs, index, param){
+
+        this.formValidate.selectedIndexs[indexs][param][index].locked = 0;
+      },
+//      锁定某一个参数
+      lockPara(indexs, index, param){
+        this.formValidate.selectedIndexs[indexs][param][index].locked = 1;
       },
 //s锁定某一个指标  只限于智能回测
       lockIndicator(index){

@@ -11,6 +11,7 @@
           <el-date-picker
             v-model="startDate"
             :editable="false"
+            :clearable="false"
             size="small"
             type="date"
             placeholder="选择日期"
@@ -23,6 +24,7 @@
           <el-date-picker
             v-model="endDate"
             :editable="false"
+            :clearable="false"
             size="small"
             type="date"
             placeholder="选择日期"

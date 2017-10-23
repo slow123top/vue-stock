@@ -52,7 +52,7 @@
   import ModelFunds       from './ModelFunds'
   import ModelFundsBack from './ModelFundsBack'
   import {postRemoteReqTodo} from '../../api/api'
-  import {combineIndicator, resolveIndicator} from '../../api/model'
+  import {combineIndicator, resolveIndicator,resolveParaLock} from '../../api/model'
   import {jumpLogin, loginTimeoutPrompt} from '../../api/tools'
   export default {
     beforeMount(){
@@ -72,12 +72,13 @@
           modelId: modelIdTemp.replace(/\%/g, '-'),
           loopType: 0
         }).then(res => {
-//          console.log(res);
           let data = res.data;
           if (data.status === 'SUCCESS') {
             this.modelPara = data.model.modelPara;
             this.$store.state.andOrNot = 'customize';
             resolveIndicator(this.$store.state.selectedIndexs, this.modelPara, this.$store.state.controller, this.$store.state.symbol);
+            resolveParaLock(this.modelPara,this.$store.state.selectedIndexs);
+            console.log();
             this.isBaseInfo = this.$store.state.selectedIndexs.some(function (item) {
               return item.className === '';
             });

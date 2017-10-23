@@ -1,6 +1,6 @@
 <template>
   <Row type="flex" justify="center">
-    <i-col span="12" style="padding: 1rem">
+    <i-col :xs="20" :sm="16" :lg="12" style="padding: 1rem">
       <Row type="flex" justify="center">
         <i-col span="10">
           <hr>
@@ -13,7 +13,7 @@
         </i-col>
       </Row>
     </i-col>
-    <i-col span="18" style="padding: 1rem">
+    <i-col :xs="24" :sm="24" :lg="18" style="padding: 1rem">
       <Row type="flex" justify="center">
         <i-col span="2" style="text-align: center">
             <Icon type="person-add" size="56" style="color: #2d8cf0"></Icon>

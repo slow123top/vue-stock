@@ -135,7 +135,8 @@ export const SELECT_INDICATOR = (state, payload) => {
         value: Number(INDICATORS[INDICATOR_ID].params2[j].value),
         validator: INDICATORS[INDICATOR_ID].params2[j].validator,
         showMessage: true,
-        errorType: 0
+        errorType: 0,
+        locked:0
       })
     }
   }
@@ -176,7 +177,8 @@ export const SELECT_INDICATOR = (state, payload) => {
       state.selectedIndexs[state.selectedIndexs.length - 1].selects.push({
         value: INDICATORS[INDICATOR_ID].selects[j].value,
         label: INDICATORS[INDICATOR_ID].selects[j].label,
-        optionList: []
+        optionList: [],
+        locked:0,
       });
       for (let t = 0; t < INDICATORS[INDICATOR_ID].selects[j].optionList.length; t++) {
         const optionLists = INDICATORS[INDICATOR_ID].selects[j].optionList;
@@ -197,7 +199,8 @@ export const SELECT_INDICATOR = (state, payload) => {
         value: INDICATORS[INDICATOR_ID].params[j].value,
         validator: INDICATORS[INDICATOR_ID].params[j].validator,
         showMessage: true,
-        errorType: 0
+        errorType: 0,
+        locked:0
       })
     }
   }
@@ -211,7 +214,8 @@ export const SELECT_INDICATOR = (state, payload) => {
         label2: INDICATORS[INDICATOR_ID].radios[0].label2,
         value2: INDICATORS[INDICATOR_ID].radios[0].value2,
         label3: INDICATORS[INDICATOR_ID].radios[0].threeFlag ? INDICATORS[INDICATOR_ID].radios[0].label3 : '',
-        value3: INDICATORS[INDICATOR_ID].radios[0].threeFlag ? INDICATORS[INDICATOR_ID].radios[0].value3 : ''
+        value3: INDICATORS[INDICATOR_ID].radios[0].threeFlag ? INDICATORS[INDICATOR_ID].radios[0].value3 : '',
+        locked:0,
       })
     }
 
