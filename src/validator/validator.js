@@ -1115,6 +1115,12 @@ export const A0026_M1M2validator = A0002validator(/^(([1-9]\d*)|0)(\.\d{1,2})?$/
 export const A0010_MN1N2validator = A0010validator(/^[1-9]\d*$/, 1, 1000, ['请输入大于0的数字(不含小数)', '数字应介于1~1000之间', 'N1<=M<=N2']);
 //A0017-A0020类  复杂指标比较大小
 export const A0017_N1N2N3N4validator = A0017validator(/^[1-9]\d*$/, 1, 1000, ['请输入大于0的数字(不含小数)', '数字应介于1~1000之间', 'N1<=N3<=N4 <=N2,N1<N2']);
+//A0027 系列
+export const A0027SLMValidator = A_validator(/^[1-9]\d*$/, 2, 200, ['请输入大于0的数字(不含小数)', '数字应介于2~200之间']);
+//A0030 Day系列
+export const A0030DayValidator = A_validator(/^[1-9]\d*$/, 2, 90, ['请输入大于0的数字(不含小数)', '数字应介于2~90之间']);
+//A0030 K D系列
+export const A0030KDValidator = A_validator(/^[1-9]\d*$/, 2, 30, ['请输入大于0的数字(不含小数)', '数字应介于2~30之间']);
 //A0031系列  M1 M2有范围限制
 export const A0031_M1M2validator = A0001validator(/^-?(([1-9]\d*)|0)(\.\d{1,2})?$/, -150, 150, ['请输入小数,保留1~2位', '数字介于-150~150', 'M1<=M2']);
 //A0040

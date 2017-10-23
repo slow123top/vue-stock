@@ -17,12 +17,15 @@ import {
   A0010_MN1N2validator,
   A0008_select1Validator,
   A0008_select2Validator,
+  A0027SLMValidator,
   A0052_N1N2validator,
   listingDate_validator,
   A0008_M1validator,
   A0008_M2validator,
   A0026_N3N4validator,
   A0026_M1M2validator,
+  A0030KDValidator,
+  A0030DayValidator,
   A0040_Mvalidator,
   A0040_Nvalidator,
   stockPool_validator,
@@ -69,14 +72,14 @@ export const MY_MODEL_INDEXS = {
       label: 'N1',
       value: 1,
       validator: [{
-        validator: A0002_N1N2validator,
+        validator: A0001_N1N2validator,
         trigger: 'blur'
       }]
     }, {
       label: 'N2',
       value: 5,
       validator: [{
-        validator: A0002_N1N2validator,
+        validator: A0001_N1N2validator,
         trigger: 'blur'
       }]
     }, {
@@ -689,21 +692,21 @@ export const MY_MODEL_INDEXS = {
       label: 'S',
       value: 12,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0027SLMValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'L',
       value: 26,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0027SLMValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'M',
       value: 9,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0027SLMValidator,
         trigger: 'blur'
       }]
     }, {
@@ -729,21 +732,21 @@ export const MY_MODEL_INDEXS = {
       label: 'S',
       value: 12,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0027SLMValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'L',
       value: 26,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0027SLMValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'M',
       value: 9,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0027SLMValidator,
         trigger: 'blur'
       }]
     }, {
@@ -795,21 +798,21 @@ export const MY_MODEL_INDEXS = {
       label: 'Day',
       value: 9,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030DayValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'K',
       value: 3,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030KDValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'D',
       value: 3,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030KDValidator,
         trigger: 'blur'
       }]
     }, {
@@ -835,21 +838,21 @@ export const MY_MODEL_INDEXS = {
       label: 'Day',
       value: 9,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030DayValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'K',
       value: 3,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030KDValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'D',
       value: 3,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030KDValidator,
         trigger: 'blur'
       }]
     }, {
@@ -882,21 +885,21 @@ export const MY_MODEL_INDEXS = {
       label: 'Day',
       value: 9,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030DayValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'K',
       value: 3,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030KDValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'D',
       value: 3,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030KDValidator,
         trigger: 'blur'
       }]
     }, {
@@ -928,21 +931,21 @@ export const MY_MODEL_INDEXS = {
       label: 'Day',
       value: 9,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030DayValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'K',
       value: 3,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030KDValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'D',
       value: 3,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030KDValidator,
         trigger: 'blur'
       }]
     }, {
@@ -1359,24 +1362,24 @@ export const MY_MODEL_INDEXS = {
   'A0048': {
     message: 'macd(S, L, M)，倒数第N个交易日指标呈空头/多头排布',
     params: [{
-      label: 'K',
+      label: 'S',
       value: 12,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0027SLMValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'L',
       value: 26,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0027SLMValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'M',
       value: 9,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0027SLMValidator,
         trigger: 'blur'
       }]
     }, {
@@ -1402,21 +1405,21 @@ export const MY_MODEL_INDEXS = {
       label: 'Day',
       value: 9,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030DayValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'K',
       value: 3,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030KDValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'D',
       value: 3,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030KDValidator,
         trigger: 'blur'
       }]
     }, {
@@ -2412,14 +2415,14 @@ export const createModelIndexs = {
       label: 'N1',
       value: 1,
       validator: [{
-        validator: A0002_N1N2validator,
+        validator: A0001_N1N2validator,
         trigger: 'blur'
       }]
     }, {
       label: 'N2',
       value: 5,
       validator: [{
-        validator: A0002_N1N2validator,
+        validator: A0001_N1N2validator,
         trigger: 'blur'
       }]
     }, {
@@ -2676,21 +2679,21 @@ export const createModelIndexs = {
       label: 'S',
       value: 12,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0027SLMValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'L',
       value: 26,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0027SLMValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'M',
       value: 9,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0027SLMValidator,
         trigger: 'blur'
       }]
     }, {
@@ -2716,21 +2719,21 @@ export const createModelIndexs = {
       label: 'S',
       value: 12,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0027SLMValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'L',
       value: 26,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0027SLMValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'M',
       value: 9,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0027SLMValidator,
         trigger: 'blur'
       }]
     }, {
@@ -2756,21 +2759,21 @@ export const createModelIndexs = {
       label: 'Day',
       value: 9,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030DayValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'K',
       value: 3,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030KDValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'D',
       value: 3,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030KDValidator,
         trigger: 'blur'
       }]
     }, {
@@ -2796,21 +2799,21 @@ export const createModelIndexs = {
       label: 'Day',
       value: 9,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030DayValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'K',
       value: 3,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030KDValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'D',
       value: 3,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030KDValidator,
         trigger: 'blur'
       }]
     }, {
@@ -2843,21 +2846,21 @@ export const createModelIndexs = {
       label: 'Day',
       value: 9,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030DayValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'K',
       value: 3,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030KDValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'D',
       value: 3,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030KDValidator,
         trigger: 'blur'
       }]
     }, {
@@ -2889,21 +2892,21 @@ export const createModelIndexs = {
       label: 'Day',
       value: 9,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030DayValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'K',
       value: 3,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030KDValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'D',
       value: 3,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030KDValidator,
         trigger: 'blur'
       }]
     }, {
@@ -3320,24 +3323,24 @@ export const createModelIndexs = {
     number: 'A0048',
     message: 'macd(S, L, M)，倒数第N个交易日指标呈空头/多头排布',
     params: [{
-      label: 'K',
+      label: 'S',
       value: 12,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0027SLMValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'L',
       value: 26,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0027SLMValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'M',
       value: 9,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0027SLMValidator,
         trigger: 'blur'
       }]
     }, {
@@ -3363,21 +3366,21 @@ export const createModelIndexs = {
       label: 'Day',
       value: 9,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030DayValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'K',
       value: 3,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030KDValidator,
         trigger: 'blur'
       }]
     }, {
       label: 'D',
       value: 3,
       validator: [{
-        validator: positiveIntegerValidator,
+        validator: A0030KDValidator,
         trigger: 'blur'
       }]
     }, {

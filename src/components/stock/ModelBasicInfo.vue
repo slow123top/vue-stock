@@ -11,27 +11,27 @@
       <span class="title-name">收益统计</span>
       <Row type="flex" justify="start">
         <i-col span="2">
-          <div>总收益率</div>
+          <div class="result-title">总收益率</div>
           <div :style="profitStyle[isEqualZero(statisticalInfo[1].replace('%',''))]">{{statisticalInfo[1]}}</div>
         </i-col>
         <i-col span="3">
-          <div>年化收益率（复利）</div>
+          <div class="result-title">年化收益率（复利）</div>
           <div :style="profitStyle[isEqualZero(statisticalInfo[5].replace('%',''))]">{{statisticalInfo[5]}}</div>
         </i-col>
         <i-col span="2">
-          <div>最大回撤</div>
+          <div class="result-title">最大回撤</div>
           <div :style="profitStyle[isEqualZero(statisticalInfo[2].replace('%',''))]">{{statisticalInfo[2]}}</div>
         </i-col>
         <i-col span="2">
-          <div>胜率</div>
+          <div class="result-title">胜率</div>
           <div :style="profitStyle[isEqualZero(statisticalInfo[3].replace('%',''))]">{{statisticalInfo[3]}}</div>
         </i-col>
         <i-col span="2">
-          <div>空仓占比</div>
+          <div class="result-title">空仓占比</div>
           <div :style="profitStyle[isEqualZero(statisticalInfo[4].replace('%',''))]">{{statisticalInfo[4]}}</div>
         </i-col>
         <i-col span="3" v-if="statisticalInfo.length >6">
-          <div>平均每日选股数量</div>
+          <div class="result-title">平均每日选股数量</div>
           <div :style="profitStyle[isEqualZero(statisticalInfo[6].replace('%',''))]">{{statisticalInfo[6]}}</div>
         </i-col>
       </Row>
@@ -66,16 +66,19 @@
           equalZero: {
             'font-size':'1.2rem',
             'color': '#000000',
+            'text-align':'center'
           },
           lessThanZero: {
             'font-weight': 'bold',
             'color': '#00c261',
-            'font-size':'1.2rem'
+            'font-size':'1.2rem',
+            'text-align':'center'
           },
           moreThanZero: {
             'font-weight': 'bold',
             'color': '#ff0000',
-            'font-size':'1.2rem'
+            'font-size':'1.2rem',
+            'text-align':'center'
           }
         },
         columns: [
@@ -327,5 +330,8 @@
   .ivu-table .demo-table-equal-zero {
     /*background-color: #187;*/
     color: #000000;
+  }
+  .result-title{
+    text-align: center;
   }
 </style>

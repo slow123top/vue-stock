@@ -3,17 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="fd36d9a8-3802-449a-9afa-d1995c49485f" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api/api.js" afterPath="$PROJECT_DIR$/src/api/api.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api/model.js" afterPath="$PROJECT_DIR$/src/api/model.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Footer.vue" afterPath="$PROJECT_DIR$/src/components/Footer.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Header.vue" afterPath="$PROJECT_DIR$/src/components/Header.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/portal/Guide.vue" afterPath="$PROJECT_DIR$/src/components/portal/Guide.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api/indexinfo.js" afterPath="$PROJECT_DIR$/src/api/indexinfo.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/stock/ModelBasicInfo.vue" afterPath="$PROJECT_DIR$/src/components/stock/ModelBasicInfo.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/stock/ModelFunds.vue" afterPath="$PROJECT_DIR$/src/components/stock/ModelFunds.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/stock/ModelFundsBack.vue" afterPath="$PROJECT_DIR$/src/components/stock/ModelFundsBack.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/stock/Result.vue" afterPath="$PROJECT_DIR$/src/components/stock/Result.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/stock/SelectIndex.vue" afterPath="$PROJECT_DIR$/src/components/stock/SelectIndex.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/vuex/mutations.js" afterPath="$PROJECT_DIR$/src/vuex/mutations.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/validator/validator.js" afterPath="$PROJECT_DIR$/src/validator/validator.js" />
     </list>
     <ignored path="vuestock.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -122,8 +114,31 @@
       <file leaf-file-name="ModelBasicInfo.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/stock/ModelBasicInfo.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="31" column="16" lean-forward="false" selection-start-line="31" selection-start-column="16" selection-end-line="31" selection-end-column="16" />
+            <state relative-caret-position="6433">
+              <caret line="334" column="22" lean-forward="false" selection-start-line="334" selection-start-column="22" selection-end-line="334" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="indexinfo.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/api/indexinfo.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="408">
+              <caret line="3372" column="17" lean-forward="false" selection-start-line="3372" selection-start-column="17" selection-end-line="3372" selection-end-column="17" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#44#744#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="validator.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/validator/validator.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="1097" column="13" lean-forward="false" selection-start-line="1097" selection-start-column="13" selection-end-line="1097" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -185,18 +200,8 @@
       <file leaf-file-name="api.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/api/api.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="369">
-              <caret line="23" column="6" lean-forward="true" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="6" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ModelFunds.vue" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/stock/ModelFunds.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="520">
-              <caret line="26" column="30" lean-forward="false" selection-start-line="26" selection-start-column="30" selection-end-line="26" selection-end-column="30" />
+            <state relative-caret-position="-204">
+              <caret line="20" column="17" lean-forward="true" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -207,16 +212,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="360">
               <caret line="27" column="30" lean-forward="false" selection-start-line="27" selection-start-column="30" selection-end-line="27" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Footer.vue" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/Footer.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="820">
-              <caret line="41" column="16" lean-forward="false" selection-start-line="41" selection-start-column="16" selection-end-line="41" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -235,15 +230,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>run:</find>
-      <find>genetic</find>
-      <find>31536000000</find>
-      <find>1000</find>
-      <find>note-content</find>
-      <find>h3</find>
-      <find>fix</find>
-      <find>您今日</find>
-      <find>tableData</find>
       <find>console.log</find>
       <find>$</find>
       <find>switch</find>
@@ -265,6 +251,15 @@
       <find>lock</find>
       <find>lockPa</find>
       <find>run</find>
+      <find>A0002_N1N2validator</find>
+      <find>A0027</find>
+      <find>A0028</find>
+      <find>A0048</find>
+      <find>A0030</find>
+      <find>A0031</find>
+      <find>A0032</find>
+      <find>A0033</find>
+      <find>A0049</find>
     </findStrings>
     <replaceStrings>
       <replace>selectedIndexs</replace>
@@ -320,8 +315,6 @@
         <option value="$PROJECT_DIR$/src/components/personalinfo/BuyCardRecord.vue" />
         <option value="$PROJECT_DIR$/src/vuex/store.js" />
         <option value="$PROJECT_DIR$/test.html" />
-        <option value="$PROJECT_DIR$/src/validator/validator.js" />
-        <option value="$PROJECT_DIR$/src/api/indexinfo.js" />
         <option value="$PROJECT_DIR$/src/components/document/CompanyState.vue" />
         <option value="$PROJECT_DIR$/src/components/document/Question.vue" />
         <option value="$PROJECT_DIR$/src/components/personalinfo/MyWallet.vue" />
@@ -355,6 +348,8 @@
         <option value="$PROJECT_DIR$/src/api/model.js" />
         <option value="$PROJECT_DIR$/src/components/stock/SelectIndex.vue" />
         <option value="$PROJECT_DIR$/src/components/stock/ModelBasicInfo.vue" />
+        <option value="$PROJECT_DIR$/src/validator/validator.js" />
+        <option value="$PROJECT_DIR$/src/api/indexinfo.js" />
         <option value="$PROJECT_DIR$/src/api/api.js" />
       </list>
     </option>
@@ -477,20 +472,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vuestock" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vuestock" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dist" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -714,7 +695,7 @@
       <workItem from="1507547396184" duration="38839000" />
       <workItem from="1507719523635" duration="115021000" />
       <workItem from="1508373074101" duration="10597000" />
-      <workItem from="1508472353678" duration="23823000" />
+      <workItem from="1508472353678" duration="28047000" />
     </task>
     <task id="LOCAL-00001" summary="sdadsa">
       <created>1499392747940</created>
@@ -1045,11 +1026,18 @@
       <option name="project" value="LOCAL" />
       <updated>1508208692201</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="完成部分参数锁定进行智能回测，加入每日选股数量">
+      <created>1508722051843</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1508722051843</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2614171000" />
+    <option name="totallyTimeSpent" value="2618395000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1119,7 +1107,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="路由跳转基本可以，没有什么大问题，完善了以下" />
     <MESSAGE value="修改绑定邮箱bug" />
     <MESSAGE value="添加遗传算法回测，修改bug,创业难，且行且珍惜，不要急躁" />
     <MESSAGE value="添加banner回测卡广告，完善一部分功能，修改不当之处" />
@@ -1144,7 +1131,8 @@
     <MESSAGE value="智能回测重建模型时，需要看到锁定与否；特别注意js中的变量类型，有时候是个大坑；添加且当清晰的icon" />
     <MESSAGE value="添加模型仓库，支持历史回测多选，完善智能回测" />
     <MESSAGE value="智能回测上线，看反响" />
-    <option name="LAST_COMMIT_MESSAGE" value="智能回测上线，看反响" />
+    <MESSAGE value="完成部分参数锁定进行智能回测，加入每日选股数量" />
+    <option name="LAST_COMMIT_MESSAGE" value="完成部分参数锁定进行智能回测，加入每日选股数量" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1153,20 +1141,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/components/document/CompanyState.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="36" lean-forward="true" selection-start-line="1" selection-start-column="2" selection-end-line="1" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/document/Guide.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="3" column="88" lean-forward="false" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="88" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/font/iconfont.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
@@ -1416,6 +1390,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1440">
           <caret line="72" column="5" lean-forward="false" selection-start-line="72" selection-start-column="5" selection-end-line="72" selection-end-column="5" />
+          <folding>
+            <element signature="n#style#0;n#Row#0;n#template#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#i-col#0;n#Row#0;n#template#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#i-col#1;n#Row#0;n#template#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#i-col#2;n#Row#0;n#template#0;n#!!top" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1618,16 +1598,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/stock/ModelBasicInfo.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="31" column="16" lean-forward="false" selection-start-line="31" selection-start-column="16" selection-end-line="31" selection-end-column="16" />
+        <state relative-caret-position="6433">
+          <caret line="334" column="22" lean-forward="false" selection-start-line="334" selection-start-column="22" selection-end-line="334" selection-end-column="22" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/validator/validator.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="1097" column="13" lean-forward="false" selection-start-line="1097" selection-start-column="13" selection-end-line="1097" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/api/indexinfo.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="3372" column="17" lean-forward="false" selection-start-line="3372" selection-start-column="17" selection-end-line="3372" selection-end-column="17" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#44#744#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/api/api.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="23" column="6" lean-forward="true" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="6" />
+        <state relative-caret-position="-204">
+          <caret line="20" column="17" lean-forward="true" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
           <folding />
         </state>
       </provider>
