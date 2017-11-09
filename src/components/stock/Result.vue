@@ -32,14 +32,14 @@
     <Row type="flex" justify="center">
       <i-col span="20">
         <All :report="$store.state.model.report" :modelName="$store.state.controller.modelName"
-             v-if="result[0]&&!isBaseInfo"></All>
-        <ModelFunds :chartModel="$store.state.model.report['charts_holdings_info']" v-if="result[1]"></ModelFunds>
+             v-if="resultRadio==='all'"></All>
+        <ModelFunds :chartModel="$store.state.model.report['charts_holdings_info']" v-if="resultRadio==='modelFunds'"></ModelFunds>
         <ModelFundsBack :chartDrop="$store.state.model.report['charts_holdings_info']"
-                        v-if="result[2]"></ModelFundsBack>
+                        v-if="resultRadio==='modelFundsBack'"></ModelFundsBack>
         <HoldReport :chartsHoldingsInfo="$store.state.model.report['charts_holdings_info']"
-                    v-if="result[3]"></HoldReport>
-        <YearMonth :tableProfitInfo="$store.state.model.report['table_profit_info']" v-if="result[4]"></YearMonth>
-        <NewSelect :newDaySelect="$store.state.model.report['new_day_select']" v-if="result[5]"></NewSelect>
+                    v-show="resultRadio==='holdReport'"></HoldReport>
+        <YearMonth :tableProfitInfo="$store.state.model.report['table_profit_info']" v-show="resultRadio==='yearMonth'"></YearMonth>
+        <NewSelect :newDaySelect="$store.state.model.report['new_day_select']" v-show="resultRadio==='newSelect'"></NewSelect>
       </i-col>
     </Row>
   </div>
@@ -56,7 +56,6 @@
   import {jumpLogin, loginTimeoutPrompt} from '../../api/tools'
   export default {
     beforeMount(){
-//      const that = this;
 //        分析模型指标  重新赋值select
       let modelIdTemp = this.$route.query.temp_sa_asd;
       let str = localStorage.getItem(modelIdTemp);
@@ -78,7 +77,6 @@
             this.$store.state.andOrNot = 'customize';
             resolveIndicator(this.$store.state.selectedIndexs, this.modelPara, this.$store.state.controller, this.$store.state.symbol);
             resolveParaLock(this.modelPara,this.$store.state.selectedIndexs);
-            console.log();
             this.isBaseInfo = this.$store.state.selectedIndexs.some(function (item) {
               return item.className === '';
             });
@@ -102,7 +100,6 @@
         andOrNot: '',
         modalModelName: false,
         resultRadio: 'all',
-        result: [1, 0, 0, 0, 0, 0],
         aferRun: false,
       }
     },
@@ -117,28 +114,6 @@
     computed: {},
     methods: {
       reslutChange(reslut){
-        switch (reslut) {
-          case 'all':
-            this.result = [1, 0, 0, 0, 0, 0];
-            break;
-          case 'modelFunds':
-            this.result = [0, 1, 0, 0, 0, 0];
-            break;
-          case 'modelFundsBack':
-            this.result = [0, 0, 1, 0, 0, 0];
-            break;
-          case 'holdReport':
-            this.result = [0, 0, 0, 1, 0, 0];
-            break;
-          case 'yearMonth':
-            this.result = [0, 0, 0, 0, 1, 0];
-            break;
-          case 'newSelect':
-            this.result = [0, 0, 0, 0, 0, 1];
-            break;
-          default:
-            break;
-        }
       },
       saveResult() {
         this.modalModelName = true;

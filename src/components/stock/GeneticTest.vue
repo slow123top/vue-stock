@@ -45,7 +45,7 @@
         <el-table-column align="center" prop="empty_rate" sortable label="空仓占比（%）"
                          v-if="!buttonDisabled"></el-table-column>
         <el-table-column align="center" label="操作">
-          <template scope="scope">
+          <template slot-scope="scope">
 
             <router-link :to="{path:'/model',query:{temp_sa_build:geneticModels[scope.$index+(currentPage - 1) * pageSize].geneticModelId}}"
                          target="_blank" :disabled="buttonDisabled">重建模型
@@ -252,7 +252,7 @@
               that.buttonDisabled = false;
             }
             that.temp = that.geneticModels;
-            that.tableTemp = that.temp.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize)
+            that.tableTemp = that.temp.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize);
             let controller = CONTROLLER(data.geneticModels[0].modelPara);
             that.controller.push(controller[0]);
             that.controller.push(controller[1] + '~' + controller[2]);

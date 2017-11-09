@@ -25,7 +25,7 @@ import MyModel from '../components/stock/MyModel'
 import Track from '../components/stock/Track'
 import History from '../components/stock/History'
 import ModelStorage from '../components/stock/ModelStroage.vue'
-// import GeneticTest from '../components/stock/GeneticTest'
+import RuleTalk from '../components/stock/RuleTalk.vue'
 import GeneticTest from '../components/stock/GeneticTest'
 
 //个人信息
@@ -166,6 +166,10 @@ const router = new Router({
           path: 'singletest',
           component: Result,
 
+        },
+        {
+          path: 'ruletalk',
+          component: RuleTalk
         },
         // {
         //   path: 'genetictest',

@@ -24,7 +24,7 @@
 
             </i-col>
           </Row>
-          <Row v-for="(model,index) in trackModels" type="flex" justify="space-between" :key="model"
+          <Row v-for="(model,index) in trackModels" type="flex" justify="space-between" :key="index"
                style="padding: .3rem;line-height: 1">
             <i-col span="24">
               <!--:style="trackInfo[index]['style']"-->

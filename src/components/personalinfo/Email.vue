@@ -50,7 +50,7 @@
           <i-col span="24" v-if="verifySucc==='confirm'">
             <!--<Tooltip content="请选择验证方式" placement="left">-->
             <i-select size="large" v-model="oldTool" placeholder="选择当前验证方式">
-              <i-option v-for="item in verifyTool" :value="item.value" :key="item">{{item.label}}</i-option>
+              <i-option v-for="(item,index) in verifyTool" :value="item.value" :key="index">{{item.label}}</i-option>
             </i-select>
             <!--</Tooltip>-->
             <i-input size="large" v-model="verifyCode" placeholder="请输入验证码"

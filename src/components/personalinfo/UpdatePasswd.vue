@@ -7,7 +7,7 @@
             <!--<i-form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">-->
             <!--<Form-item label="验证工具">-->
             <i-select size="large" v-model="oldTool" placeholder="选择当前验证工具">
-              <i-option v-for="item in verifyTool" :value="item.value" :key="item">{{item.label}}</i-option>
+              <i-option v-for="(item,index) in verifyTool" :value="item.value" :key="index">{{item.label}}</i-option>
             </i-select>
             <!--</Form-item>-->
             <!--<Form-item label="验证码">-->

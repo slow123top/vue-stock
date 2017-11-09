@@ -6,9 +6,6 @@
           入市指标组合
 
 
-
-
-
         </template>
         <Menu-item name="1-1">价格类指标</Menu-item>
         <Menu-item name="1-2">市值类指标</Menu-item>
@@ -16,17 +13,12 @@
         <Menu-item name="1-4">股票池筛选指标</Menu-item>
         <Menu-item name="1-5">交易量类指标</Menu-item>
         <Menu-item name="1-6">经典指标</Menu-item>
-        <!--<Menu-item name="1-7">定制指标</Menu-item>-->
+        <Menu-item name="1-7" v-if="!$store.state.user.userType">千投定制入市类</Menu-item>
         <Menu-item name="1-8">我的模型入市指标组合</Menu-item>
       </Submenu>
       <Submenu name="2">
         <template slot="title">
           出市指标组合
-
-
-
-
-
         </template>
         <Menu-item name="2-1">价格类指标</Menu-item>
         <Menu-item name="2-2">市值类指标</Menu-item>
@@ -42,21 +34,23 @@
           风控指标组合
 
 
-
-
-
         </template>
         <Menu-item name="4-1">趋势类指标</Menu-item>
-        <Menu-item name="4-2">我的模型风控指标组合</Menu-item>
+        <Menu-item name="4-2" v-if="!$store.state.user.userType">千投定制风控类</Menu-item>
+        <Menu-item name="4-3">我的模型风控指标组合</Menu-item>
       </Submenu>
-      <Menu-item name="3">
-        二次筛选指标
+      <Submenu name="3">
+        <template slot="title">
+          二次筛选指标组合
+        </template>
+        <Menu-item name="3-1">普通二次筛选类</Menu-item>
+        <Menu-item name="3-2" v-if="!$store.state.user.userType">千投定制二次筛选类</Menu-item>
+      </Submenu>
+      <!--<Menu-item name="3">-->
+      <!--二次筛选指标-->
 
 
-
-
-
-      </Menu-item>
+      <!--</Menu-item>-->
       <!--<Submenu name="4">-->
       <!--<template slot="title">-->
       <!--风控指标-->
@@ -77,13 +71,10 @@
     <Row type="flex" justify="center">
       <i-col span="24" style="height: 15rem;overflow:auto;background-color: #ffffff;padding: .5rem">
         <ul class="index" v-if="activeName === '1-1'">
-          <li :id="indexClass.number" v-for="indexClass in indexs['price']" class="price-index" :key="indexClass"
+          <li :id="indexClass.number" v-for="indexClass in indexs['price']" class="price-index" :key="indexClass.number"
               style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
             <Button size="large" style="width:35rem" @click="selectIndex(indexClass.number)">
               {{indexClass.message}}
-
-
-
 
 
             </Button>
@@ -91,14 +82,10 @@
         </ul>
         <ul class="index" v-if="activeName === '1-2'">
           <li :id="indexClass.number" v-for="indexClass in indexs.marketValue" class="market-value-index"
-              :key="indexClass"
+              :key="indexClass.number"
               style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
             <Button size="large" style="width:35rem" @click="selectIndex(indexClass.number)">
               {{indexClass.message}}
-
-
-
-
 
 
             </Button>
@@ -106,14 +93,10 @@
         </ul>
         <ul class="index" v-if="activeName === '1-3'">
           <li :id="indexClass.number" v-for="indexClass in indexs.listingDate" class="listing-date-index"
-              :key="indexClass"
+              :key="indexClass.number"
               style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
             <Button size="large" style="width:35rem" @click="selectIndex(indexClass.number)">
               {{indexClass.message}}
-
-
-
-
 
 
             </Button>
@@ -121,13 +104,10 @@
         </ul>
         <ul class="index" v-if="activeName === '1-4'">
           <li :id="indexClass.number" v-for="indexClass in indexs.code" class="code-index"
-              :key="indexClass"
+              :key="indexClass.number"
               style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
             <Button size="large" style="width:35rem" @click="selectIndex(indexClass.number)">
               {{indexClass.message}}
-
-
-
 
 
             </Button>
@@ -135,53 +115,50 @@
         </ul>
         <ul class="index" v-if="activeName === '1-5'">
           <li :id="indexClass.number" v-for="indexClass in indexs.trade" class="trade-index"
-              :key="indexClass"
+              :key="indexClass.number"
               style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
             <Button size="large" style="width:35rem" @click="selectIndex(indexClass.number)">
               {{indexClass.message}}
-
-
-
 
 
             </Button>
           </li>
         </ul>
         <ul class="index" v-if="activeName === '1-6'">
-          <li :id="indexClass.number" v-for="indexClass in indexs.classic" class="classic-index" :key="indexClass"
+          <li :id="indexClass.number" v-for="indexClass in indexs.classic" class="classic-index" :key="indexClass.number"
               style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
             <Button size="large" style="width:35rem" @click="selectIndex(indexClass.number)">
               {{indexClass.message}}
 
 
-
-
-
+            </Button>
+          </li>
+        </ul>
+        <ul class="index" v-if="activeName === '1-7'">
+          <li :id="indexClass.number" v-for="indexClass in indexs.customMadeIntoMarket" class="classic-index"
+              :key="indexClass.number"
+              style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
+            <Button size="large" style="width:35rem" @click="selectIndex(indexClass.number)">
+              {{indexClass.message}}
             </Button>
           </li>
         </ul>
         <ul class="my-model" v-if="activeName === '1-8'">
-          <li v-for="(item,index) in myModels" :key="item"
+          <li v-for="(item,index) in myModels" :key="index"
               style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
             <Button size="large" style="width:35rem" @click="selectModel(index)">
               {{item.modelName}}
-
-
-
 
 
             </Button>
           </li>
         </ul>
         <ul class="index" v-if="activeName === '2-1'">
-          <li :id="indexClass.number" v-for="indexClass in indexs['price']" class="price-index" :key="indexClass"
+          <li :id="indexClass.number" v-for="indexClass in indexs['price']" class="price-index" :key="indexClass.number"
               style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
             <Button size="large" style="width:35rem"
                     @click="selectIndexSell(indexClass.number,'sell')">
               {{indexClass.message}}
-
-
-
 
 
             </Button>
@@ -189,14 +166,11 @@
         </ul>
         <ul class="index" v-if="activeName === '2-2'">
           <li :id="indexClass.number" v-for="indexClass in indexs.marketValue" class="market-value-index"
-              :key="indexClass"
+              :key="indexClass.number"
               style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
             <Button size="large" style="width:35rem"
                     @click="selectIndexSell(indexClass.number,'sell')">
               {{indexClass.message}}
-
-
-
 
 
             </Button>
@@ -204,13 +178,10 @@
         </ul>
         <ul class="index" v-if="activeName === '2-3'">
           <li :id="indexClass.number" v-for="indexClass in indexs.listingDate" class="listing-date-index"
-              :key="indexClass" style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
+              :key="indexClass.number" style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
             <Button size="large" style="width:35rem"
                     @click="selectIndexSell(indexClass.number,'sell')">
               {{indexClass.message}}
-
-
-
 
 
             </Button>
@@ -218,14 +189,11 @@
         </ul>
         <ul class="index" v-if="activeName === '2-4'">
           <li :id="indexClass.number" v-for="indexClass in indexs.code" class="code-index"
-              :key="indexClass"
+              :key="indexClass.number"
               style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
             <Button size="large" style="width:35rem"
                     @click="selectIndexSell(indexClass.number,'sell')">
               {{indexClass.message}}
-
-
-
 
 
             </Button>
@@ -233,41 +201,32 @@
         </ul>
         <ul class="index" v-if="activeName === '2-5'">
           <li :id="indexClass.number" v-for="indexClass in indexs.trade" class="trade-index"
-              :key="indexClass"
+              :key="indexClass.number"
               style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
             <Button size="large" style="width:35rem"
                     @click="selectIndexSell(indexClass.number,'sell')">
               {{indexClass.message}}
-
-
-
 
 
             </Button>
           </li>
         </ul>
         <ul class="index" v-if="activeName === '2-6'">
-          <li :id="indexClass.number" v-for="indexClass in indexs.classic" class="classic-index" :key="indexClass"
+          <li :id="indexClass.number" v-for="indexClass in indexs.classic" class="classic-index" :key="indexClass.number"
               style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
             <Button size="large" style="width:35rem"
                     @click="selectIndexSell(indexClass.number,'sell')">
               {{indexClass.message}}
 
 
-
-
-
             </Button>
           </li>
         </ul>
         <ul class="my-model" v-if="activeName === '2-8'">
-          <li v-for="(item,index) in myModels" :key="item"
+          <li v-for="(item,index) in myModels" :key="index"
               style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
             <Button size="large" style="width:35rem" @click="selectModelOutMarket(index)">
               {{item.modelName}}
-
-
-
 
 
             </Button>
@@ -276,43 +235,65 @@
 
         <ul class="index" v-if="activeName === '4-1'">
           <li :id="indexClass.number" v-for="indexClass in indexs.windControl" class="classic-index"
-              :key="indexClass"
+              :key="indexClass.number"
               style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
             <Button size="large" style="width:35rem" @click="selectIndex(indexClass.number)">
               {{indexClass.message}}
-
-
-
-
-
             </Button>
           </li>
         </ul>
-        <ul class="my-model" v-if="activeName === '4-2'">
+        <ul class="index" v-if="activeName === '4-2'">
+          <li :id="indexClass.number" v-for="indexClass in indexs.customMadeWindControl" class="classic-index"
+              :key="indexClass.number"
+              style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
+            <Button size="large" style="width:35rem" @click="selectIndex(indexClass.number)">
+              {{indexClass.message}}
+            </Button>
+          </li>
+          <li :id="indexClass.number" v-for="indexClass in indexs.ruleWindControl" class="classic-index"
+              :key="indexClass.number"
+              style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
+            <Button size="large" style="width:35rem" @click="selectIndex(indexClass.number)">
+              {{indexClass.message}}
+            </Button>
+          </li>
+        </ul>
+        <ul class="my-model" v-if="activeName === '4-3'">
           <li v-for="(item,index) in myModels" :key="item"
               style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
             <Button size="large" style="width:35rem" @click="selectModelWindCtrl(index)">
               {{item.modelName}}
 
 
-
-
-
             </Button>
           </li>
         </ul>
-        <ul class="index" v-if="activeName === '3'">
+        <ul class="index" v-if="activeName === '3-1'">
           <li :id="indexClass.number" v-for="indexClass in indexs.secondaryScreen" class="classic-index"
-              :key="indexClass"
+              :key="indexClass.number"
               style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
             <Button size="large" style="width:35rem" @click="selectIndex(indexClass.number)"
                     :disabled="secondaryScreenOnlyOnce">
               {{indexClass.message}}
-
-
-
-
-
+            </Button>
+          </li>
+        </ul>
+        <ul class="index" v-if="activeName === '3-2'">
+          <li :id="indexClass.number" v-for="indexClass in indexs.customMadeSecondaryScreen" class="classic-index"
+              :key="indexClass.number"
+              style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
+            <Button size="large" style="width:35rem" @click="selectIndex(indexClass.number)"
+                    :disabled="secondaryScreenOnlyOnce">
+              {{indexClass.message}}
+            </Button>
+          </li>
+          <li v-if="$store.state.user.userType===0" :id="indexClass.number"
+              v-for="indexClass in indexs.ruleSecondaryScreen" class="classic-index"
+              :key="indexClass.number"
+              style="display:inline-block;margin-right:.5rem;margin-bottom:.5rem">
+            <Button size="large" style="width:35rem" @click="selectIndex(indexClass.number)"
+                    :disabled="secondaryScreenOnlyOnce">
+              {{indexClass.message}}
             </Button>
           </li>
         </ul>
@@ -329,12 +310,6 @@
         type: Boolean,
         default: false
       }
-//      myModels: {
-//        type: Array,
-//        default: function () {
-//          return [];
-//        }
-//      }
     },
     data(){
       return {

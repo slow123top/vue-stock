@@ -1,7 +1,7 @@
 <template>
   <div class="register">
     <Row type="flex" justify="center" :style="style">
-      <i-col span="5">
+      <i-col span="4">
         <Card style="font-size:1rem">
           <p slot="title" style="text-align: center;font-size: 1rem">注册</p>
           <i-form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="0"

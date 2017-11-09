@@ -20,7 +20,7 @@
         <el-table-column align="center" sortable prop="empty_rate" label="空仓占比"></el-table-column>
         <el-table-column align="center" :show-overflow-tooltip="true" prop="remark" label="备注"></el-table-column>
         <el-table-column align="center" label="操作">
-          <template scope="scope">
+          <template slot-scope="scope">
             <el-button @click="rebuildModel(scope.$index)" type="text">重建模型</el-button>
           </template>
         </el-table-column>

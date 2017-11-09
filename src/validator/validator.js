@@ -49,6 +49,23 @@ function validator(regExp, min, max, errorMessage, canRunParam) {
     }
   }
 }
+function lessEqualValidator(regExp, min, max, errorMessage, canRunParam) {
+  return (rule, value, callback) => {
+    if (value === '' || !new RegExp(regExp).test(value)) {
+      store.state.selectedIndexs[store.state.currentInputIndex.parentIndex].params[store.state.currentInputIndex.childIndex][canRunParam] = 0;
+      callback(new Error(errorMessage));
+    } else {
+      if (value <= min || value > max) {
+        store.state.selectedIndexs[store.state.currentInputIndex.parentIndex].params[store.state.currentInputIndex.childIndex][canRunParam] = 0;
+        min !== -Infinity && max !== Infinity ? callback(new Error('范围:' + min + '~' + max)) : callback(new Error('范围:大于' + min));
+      } else {
+        canRunParam === 'canRun' ? store.state.selectedIndexs[store.state.currentInputIndex.parentIndex].params[store.state.currentInputIndex.childIndex][canRunParam] = 1 :
+          store.state.controller[canRunParam] = 1;
+        callback();
+      }
+    }
+  }
+}
 //无比较的校验器
 function A_validator(regExp, min, max, errorMessage) {
   return (rule, value, callback) => {
@@ -1166,6 +1183,7 @@ export const modelName_validator = (rule, value, callback) => {
 export const secondScreen_validator = A_validator(/^[1-9]\d*$/, 1, 1000, ['请输入数字(不含小数)', '数字应介于1~1000之间']);
 //C指标校验器
 export const windControl_validator = A_validator(/^[1-9]\d*$/, 2, Infinity, ['请输入数字(不含小数)', '数字应大于等于2']);
+export const C0004_validator = lessEqualValidator(/^(([1-9]\d*)(\.\d{1,2})?)$|(0\.0?([1-9]\d?))$/,0,Infinity,'请输入数字（>0）','canRun');
 //代码类即股票池类指标校验器
 export const stockPool_validator = A_validator(/^\d{0,6}$/, -Infinity, Infinity, ['请输入6位以内的数字串', '']);
 //上市日期类指标校验器

@@ -30,7 +30,7 @@
 
             </i-col>
           </Row>
-          <Row v-for="(model,index) in myModels" type="flex" justify="space-between" :key="model"
+          <Row v-for="(model,index) in myModels" type="flex" justify="space-between" :key="index"
                style="box-sizing: border-box;padding: .3rem;line-height: 2">
             <i-col span="24">
               <!--:style="trackInfo[index]['style']"-->
@@ -76,7 +76,7 @@
 <script>
   import AllReport from './ResultChildren.vue'
   import {postRemoteReqTodo, getRemoteReqTodo} from '../../api/api'
-  import {resolveIndicator} from '../../api/model'
+  import {resolveIndicator,resolveParaLock} from '../../api/model'
   import {loginTimeoutPrompt, jumpLogin, descObj, ascObj} from '../../api/tools'
   export default {
     mounted(){
@@ -203,6 +203,7 @@
         //          首先删除所有存在的指标
         this.$store.state.andOrNot = 'customize';
         resolveIndicator(this.$store.state.selectedIndexs, this.myModels[this.currentModelIndex].modelPara, this.$store.state.controller, this.$store.state.symbol);
+        resolveParaLock(this.myModels[this.currentModelIndex].modelPara, this.$store.state.selectedIndexs);
         this.$router.push('/model/newModel');
       },
       // 删除模型  若模型为实盘跟踪模型  第一次是撤销实盘跟踪  之后才能删除模型

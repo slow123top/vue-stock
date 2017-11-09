@@ -14,7 +14,7 @@
           <i-form ref="formValidate" :label-width="100">
             <Form-item label="回测卡种类" prop="recharge">
               <el-radio-group v-model="cardNumber" @change="changeCard">
-                <el-radio-button v-for="(card,index) in cardInfo" :label="card.cardNumber" :key="card"
+                <el-radio-button v-for="(card,index) in cardInfo" :label="card.cardNumber" :key="index"
                                  :disabled="card.disabled">{{card.cardName}}
 
                 </el-radio-button>
@@ -25,12 +25,12 @@
             </Form-item>
             <Form-item label="购买量">
               <el-radio-group size="small" v-model="amount" @change="changeAmount">
-                <el-radio-button :label="item.amount" v-for="item in buyCardAmount" :key="item"><span
+                <el-radio-button :label="item.amount" v-for="(item,index) in buyCardAmount" :key="index"><span
                   v-if="!item.isSelected" class="r-month">{{item.notSelectName}}</span>
                   <span class="r-month" v-else>{{item.selectName}}</span>
                 </el-radio-button>
-                <el-tooltip effect="light" v-for="item in buyCardAmountDiscount" :content="item.content" placement="top"
-                            :key="item">
+                <el-tooltip effect="light" v-for="(item,index) in buyCardAmountDiscount" :content="item.content" placement="top"
+                            :key="index">
                   <el-radio-button :label="item.amount"><span
                     v-if="!item.isSelected" class="r-month">{{item.notSelectName}}<img src="../../img/discount(2).png"
                                                                                        alt="折扣"></span>

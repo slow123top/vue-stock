@@ -6,7 +6,7 @@
           <Icon type="load-c" size=18
 
 
-                                            class="demo-spin-icon-load"
+                                               class="demo-spin-icon-load"
                 style="line-height: 2rem;border-radius: 20px"></Icon>
           <!--<div style="font-size: 1rem;color: #000">{{runMessage}}</div>-->
 
@@ -25,7 +25,7 @@
           <Icon type="load-c" size=18
 
 
-                                            class="demo-spin-icon-load"
+                                               class="demo-spin-icon-load"
                 style="line-height: 2rem;border-radius: 20px"></Icon>
           <!--<div style="font-size: 1rem;color: #000">{{runMessage}}</div>-->
 
@@ -59,8 +59,14 @@
 
 
 
+
+
+
         <router-link to="/personalInfo/buycard" style="font-weight: bold;">购买</router-link>
         此次回测区间的回测卡,您将消费<span style="color: #ff0000;font-weight: bold">{{needPoints}}</span>点数来完成本次回测,是否继续?
+
+
+
 
 
 
@@ -98,6 +104,9 @@
 
 
 
+
+
+
       </div>
       <p style="font-size: 1rem;">您没有本次回测区间的回测卡，请
 
@@ -115,8 +124,14 @@
 
 
 
+
+
+
         <router-link to="/personalInfo/buycard">购买回测卡</router-link>
       <p style="font-size: 1rem;">本次回测需要<span style="color: #ff0000;font-weight: bold">{{needPoints}}</span>点数，您的点数已不足，请
+
+
+
 
 
 
@@ -178,6 +193,9 @@
 
 
 
+
+
+
         </Button>
       </div>
     </Modal>
@@ -224,13 +242,16 @@
 
 
 
+
+
+
                       </div>
                     </Poptip>
                   </i-col>
                 </Row>
                 <ul class="selected-indexs"
                     style="width: 100%;height: 25rem;overflow: auto;font-size:0.875rem;padding:.5rem;color:#34495e">
-                  <li v-for="(item,indexs) in $store.state.selectedIndexs" :key="item"
+                  <li v-for="(item,indexs) in $store.state.selectedIndexs" :key="indexs"
                       :style="item.className === ''?style_ABC[item.selectModelClass]:style_ABC[item.className.substring(0,1)]">
                     <Tooltip v-if="item.selectModelClass === 'intoMarket'" :content="'入市'+item.number" placement="top">
                       <span>{{item.modelName}}</span>
@@ -269,11 +290,14 @@
                     </span>
                     <Form-item v-for="(select,index) in item.selects"
                                :prop="'selectedIndexs.'+indexs+'.selects.'+index+'.value'" :label-width="5"
-                               :key="select" style="float: left;margin: 0">
+                               :key="index" style="float: left;margin: 0">
                       <el-tooltip :content="select.label" :enterable="false" placement="left">
                         <i-select v-model="select.value" filterable style="width:15rem">
-                          <i-option v-for="option in select.optionList" :value="option.value" :key="option">
+                          <i-option v-for="(option,indexss) in select.optionList" :value="option.value" :key="indexss">
                             {{ option.label }}
+
+
+
 
 
 
@@ -292,7 +316,7 @@
                     </Form-item>
                     <Form-item v-for="(param,index) in item.params"
                                :prop="'selectedIndexs.'+indexs+'.params.'+index+'.value'" :label-width="5"
-                               :rules="param.validator" :key="param" style="float: left;margin: 0;font-size:1rem"
+                               :rules="param.validator" :key="index" style="float: left;margin: 0;font-size:1rem"
                                :show-message="param.showMessage">
                       <el-tooltip :content="param.label" :enterable="false" placement="left">
                         <i-input type="text" v-model="param.value"
@@ -312,12 +336,15 @@
                     </Form-item>
                     <Form-item v-for="(select_1,index) in item.select1"
                                :prop="'selectedIndexs.'+indexs+'.select1.'+index+'.value'" :label-width="5"
-                               :rules="select_1.validator" :key="select_1" :show-message="select_1.showMessage"
+                               :rules="select_1.validator" :key="index" :show-message="select_1.showMessage"
                                style="float: left;margin: 0">
                       <i-select v-model="select_1.value" style="width:5rem"
                                 @on-change="getSelectIndex(select_1.value,indexs)">
-                        <i-option v-for="option1 in select_1.optionList" :value="option1.value" :key="option1">
+                        <i-option v-for="(option1,indexss) in select_1.optionList" :value="option1.value" :key="indexss">
                           {{ option1.label }}
+
+
+
 
 
 
@@ -330,7 +357,7 @@
                     </Form-item>
                     <Form-item v-for="(param_2,index) in item.params2"
                                :prop="'selectedIndexs.'+indexs+'.params2.'+index+'.value'" :label-width="5"
-                               :rules="param_2.validator" :key="param_2" :show-message="param_2.showMessage"
+                               :rules="param_2.validator" :key="index" :show-message="param_2.showMessage"
                                style="float: left;margin: 0">
                       <el-tooltip :content="param_2.label" :enterable="false" placement="left">
                         <i-input type="text" v-model="param_2.value"
@@ -346,19 +373,17 @@
                     </Form-item>
                     <Form-item v-for="(select_2,index) in item.select2"
                                :prop="'selectedIndexs.'+indexs+'.select2.'+index+'.value'" :label-width="5"
-                               :rules="select_2.validator" :key="select_2" :show-message="select_2.showMessage"
+                               :rules="select_2.validator" :key="index" :show-message="select_2.showMessage"
                                style="float: left;margin: 0">
                       <i-select v-model="select_2.value" style="width:5rem"
                                 @on-change="getSelectIndex(select_2.value,indexs)">
-                        <i-option v-for="option2 in select_2.optionList" :value="option2.value" :key="option2">
+                        <i-option v-for="(option2,indexss) in select_2.optionList" :value="option2.value" :key="indexss">
                           {{ option2.label }}
-
-
 
                         </i-option>
                       </i-select>
                     </Form-item>
-                    <Form-item v-for="(radio, index) in item.radios" :label-width="5" :key="radio"
+                    <Form-item v-for="(radio, index) in item.radios" :label-width="5" :key="index"
                                style="float: left;margin: 0;font-size:1rem">
                       <Radio-group v-model="radio.value" style="margin-left: 1rem">
                         <Radio :label="radio.value1">{{radio.label1}}</Radio>
@@ -372,12 +397,12 @@
                     <!-- <Button type="primary" shape="circle" icon="ios-search"></Button> -->
                     <Button type="text" shape="circle" size="large" style="float: right" icon="close"
                             @click="handleRemove(indexs)"></Button>
-                    <el-tooltip v-if="item.className===''&&!item.locked" class="item" effect="dark"
+                    <el-tooltip v-if="(!item.className&&!item.locked)||(item.className&&!item.params.length&&!item.radios.length&&!item.locked)" class="item" effect="dark"
                                 content="该锁定仅用于智能回测锁定指标参数" placement="top" :enterable="false" style="float: right">
                       <el-button type="text" shape="circle" icon="my-unlock" @click="lockIndicator(indexs)"
                                  style="color: #000000"></el-button>
                     </el-tooltip>
-                    <el-button v-if="item.locked" type="text" icon="my-lock3"
+                    <el-button v-if="(item.className===''&&item.locked)||(item.className&&!item.params.length&&!item.radios.length&&item.locked)" type="text" icon="my-lock3"
                                style="float: right;color: #000000" @click="unlockIndicator(indexs)"></el-button>
                   </li>
                 </ul>
@@ -392,7 +417,7 @@
                                :prop="'intoMarketListTemp.'+index+'.nextRelationship'"
                                :rules="andOrNotIntoMarketMiddleValidate"
                                :label="intoMarket.selectModelClass === 'intoMarket'?intoMarket.number:intoMarket.className"
-                               :key="intoMarket">
+                               :key="index">
                       <i-input v-if="index !== intoMarketList.length-1" type="text"
                                style="width: 3rem;text-align: center"
                                v-model="intoMarket.nextRelationship"
@@ -417,7 +442,7 @@
                                :prop="'outMarketListTemp.'+index+'.nextRelationship'"
                                :rules="andOrNotIntoMarketMiddleValidate"
                                :label="outMarket.selectModelClass === 'outMarket'?outMarket.number:outMarket.className"
-                               :key="outMarket">
+                               :key="index">
                       <i-input v-if="index !== outMarketList.length-1" type="text" style="width: 3rem"
                                v-model="outMarket.nextRelationship"
                                :disabled="!isCustomise" @on-blur="outMarketErrorLogo"></i-input>
@@ -441,7 +466,7 @@
                                :prop="'windCtrlListTemp.'+index+'.nextRelationship'"
                                :rules="andOrNotIntoMarketMiddleValidate"
                                :label="windCtrl.selectModelClass === 'windCtrl'?windCtrl.number:windCtrl.className"
-                               :key="windCtrl">
+                               :key="index">
                       <i-input v-if="index !== windCtrlList.length-1" type="text" style="width: 3rem"
                                v-model="windCtrl.nextRelationship"
                                :disabled="!isCustomise" @on-blur="windCtrlErrorLogo"></i-input>
@@ -568,15 +593,6 @@
                             style="font-size:1rem">单次回测
 
 
-
-
-
-
-
-
-
-
-
                     </Button>
                     <Button type="success" size="large" icon="arrow-down-b" v-popover:popover
                             style="font-size:1rem;opacity: .9"></Button>
@@ -603,6 +619,9 @@
                   </el-popover>
                   <Button-group>
                     <Button type="success" size="large" @click="geneticTest" :disabled="!canRun" style="font-size:1rem">智能回测
+
+
+
 
 
 
@@ -1073,7 +1092,7 @@
             } else if (!isBracketBalance(windCtrlStr)) {
               this.windCtrlCanRun = 0;
             } else {
-//              console.log(combineLockStr(that.formValidate));
+//              console.log(modelPara);
               //                  判断自定义的指标之间的关系格式是否正确
               //              满足回测条件  开始回测
               that.modal = true;
@@ -1126,7 +1145,6 @@
 //                        取消回测按钮在获取资源时出现
                     that.isRunning = false;
                     that.runMessage = '正在为您获取计算资源，请耐心等待...';
-//                      clearTimeout(that.isGetRunStatus);
                     that.isGetRunStatus = setTimeout(getRunStatus, 2000);
                   } else if (data['status'] === 'USER_NOT_FOUND') {
 //                        若session过期  跳转到登录页面
@@ -1333,25 +1351,30 @@
           {name: '中级', value: 5000},
           {name: '高级', value: 20000}
         ];
-        postRemoteReqTodo('/stock/genetic/rungeneticmodel/getgenetictime', {}).then(res => {
-          let data = res.data;
-          let status = data.status;
+        new Promise(function (resolve, reject) {
+          postRemoteReqTodo('/stock/genetic/rungeneticmodel/getgenetictime', {}).then(res => {
+            let data = res.data;
+            let status = data.status;
 //          console.log(data);
-          if (status === 'SUCCESS') {
-            let times = data.message.split('-');
-            that.primaryTimes = times[0];
-            that.intermediateTimes = times[1];
-            that.advancedTimes = times[2];
-            that.geneticPointInsuff = false;
-            that.geneticMessage = '您今日可免费使用' + times[that.geneticLevel] + '次' + geneticInfo[that.geneticLevel].name + '智能回测';
-          } else if (status === 'ERROR') {
-            that.$message.error(data.message);
-          } else if (status === 'USER_NOT_FOUND') {
-            jumpLogin(that);
-          }
-        }).catch(() => {
-          that.$message.error('连接服务器异常，请您稍后重试');
+            if (status === 'SUCCESS') {
+              let times = data.message.split('-');
+              that.primaryTimes = times[0];
+              that.intermediateTimes = times[1];
+              that.advancedTimes = times[2];
+              that.geneticPointInsuff = false;
+              resolve();
+            } else if (status === 'ERROR') {
+              that.$message.error(data.message);
+            } else if (status === 'USER_NOT_FOUND') {
+              jumpLogin(that);
+            }
+          }).catch(() => {
+            that.$message.error('连接服务器异常，请您稍后重试');
+          });
+        }).then(function () {
+          that.changeGeneticLevel(0);
         });
+
       },
       geneticTest(){
         const that = this;
@@ -1400,7 +1423,7 @@
         const that = this;
         that.geneticLoading = true;
         let modelPara = combineIndicator(that.formValidate, that.$store.state.controller);
-        console.log(modelPara);
+//        console.log(modelPara);
         let geneticLevel = [300, 5000, 20000];
         let startDate = this.$store.state.controller.backStart;
         let endDate = this.$store.state.controller.backEnd;
@@ -1634,14 +1657,14 @@
       },
       cancelTest(){
         const that = this;
-        clearTimeout(that.isGetRunStatus);
-        clearTimeout(that.runPoll);
         that.modal = false;
         postRemoteReqTodo('/stock/cancelcalculation', {
           modelId: that.modelId
         }).then(res => {
           let data = res.data;
           if (data.status === 'SUCCESS') {
+            clearTimeout(that.isGetRunStatus);
+            clearTimeout(that.runPoll);
             that.$message.success('您已成功取消单次回测');
           } else if (data.status === 'USER_NOT_FOUND') {
             jumpLogin(that);
@@ -2001,9 +2024,6 @@
     margin-top: -1rem;
   }
 
-  // .ivu-tabs .ivu-tabs-content-animated {
-  //     margin-top: -16px;
-  // }
   .demo-tabs-style1 > .ivu-tabs-card > .ivu-tabs-content > .ivu-tabs-tabpane {
     background: #fff;
     height: 15rem;

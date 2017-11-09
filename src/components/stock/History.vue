@@ -5,7 +5,8 @@
       <i-col span="24">
         <div class="s-history">
           <span>搜索历史回测模型（支持模糊搜索、多选）：</span>
-          <el-select size="large" v-model="search" filterable multiple placeholder="请输入模型名称" @change="getFilterHistory" style="width: 30rem">
+          <el-select size="large" v-model="search" filterable multiple placeholder="请输入模型名称" @change="getFilterHistory"
+                     style="width: 30rem">
             <el-option
               v-for="item in filterHistory"
               :key="item.value"
@@ -197,7 +198,8 @@
         getRemoteReqTodo('/stock/deletehistory', ['modelId'], [this.historyModels[index].modelId]).then(res => {
           let data = res.data;
           if (data['status'] === 'SUCCESS') {
-            this.historyModels.splice(index, 1);
+            this.data.splice(index, 1);
+            this.tableData = this.data.slice((this.currentPage - 1) * 10, this.currentPage * 10);
           } else if (data['status'] === 'ERROR') {
             this.$Notice.error({
               title: data['message']
@@ -205,7 +207,7 @@
           } else if (data['status'] === 'USER_NOT_FOUND') {
             loginTimeoutPrompt(this);
           } else {
-
+            this.$message.error(data['message']);
           }
         })
       },

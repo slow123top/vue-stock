@@ -50,11 +50,3 @@ export const getRandomModel = function (selectedIndicatorList,that) {
   })
 };
 
-//模型仓库
-// export const getModelStroage = function () {
-//   getRemoteReqTodo('/stock/modelstorage',[],[]).then(res=>{
-//     console.log(res);
-//   });
-// }
-
-

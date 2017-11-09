@@ -10,7 +10,7 @@
           <i-form :label-width="100">
             <Form-item label="可升级到">
               <i-select size="large" v-model="upGrade1" @on-change="calUpgradePoint" style="width: 15rem">
-                <i-option v-for="item in upGradeList" :value="item.value" :key="item">
+                <i-option v-for="(item,index) in upGradeList" :value="item.value" :key="index">
                   {{item.label}}
 
 

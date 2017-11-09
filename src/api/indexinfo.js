@@ -30,7 +30,8 @@ import {
   A0040_Nvalidator,
   stockPool_validator,
   secondScreen_validator,
-  windControl_validator
+  windControl_validator,
+  C0004_validator
 } from '../validator/validator'
 
 export const MY_MODEL_INDEXS = {
@@ -766,32 +767,32 @@ export const MY_MODEL_INDEXS = {
       value2: '1'
     }]
   },
-  // 'A0029': {
-  //   message: '倒数第M个交易日,收盘价位于N日均线以下/以上',
-  //   params: [{
-  //     label: 'M',
-  //     value: 1,
-  //     validator: [{
-  //       validator: positiveIntegerValidator,
-  //       trigger: 'blur'
-  //     }]
-  //   }, {
-  //     label: 'N',
-  //     value: 5,
-  //     validator: [{
-  //       validator: positiveIntegerValidator,
-  //       trigger: 'blur'
-  //     }]
-  //   }],
-  //   radios: [{
-  //     value: '1',
-  //     threeFlag: false,
-  //     label1: '以下',
-  //     value1: '0',
-  //     label2: '以上',
-  //     value2: '1'
-  //   }]
-  // },
+  'A0029': {
+    message: '倒数第M个交易日,收盘价位于N日均线以下/以上',
+    params: [{
+      label: 'M',
+      value: 1,
+      validator: [{
+        validator: positiveIntegerValidator,
+        trigger: 'blur'
+      }]
+    }, {
+      label: 'N',
+      value: 5,
+      validator: [{
+        validator: positiveIntegerValidator,
+        trigger: 'blur'
+      }]
+    }],
+    radios: [{
+      value: '1',
+      threeFlag: false,
+      label1: '以下',
+      value1: '0',
+      label2: '以上',
+      value2: '1'
+    }]
+  },
   'A0030': {
     message: 'kdj(Day, K, D)，倒数第M个交易日指标死叉/金叉',
     params: [{
@@ -1573,6 +1574,17 @@ export const MY_MODEL_INDEXS = {
       }]
     }]
   },
+  'A0055': {
+    message: '规则议会--选中股票数大于N的股票',
+    params: [{
+      label: 'N',
+      value: 20,
+      validator: [{
+        validator: listingDate_validator,
+        trigger: 'blur'
+      }]
+    }],
+  },
   'B0001': {
     message: '过去N日股价波动率越低/高越易被选中',
     params: [{
@@ -1692,19 +1704,23 @@ export const MY_MODEL_INDEXS = {
       value2: '1'
     }]
   },
-  // 'B0008': {
-  //   message: '千投定制二次筛选--K线分析法',
-  //   params: []
-  // },
-  // 'B0009': {
-  //   message: '千投定制二次筛选--量价分析法',
-  //   params: []
-  // },
-  // 'B0010': {
-  //
-  //   message: '二次筛选函数，千投定制二次筛选--趋势分析法',
-  //   params: []
-  // },
+  'B0008': {
+    message: '千投定制二次筛选--K线分析法',
+    params: []
+  },
+  'B0009': {
+    message: '千投定制二次筛选--量价分析法',
+    params: []
+  },
+  'B0010': {
+    message: '二次筛选函数，千投定制二次筛选--趋势分析法',
+    params: []
+  },
+  'B0011': {
+    message: '规则议会--二次筛选函数',
+    params: [],
+    rule:1
+  },
   'C0001': {
     message: 'M指数位于N日均线以下/上才允许买，否则空仓',
     params: [{
@@ -1843,8 +1859,18 @@ export const MY_MODEL_INDEXS = {
   'C0003': {
     message: '千投定制风控函数--大盘股综合分析',
     params: []
+  },
+  'C0004':{
+    message: '熔断机制：当原模型小于M%才允许交易',
+    params: [{
+      label: 'M',
+      value: 20,
+      validator: [{
+        validator: C0004_validator,
+        trigger: 'blur'
+      }]
+    }]
   }
-
 };
 
 export const createModelIndexs = {
@@ -2048,33 +2074,33 @@ export const createModelIndexs = {
       }]
     }]
   },
-    //   {
-    //   number: 'A0029',
-    //   message: '倒数第M个交易日,收盘价位于N日均线以下/以上',
-    //   params: [{
-    //     label: 'M',
-    //     value: 1,
-    //     validator: [{
-    //       validator: positiveIntegerValidator,
-    //       trigger: 'blur'
-    //     }]
-    //   }, {
-    //     label: 'N',
-    //     value: 5,
-    //     validator: [{
-    //       validator: positiveIntegerValidator,
-    //       trigger: 'blur'
-    //     }]
-    //   }],
-    //   radios: [{
-    //     value: '1',
-    //     threeFlag: false,
-    //     label1: '以下',
-    //     value1: '0',
-    //     label2: '以上',
-    //     value2: '1'
-    //   }]
-    // },
+    {
+      number: 'A0029',
+      message: '倒数第M个交易日,收盘价位于N日均线以下/以上',
+      params: [{
+        label: 'M',
+        value: 1,
+        validator: [{
+          validator: positiveIntegerValidator,
+          trigger: 'blur'
+        }]
+      }, {
+        label: 'N',
+        value: 5,
+        validator: [{
+          validator: positiveIntegerValidator,
+          trigger: 'blur'
+        }]
+      }],
+      radios: [{
+        value: '1',
+        threeFlag: false,
+        label1: '以下',
+        value1: '0',
+        label2: '以上',
+        value2: '1'
+      }]
+    },
     {
       number: 'A0050',
       message: '倒数第M个交易日,N1日均线上穿N2日均线',
@@ -2672,6 +2698,18 @@ export const createModelIndexs = {
         }]
       }]
     }],
+  customMadeIntoMarket: [{
+    number: 'A0055',
+    message: '规则议会--选中股票数大于N的股票',
+    params: [{
+      label: 'N',
+      value: 20,
+      validator: [{
+        validator: listingDate_validator,
+        trigger: 'blur'
+      }]
+    }],
+  }],
   classic: [{
     number: 'A0027',
     message: 'macd(S,L,M),倒数第N个交易日指标死叉/金叉',
@@ -3535,6 +3573,7 @@ export const createModelIndexs = {
     //   params: []
     // }
   ],
+
   windControl: [
     {
       number: 'C0001',
@@ -3668,16 +3707,56 @@ export const createModelIndexs = {
         ],
       }],
     },
-    // {
-    //   number: 'C0002',
-    //   message: '千投定制风控函数--小盘股综合分析',
-    //   params: []
-    //
-    // }, {
-    //   number: 'C0003',
-    //   message: '千投定制风控函数--大盘股综合分析',
-    //   params: []
-    // }
 
-  ]
+
+  ],
+  customMadeWindControl:[
+    {
+      number: 'C0002',
+      message: '千投定制风控函数--小盘股综合分析',
+      params: []
+
+    },
+    {
+      number: 'C0003',
+      message: '千投定制风控函数--大盘股综合分析',
+      params: []
+    },
+    {
+      number: 'C0004',
+      message: '熔断机制：当原模型小于M%才允许交易',
+      params: [{
+        label: 'M',
+        value: 20,
+        validator: [{
+          validator: C0004_validator,
+          trigger: 'blur'
+        }]
+      }],
+    }
+  ],
+  ruleWindControl:[],
+  customMadeSecondaryScreen:[
+    {
+      number: 'B0008',
+      message: '千投定制二次筛选--K线分析法',
+      params: []
+    },
+    {
+      number: 'B0009',
+      message: '千投定制二次筛选--量价分析法',
+      params: []
+    },
+    {
+      number: 'B0010',
+      message: '二次筛选函数，千投定制二次筛选--趋势分析法',
+      params: []
+    }
+  ],
+  ruleSecondaryScreen:[{
+      number: 'B0011',
+      message: '规则议会---二次筛选函数',
+      params: [],
+      rule:1
+    }]
 }

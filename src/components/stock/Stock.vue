@@ -25,6 +25,10 @@
               <Icon type="outlet"></Icon>
               <span>智能回测记录</span>
             </Menu-item>
+            <Menu-item name="rule-talk" v-if="!$store.state.user.userType">
+              <Icon type="outlet"></Icon>
+              <span>规则议会模型</span>
+            </Menu-item>
           </i-menu>
         </div>
       </Tooltip>
@@ -79,6 +83,9 @@
             break;
           case 'model-storage':
             this.$router.push('/model/modelstorage');
+            break;
+          case 'rule-talk':
+            this.$router.push('/model/ruletalk');
             break;
           default:
             break;

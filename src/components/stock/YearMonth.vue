@@ -2,7 +2,7 @@
   <Row type="flex" justify="start" style="margin:0 0 1rem 0">
     <i-col span="24" style="background: #fff;padding:1rem;border-radius: 10px">
       <h2 style="text-align: center">年/月盈利分布表</h2>
-      <i-table border :columns="columns" :data="data"></i-table>
+      <i-table border :columns="columns" :data="datas"></i-table>
     </i-col>
   </Row>
 </template>
@@ -16,7 +16,7 @@
     },
     data() {
       return {
-        data: this.data(),
+        datas: this.data(),
         columns: [{
           "title": "年份_月份",
           "key": "year_month",

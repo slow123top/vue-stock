@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <Row type="flex" justify="center" :style="style">
-      <i-col span="5">
+      <i-col :xs="4" :sm="4" :md="5" :lg="4" style="">
         <Card>
           <p slot="title" style="text-align: center;font-size: 1rem">登录</p>
           <i-form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="0"
@@ -18,14 +18,24 @@
                 <span slot="prepend"><Icon type="locked"></Icon></span>
               </i-input>
             </Form-item>
-            <Form-item prop="qrCode">
-              <i-input size="large" v-model="formValidate.qrCode" :icon="iconQrCode" placeholder="请输入验证码"
-                       style="width: 50%" @on-enter="handleSubmit('formValidate')"></i-input>
-              <img :src="img" alt="" style="width: 30%;height: 36px;margin-bottom: -1rem">
-              <a @click="getQrCode">换一张</a>
-            </Form-item>
+            <!--<Form-item prop="qrCode">-->
+            <!--<i-input size="large" v-model="formValidate.qrCode" :icon="iconQrCode" placeholder="请输入验证码"-->
+            <!--style="width: 50%" @on-enter="handleSubmit('formValidate')"></i-input>-->
+            <!--<img :src="img" alt="" style="width: 30%;height: 36px;margin-bottom: -1rem">-->
+            <!--<a @click="getQrCode">换一张</a>-->
+            <!--</Form-item>-->
+            <div id="slide-wrapper">
+              <input type="hidden" value="" id="lockable"/>
+              <div id="slider">
+                <span id="label">
+                  <!--<Icon type="arrow-right-c" :size="20" style="margin-top: .5rem"></Icon>-->
+                </span>
+                <span id="lableTip">拖动滑块验证</span>
+              </div>
+            </div>
             <Form-item style="margin-bottom: 0;vertical-align: middle">
-              <Button size="large" type="primary" :loading="logining" @click="handleSubmit('formValidate')" long>
+              <Button size="large" type="primary" :loading="logining" @click="handleSubmit('formValidate')" long
+                      :disabled="loginDisabled">
                 <span v-if="!logining">登录</span>
                 <span v-else>登录中...</span>
               </Button>
@@ -49,12 +59,19 @@
 </template>
 <script>
   import {postRemoteReqTodo, getRemoteReqTodo, BASE_API_URL} from '../../api/api'
+  import $ from 'jquery'
+  import {SliderUnlock} from '../../api/jquery.slideunlock.min'
   import {loginTimeoutPrompt, jumpLogin} from '../../api/tools'
   import 'babel-polyfill'
   //    import Promise from 'promise'
   export default {
     mounted(){
-      this.img = BASE_API_URL + '/image/getimagecode?random=' + Math.random();
+      let slider = new SliderUnlock("#slider", {}, () => {
+        this.validateLogin('formValidate',slider);
+      }, () => {
+        $(".warn").text("index:" + slider.index + "， max:" + slider.max + ",lableIndex:" + slider.lableIndex + ",value:" + $("#lockable").val() + " date:" + new Date().getUTCDate());
+      });
+      slider.init();
     },
     data () {
 //   校验验证码
@@ -67,6 +84,7 @@
         }
       };
       return {
+        loginDisabled: true,
         weixinImg: BASE_API_URL + '/user/login/wechat',
         logining: false,
         iconQrCode: '',
@@ -96,7 +114,18 @@
       }
     },
     methods: {
-      handleSubmit(name) {
+      validateLogin(name,slider){
+        this.$refs[name].validate((valid) => {
+          if (!valid) {
+            this.loginDisabled = true;
+            slider.reset();
+          } else {
+            this.loginDisabled = false;
+          }
+        })
+      },
+      //验证成功函数
+      handleSubmit(name, slider) {
         const that = this;
         this.$refs[name].validate((valid) => {
           if (valid) {
@@ -108,16 +137,11 @@
                 {
                   phoneOrEmail: that.formValidate.mailTel,
                   password: that.formValidate.passwd,
-                  verifyCode: that.formValidate.qrCode
                 }
               ).then(response => {
                 const data = response.data;
-//                console.log(res);
                 if (data['status'] === 'SUCCESS') {
 //                跳转到创建模型
-//                  that.$store.commit('ISLOGIN', {
-//                    isLogin: true,
-//                  });
                   that.$router.push('/');
                   resolve();
                 } else {
@@ -132,15 +156,11 @@
                 getRemoteReqTodo('/user/infomation/getuserinfo', [], []).then(res => {
                   let data = res.data;
                   if (data['status'] === 'SUCCESS') {
-//                    console.log('成功');
                     let user = data['userInfo'];
                     resolve(user);
                   } else if (data['status'] === 'ERROR') {
-//                    console.log('错误');
                     that.$message.error(data['message']);
                   } else if (data['status'] === 'USER_NOT_FOUND') {
-//                    console.log('用户不存在');
-//                    loginTimeoutPrompt(that);
                     jumpLogin(that);
                   }
                 })
@@ -160,7 +180,6 @@
         })
       },
       getQrCode(){
-//          getRemoteReqTodo('')
         this.img = BASE_API_URL + '/image/getimagecode?random=' + Math.random();
       },
       mailTelChange(){
@@ -170,7 +189,7 @@
     }
   }
 </script>
-<style lang="scss" rel="stylesheet">
+<style lang="scss" rel="stylesheet" scoped>
   .login {
     background-image: url("../../img/loginbg.jpg");
     background-repeat: no-repeat;
@@ -180,7 +199,36 @@
     /*color: #3eb94e;*/
   }
 
-  /*.login{*/
-  /*min-height: 40rem;*/
-  /*}*/
+  #slide-wrapper {
+    width: 100%;
+    position: relative;
+    background: #ECF0F1;
+    margin: 1rem auto;
+  }
+
+  #slider {
+    padding: .5rem 1rem;
+    position: relative;
+    border-radius: 2px;
+    background-color: #FDEB9C;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  #slider.success {
+    background-color: #E5EE9F;
+  }
+
+  #label {
+    width: 2rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: #E67E22;
+    background-image: url('../../img/jiantou.png');
+    z-index: 999;
+    cursor: pointer;
+
+  }
 </style>

@@ -127,32 +127,40 @@ export const resolveParaLock = function (modelPara, selectedIndexs) {
   secondLock.forEach(ele => {
     tempArr.push(ele.split('_'));
   });
+  // console.log(tempArr);
   for (let i = 0; i < selectedIndexs.length; i++) {
     indicator = selectedIndexs[i];
-    if (indicator.selects.length !== 0) {
-      for (let j = 0; j < indicator.selects.length; j++) {
-        selectedIndexs[i].selects[j].locked = Number(tempArr[i][j]);
+    if (!indicator.params.length&&!indicator.radios.length) {
+      selectedIndexs[i].locked = Number(tempArr[i][0]);
+      tempArr[i].splice(0, 1);
+    } else {
+      // console.log(tempArr);
+      if (indicator.selects.length !== 0) {
+        for (let j = 0; j < indicator.selects.length; j++) {
+          selectedIndexs[i].selects[j].locked = Number(tempArr[i][j]);
+        }
+        tempArr[i].splice(0, indicator.selects.length);
       }
-      tempArr[i].splice(0, indicator.selects.length);
-    }
-    if (indicator.params.length !== 0) {
-      for (let j = 0; j < indicator.params.length; j++) {
-        selectedIndexs[i].params[j].locked = Number(tempArr[i][j]);
+      if (indicator.params.length !== 0) {
+        for (let j = 0; j < indicator.params.length; j++) {
+          selectedIndexs[i].params[j].locked = Number(tempArr[i][j]);
+        }
+        tempArr[i].splice(0, indicator.params.length);
       }
-      tempArr[i].splice(0, indicator.params.length);
-    }
-    if (indicator.params2.length !== 0) {
-      for (let j = 0; j < indicator.params2.length; j++) {
-        selectedIndexs[i].params2[j].locked = Number(tempArr[i][j]);
+      if (indicator.params2.length !== 0) {
+        for (let j = 0; j < indicator.params2.length; j++) {
+          selectedIndexs[i].params2[j].locked = Number(tempArr[i][j]);
+        }
+        tempArr[i].splice(0, indicator.params2.length);
       }
-      tempArr[i].splice(0, indicator.params2.length);
-    }
-    if (indicator.radios.length !== 0) {
-      for (let j = 0; j < indicator.radios.length; j++) {
-        selectedIndexs[i].radios[j].locked = Number(tempArr[i][j]);
+      if (indicator.radios.length !== 0) {
+        for (let j = 0; j < indicator.radios.length; j++) {
+          selectedIndexs[i].radios[j].locked = Number(tempArr[i][j]);
+        }
+        tempArr[i].splice(0, indicator.radios.length);
       }
-      tempArr[i].splice(0, indicator.radios.length);
     }
+
   }
 };
 function notIncludeRelationship(model, includeLogo) {
@@ -249,8 +257,9 @@ export const combineLockStr = function (formValidate) {
         intoMarketLocked += intoMarketLocked + '-';
       }
     } else {
-      //单个指标
-      intoMarketLocked += combineParaLock(ele) + '-';
+      //单个指标无参数的情况
+      //单个指标有参数的情况
+      intoMarketLocked += (!ele.params.length&&!ele.radios.length ? ele.locked : combineParaLock(ele)) + '-';
     }
   });
   intoMarketLocked = intoMarketLocked.substring(0, intoMarketLocked.length - 1);
@@ -272,7 +281,7 @@ export const combineLockStr = function (formValidate) {
           }
         }
       } else {
-        outMarketLocked += combineParaLock(ele) + '-';
+        outMarketLocked += (!ele.params.length&&!ele.radios.length ? ele.locked : combineParaLock(ele)) + '-';
       }
     });
     outMarketLocked = outMarketLocked === '' ? '1' : outMarketLocked.substring(0, outMarketLocked.length - 1);
@@ -295,7 +304,7 @@ export const combineLockStr = function (formValidate) {
           }
         }
       } else {
-        windCtrlLocked += combineParaLock(ele) + '-';
+        windCtrlLocked += (!ele.params.length&&!ele.radios.length ? ele.locked : combineParaLock(ele)) + '-';
       }
     });
     windCtrlLocked = windCtrlLocked === '' ? '1' : windCtrlLocked.substring(0, windCtrlLocked.length - 1);
@@ -315,7 +324,7 @@ export const combineLockStr = function (formValidate) {
       }
     } else {
       //单个指标
-      secondLocked += combineParaLock(ele) + '-';
+      secondLocked += (!ele.params.length&&!ele.radios.length ? ele.locked : combineParaLock(ele)) + '-';
     }
     secondLocked = secondLocked.substring(0, secondLocked.length - 1);
   });
@@ -626,7 +635,6 @@ export const resolveIndicator = (selectedIndicator, modelPara, controller, symbo
   let second = modelPara.substring(modelPara.indexOf('[SECOND]') + 8, modelPara.lastIndexOf('[SECOND]'));
   splitABC(second, selectedIndicator, '');
 };
-//run  combineIndicator
 export const combineIndicator = (formValidate, ctrl) => {
 
   let intoMarketComb = '';
@@ -665,8 +673,9 @@ export const combineIndicator = (formValidate, ctrl) => {
             windCtrlComb += eleRadioChild.value;
           });
         } else {
+          windCtrlComb += ele.className + '-';
           ele.selects.forEach(eleChild => {
-            windCtrlComb += ele.className + '-' + eleChild.value + '_';
+            windCtrlComb += eleChild.value + '_';
           });
           ele.params.forEach(eleChild => {
             windCtrlComb += eleChild.value + '_';
@@ -696,8 +705,9 @@ export const combineIndicator = (formValidate, ctrl) => {
         secondComb += eleRadioChild.value;
       });
     } else {
+      secondComb += ele.className + '-';
       ele.params.forEach(eleChild => {
-        secondComb += ele.className + '-' + eleChild.value + '_';
+        secondComb += eleChild.value + '_';
       });
       ele.radios.forEach(eleRadioChild => {
         secondComb += eleRadioChild.value + '_';

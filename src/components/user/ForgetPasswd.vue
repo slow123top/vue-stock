@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 45rem">
+  <div class="forget-password" style="height: 45rem">
     <Row type="flex" justify="center">
       <i-col span="24" style="text-align: center;padding: 1rem 0">
         <h2>找回密码</h2>
@@ -16,43 +16,30 @@
     </Row>
     <i-form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="0">
       <Row type="flex" justify="start" v-if="isTrue==='confirm'">
-        <i-col span="5" offset="6">
+        <i-col span="4" offset="6">
           <Form-item prop="phoneOrEmail">
             <i-input size="large" v-model="formValidate.phoneOrEmail" placeholder="请输入邮箱或手机">
 
             </i-input>
           </Form-item>
+          <div id="slide-wrapper">
+            <input type="hidden" value="" id="lockable"/>
+            <div id="slider">
+                <span id="label">
+                  <!--<Icon type="arrow-right-c" :size="20" style="margin-top: .5rem"></Icon>-->
+                </span>
+              <span id="lableTip">拖动滑块验证</span>
+            </div>
+          </div>
           <Form-item>
-            <i-input size="large" v-model="formValidate.verifyCode" style="width: 50%">
-            </i-input>
-            <img :src="img" alt="" style="width: 30%;height: 36px;margin-left:1rem;margin-bottom: -1rem">
-            <a href="#" @click="getImgQrCode">换一张</a>
-          </Form-item>
-          <Form-item>
-            <Button long type="primary" @click="confirmAccount">
+            <Button long type="primary" @click="confirmAccount" :disabled="loginDisabled">
               下一步
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </Button>
           </Form-item>
         </i-col>
       </Row>
       <Row type="flex" justify="start" v-else-if="isTrue==='verify'">
-        <i-col span="5" offset="6">
+        <i-col span="4" offset="6">
 
 
           <span>{{validateType}}</span><span>{{errorPhoneOrEmail}}</span>
@@ -106,7 +93,7 @@
 
       </Row>
       <Row type="flex" justify="start" v-else-if="isTrue==='reset'">
-        <i-col span="5" offset="6">
+        <i-col span="4" offset="6">
           <Form-item prop="passwd">
             <i-input type="password" size="large" v-model="formValidate.passwd" placeholder="请输入新密码">
 
@@ -145,8 +132,17 @@
 </template>
 <script>
   import {postRemoteReqTodo,BASE_API_URL} from '../../api/api'
+  import $ from 'jquery'
+  import {SliderUnlock} from '../../api/jquery.slideunlock.min'
   export default{
     mounted(){
+      let slider = new SliderUnlock("#slider", {}, () => {
+//        this.validateLogin('formValidate',slider);
+        this.loginDisabled = false;
+      }, () => {
+        $(".warn").text("index:" + slider.index + "， max:" + slider.max + ",lableIndex:" + slider.lableIndex + ",value:" + $("#lockable").val() + " date:" + new Date().getUTCDate());
+      });
+      slider.init();
       this.img = BASE_API_URL+'/image/getimagecode?random=' + Math.random();
     },
     data(){
@@ -189,6 +185,7 @@
         }
       };
       return {
+        loginDisabled: true,
         verifyCodeLoding: false,
         verifyCodeId: '',
         verifyCode: '',
@@ -237,7 +234,7 @@
         const that = this;
         postRemoteReqTodo('/user/getpassword/existphoneoremail', {
           phoneOrEmail: that.formValidate.phoneOrEmail,
-          verifyCode: that.formValidate.verifyCode
+//          verifyCode: that.formValidate.verifyCode
         }).then(res => {
           let data = res.data;
           if (data['status'] === 'SUCCESS') {
@@ -364,5 +361,36 @@
   }
 </script>
 <style scoped>
+  #slide-wrapper {
+    width: 100%;
+    position: relative;
+    background: #ECF0F1;
+    margin: 1rem auto;
+  }
 
+  #slider {
+    padding: .5rem 1rem;
+    position: relative;
+    border-radius: 2px;
+    background-color: #FDEB9C;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  #slider.success {
+    background-color: #E5EE9F;
+  }
+
+  #label {
+    width: 2rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: #E67E22;
+    background-image: url('../../img/jiantou.png');
+    z-index: 999;
+    cursor: pointer;
+
+  }
 </style>
