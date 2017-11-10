@@ -23,32 +23,126 @@
       </i-form>
     </i-col>
     <i-col span="24">
-      <el-table :data="tableData" border style="width: 100%" :empty-text="dataText" @sort-change="sortChange">
-        <el-table-column type="index" align="center" width="60"></el-table-column>
+      <el-table :data="tableData" border size="small" style="width: 100%" :empty-text="dataText"
+                @sort-change="sortChange">
+        <el-table-column type="index" align="center" :width="60"></el-table-column>
         <el-table-column align="center" prop="time" label="日期" v-if="buttonDisabled"></el-table-column>
-        <el-table-column align="center" prop="time" sortable label="日期" v-if="!buttonDisabled"></el-table-column>
-        <el-table-column align="center" :show-overflow-tooltip="true" prop="stock_index" label="入市指标"></el-table-column>
-        <el-table-column align="center" :show-overflow-tooltip="true" prop="out_index" label="出市指标"></el-table-column>
-        <el-table-column align="center" :show-overflow-tooltip="true" prop="second_index"
-                         label="二次筛选指标"></el-table-column>
-        <el-table-column align="center" :show-overflow-tooltip="true" prop="wind_index" label="风控指标"></el-table-column>
-        <el-table-column align="center" prop="year_profit" width="250" label="年化收益率（复利）（%）"
-                         v-if="buttonDisabled"></el-table-column>
-        <el-table-column align="center" prop="max_back" label="最大回撤（%）" v-if="buttonDisabled"></el-table-column>
-        <el-table-column align="center" prop="win_rate" label="胜率（%）" v-if="buttonDisabled"></el-table-column>
-        <el-table-column align="center" prop="empty_rate" label="空仓占比（%）" v-if="buttonDisabled"></el-table-column>
-        <el-table-column align="center" prop="year_profit" sortable width="250" label="年化收益率（复利）（%）"
-                         v-if="!buttonDisabled"></el-table-column>
-        <el-table-column align="center" prop="max_back" sortable label="最大回撤（%）"
-                         v-if="!buttonDisabled"></el-table-column>
-        <el-table-column align="center" prop="win_rate" sortable label="胜率（%）" v-if="!buttonDisabled"></el-table-column>
-        <el-table-column align="center" prop="empty_rate" sortable label="空仓占比（%）"
-                         v-if="!buttonDisabled"></el-table-column>
+        <el-table-column align="center" prop="time" sortable="custom" label="日期" v-else></el-table-column>
+        <el-table-column align="center" prop="stock_index" label="入市指标">
+          <template slot-scope="scope">
+            <el-tooltip placement="right" :enterable="false">
+              <div class="show-overflow">{{scope.row.stock_index.join('')}}</div>
+              <div slot="content">
+                <ul>
+                  <li class="text-center" v-for="intoMarket in scope.row.stock_index">
+                    {{intoMarket}}
+                  </li>
+                </ul>
+              </div>
+            </el-tooltip>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="out_index" label="出市指标">
+          <template slot-scope="scope">
+            <el-tooltip placement="right" :enterable="false">
+              <div class="show-overflow">{{scope.row.out_index.join('')}}</div>
+              <div slot="content">
+                <ul>
+                  <li class="text-center" v-for="outMarket in scope.row.out_index">
+                    {{outMarket}}
+                  </li>
+                </ul>
+              </div>
+            </el-tooltip>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="second_index"
+                         label="二次筛选指标">
+          <template slot-scope="scope">
+            <el-tooltip placement="right" :enterable="false">
+              <div class="show-overflow">{{scope.row.second_index.join('')}}</div>
+              <div slot="content">
+                <ul>
+                  <li class="text-center" v-for="second in scope.row.second_index">
+                    {{second}}
+                  </li>
+                </ul>
+              </div>
+            </el-tooltip>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="wind_index" label="风控指标">
+          <template slot-scope="scope">
+            <el-tooltip placement="right" :enterable="false">
+              <div class="show-overflow">{{scope.row.wind_index.join('')}}</div>
+              <div slot="content">
+                <ul>
+                  <li class="text-center" v-for="wind in scope.row.wind_index">
+                    {{wind}}
+                  </li>
+                </ul>
+              </div>
+            </el-tooltip>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="year_profit" :width="200" label="年化收益率（复利）"
+                         v-if="buttonDisabled">
+          <template slot-scope="scope">
+            <span
+              :class="{'above-zero':(scope.row.year_profit>0),'equal-zero':(scope.row.year_profit===0),'bellow-zero':(scope.row.year_profit<0)}">{{scope.row.year_profit+"%"}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="year_profit" sortable="custom" :width="200" label="年化收益率（复利）"
+                         v-else>
+          <template slot-scope="scope">
+            <span
+              :class="{'above-zero':(scope.row.year_profit>0),'equal-zero':(scope.row.year_profit===0),'bellow-zero':(scope.row.year_profit<0)}">{{scope.row.year_profit+"%"}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="max_back" label="最大回撤" v-if="buttonDisabled">
+          <template slot-scope="scope">
+            <span
+              :class="{'above-zero':(scope.row.max_back>0),'equal-zero':(scope.row.max_back===0),'bellow-zero':(scope.row.max_back<0)}">{{scope.row.max_back+"%"}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="max_back" sortable="custom" label="最大回撤"
+                         v-else>
+          <template slot-scope="scope">
+            <span
+              :class="{'above-zero':(scope.row.max_back>0),'equal-zero':(scope.row.max_back===0),'bellow-zero':(scope.row.max_back<0)}">{{scope.row.max_back+"%"}}</span>
+          </template>
+        </el-table-column>
+
+        <el-table-column align="center" prop="empty_rate" label="空仓占比" v-if="buttonDisabled">
+          <template slot-scope="scope">
+            <span
+              :class="{'above-zero':(scope.row.empty_rate>0),'equal-zero':(scope.row.empty_rate===0),'bellow-zero':(scope.row.empty_rate<0)}">{{scope.row.empty_rate+"%"}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="empty_rate" sortable="custom" label="空仓占比"
+                         v-else>
+          <template slot-scope="scope">
+            <span
+              :class="{'above-zero':(scope.row.empty_rate>0),'equal-zero':(scope.row.empty_rate===0),'bellow-zero':(scope.row.empty_rate<0)}">{{scope.row.empty_rate+"%"}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="win_rate" label="胜率" v-if="buttonDisabled">
+          <template slot-scope="scope">
+            <span
+              :class="{'above-zero':(scope.row.win_rate>0),'equal-zero':(scope.row.win_rate===0),'bellow-zero':(scope.row.win_rate<0)}">{{scope.row.win_rate+"%"}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="win_rate" sortable="custom" label="胜率" v-else>
+          <template slot-scope="scope">
+            <span
+              :class="{'above-zero':(scope.row.win_rate>0),'equal-zero':(scope.row.win_rate===0),'bellow-zero':(scope.row.win_rate<0)}">{{scope.row.win_rate+"%"}}</span>
+          </template>
+        </el-table-column>
         <el-table-column align="center" label="操作">
           <template slot-scope="scope">
-
-            <router-link :to="{path:'/model',query:{temp_sa_build:geneticModels[scope.$index+(currentPage - 1) * pageSize].geneticModelId}}"
-                         target="_blank" :disabled="buttonDisabled">重建模型
+            <router-link
+              :to="{path:'/model',query:{temp_sa_build:geneticModels[scope.$index+(currentPage - 1) * pageSize].geneticModelId}}"
+              target="_blank" :disabled="buttonDisabled">重建模型
             </router-link>
           </template>
         </el-table-column>
@@ -92,8 +186,7 @@
       this.$notify({
         title: '温馨提示',
         message: '您可以任意切换页面，智能回测运行不会受任何影响',
-        type:'warning',
-//        duration: 4000
+        type: 'warning',
       });
     },
     data() {
@@ -226,6 +319,7 @@
           if (data.status === 'SUCCESS') {
             that.geneticModels.splice(0, that.geneticModels.length);
             clearTimeout(that.geneticSetTime);
+            that.buttonDisabled = false;
 //                结束状态
 //           获取报告  每隔4s请求一次
             if (data.geneticModels.length !== 0) {
@@ -234,25 +328,24 @@
                 resolveIndicator(selectedIndexsTemp, geneticModel.modelPara, conCtrl, symbol);
                 statisticalInfo = JSON.parse(geneticModel.report.replace(/\'/g, '\"'));
                 that.geneticModels.push({
-                  geneticModelId: geneticModel.intelligentModelId.replace(/\-/g,'%'),
+                  geneticModelId: geneticModel.intelligentModelId.replace(/\-/g, '%'),
                   time: new Date(geneticModel.returnTime).format('yyyy-MM-dd hh:mm:ss'),
                   stock_index: indicatorToDes(classifyIndicator(selectedIndexsTemp, 'A', 'intoMarket'), symbol.andOrNotIntoMarketLeft, symbol.andOrNotIntoMarketRight),
                   out_index: geneticModel.modelPara.indexOf('[SELL]') !== -1 ? indicatorToDes(classifyIndicator(selectedIndexsTemp, 'sell', 'outMarket'),
-                    symbol.andOrNotOutMarketLeft, symbol.andOrNotOutMarketRight) : '无',
+                    symbol.andOrNotOutMarketLeft, symbol.andOrNotOutMarketRight) : ['无'],
                   second_index: indicatorToDes(classifyIndicator(selectedIndexsTemp, 'B', 'second'), '', ''),
                   wind_index: geneticModel.modelPara.indexOf('[DAN_CON]') !== -1 ? indicatorToDes(classifyIndicator(selectedIndexsTemp, 'C', 'windCtrl'),
-                    symbol.andOrNotWindCtrlLeft, symbol.andOrNotWindCtrlRight) : '无',
+                    symbol.andOrNotWindCtrlLeft, symbol.andOrNotWindCtrlRight) : ['无'],
                   year_profit: statisticalInfo['score'],
                   max_back: statisticalInfo['drop'],
                   win_rate: statisticalInfo['win'],
                   empty_rate: statisticalInfo['none_fate'],
                   modelPara: geneticModel.modelPara
                 });
-              })
-              that.buttonDisabled = false;
+              });
             }
             that.temp = that.geneticModels;
-            that.tableTemp = that.temp.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize);
+//            that.tableTemp = that.temp.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize);
             let controller = CONTROLLER(data.geneticModels[0].modelPara);
             that.controller.push(controller[0]);
             that.controller.push(controller[1] + '~' + controller[2]);
@@ -274,12 +367,12 @@
                 resolveIndicator(selectedIndexsTemp, geneticModel.modelPara, conCtrl, symbol);
                 statisticalInfo = JSON.parse(geneticModel.report.replace(/\'/g, '\"'));
                 that.geneticModels.push({
-                  geneticModelId: geneticModel.intelligentModelId.replace(/\-/g,'%'),
+                  geneticModelId: geneticModel.intelligentModelId.replace(/\-/g, '%'),
                   time: new Date(geneticModel.returnTime).format('yyyy-MM-dd hh:mm:ss'),
                   stock_index: indicatorToDes(classifyIndicator(selectedIndexsTemp, 'A', 'intoMarket'), symbol.andOrNotIntoMarketLeft, symbol.andOrNotIntoMarketRight),
-                  out_index: geneticModel.modelPara.indexOf('[SELL]') !== -1 ? indicatorToDes(classifyIndicator(selectedIndexsTemp, 'sell', 'outMarket'), symbol.andOrNotOutMarketLeft, symbol.andOrNotOutMarketRight) : '无',
+                  out_index: geneticModel.modelPara.indexOf('[SELL]') !== -1 ? indicatorToDes(classifyIndicator(selectedIndexsTemp, 'sell', 'outMarket'), symbol.andOrNotOutMarketLeft, symbol.andOrNotOutMarketRight) : ['无'],
                   second_index: indicatorToDes(classifyIndicator(selectedIndexsTemp, 'B', 'second'), '', ''),
-                  wind_index: geneticModel.modelPara.indexOf('[DAN_CON]') !== -1 ? indicatorToDes(classifyIndicator(selectedIndexsTemp, 'C', 'windCtrl'), symbol.andOrNotWindCtrlLeft, symbol.andOrNotWindCtrlRight) : '无',
+                  wind_index: geneticModel.modelPara.indexOf('[DAN_CON]') !== -1 ? indicatorToDes(classifyIndicator(selectedIndexsTemp, 'C', 'windCtrl'), symbol.andOrNotWindCtrlLeft, symbol.andOrNotWindCtrlRight) : ['无'],
                   year_profit: statisticalInfo['score'],
                   max_back: statisticalInfo['drop'],
                   win_rate: statisticalInfo['win'],
@@ -310,7 +403,6 @@
       },
       exportData(){
 //          导出所有数据
-//        console.log();
         const that = this;
         let a = [];
         this.geneticModels.forEach((item) => {
@@ -339,17 +431,38 @@
         })
       },
       sortChange(param){
-      if (param.order === 'descending') {
-        this.geneticModels = this.geneticModels.sort(descObj(param.prop));
-      } else if (param.order === 'ascending') {
-        this.geneticModels = this.geneticModels.sort(ascObj(param.prop));
-      } else {
-        this.geneticModels = this.geneticModels.sort(descObj('time'));
+        if (param.order === 'descending') {
+          this.geneticModels = this.geneticModels.sort(descObj(param.prop));
+        } else if (param.order === 'ascending') {
+          this.geneticModels = this.geneticModels.sort(ascObj(param.prop));
+        } else {
+          this.geneticModels = this.geneticModels.sort(descObj('time'));
+        }
       }
     }
-  }
 
   }
 </script>
-<style rel="stylesheet" lang="scss">
+<style rel="stylesheet" lang="scss" scoped>
+  .show-overflow {
+    /*width: 200px;*/
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .text-center{
+    text-align: center;
+  }
+
+  .above-zero {
+    color: #ff0000;
+  }
+
+  .equal-zero {
+    color: #000;
+  }
+
+  .bellow-zero {
+    color: #00c261;
+  }
 </style>

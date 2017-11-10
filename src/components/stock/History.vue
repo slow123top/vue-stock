@@ -5,21 +5,67 @@
       <i-col span="24">
         <div class="s-history">
           <span>搜索历史回测模型（支持模糊搜索、多选）：</span>
-          <el-select size="large" v-model="search" filterable multiple placeholder="请输入模型名称" @change="getFilterHistory"
+          <el-select size="large" v-model="search" filterable placeholder="请输入模型名称" @change="getFilterHistory"
                      style="width: 30rem">
             <el-option
               v-for="item in filterHistory"
               :key="item.value"
               :label="item.label"
-              :value="item.value">
+              :value="item.label">
             </el-option>
           </el-select>
         </div>
+        <el-table :data="tableData" style="width: 100%;" size="small" border @sort-change="sortChange">
+          <el-table-column type="index" align="center" :width="60"></el-table-column>
+          <el-table-column align="center" sortable="custom" prop="test_time" label="时间"></el-table-column>
+          <el-table-column align="center" prop="model_name" label="模型名称"></el-table-column>
+          <el-table-column align="center" sortable="custom" prop="test_range" label="回测区间"></el-table-column>
+          <el-table-column align="center" sortable="custom" prop="sum_profit" label="总收益率">
+            <template slot-scope="scope">
+            <span
+              :class="{'above-zero':(scope.row.sum_profit.replace('%','')>0),'equal-zero':(scope.row.sum_profit.replace('%','')===0),'bellow-zero':(scope.row.sum_profit.replace('%','')<0)}">{{scope.row.sum_profit}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" sortable="custom" prop="year_profit" label="年化收益率（复利）" :width="200">
+            <template slot-scope="scope">
+            <span
+              :class="{'above-zero':(scope.row.year_profit.replace('%','')>0),'equal-zero':(scope.row.year_profit.replace('%','')===0),'bellow-zero':(scope.row.year_profit.replace('%','')<0)}">{{scope.row.year_profit}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" sortable="custom" prop="max_back" label="最大回撤">
+            <template slot-scope="scope">
+            <span
+              :class="{'above-zero':(scope.row.max_back.replace('%','')>0),'equal-zero':(scope.row.max_back.replace('%','')===0),'bellow-zero':(scope.row.max_back.replace('%','')<0)}">{{scope.row.max_back}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" sortable="custom" prop="empty_rate" label="空仓占比">
+            <template slot-scope="scope">
+            <span
+              :class="{'above-zero':(scope.row.empty_rate.replace('%','')>0),'equal-zero':(scope.row.empty_rate.replace('%','')===0),'bellow-zero':(scope.row.empty_rate.replace('%','')<0)}">{{scope.row.empty_rate}}</span>
+            </template>
+          </el-table-column>
 
-        <i-table size="large" border :columns="columns" :data="tableData" @on-sort-change="sortChange"></i-table>
+          <el-table-column align="center" sortable="custom" prop="win_rate" label="胜率">
+            <template slot-scope="scope">
+            <span
+              :class="{'above-zero':(scope.row.win_rate.replace('%','')>0),'equal-zero':(scope.row.win_rate.replace('%','')===0),'bellow-zero':(scope.row.win_rate.replace('%','')<0)}">{{scope.row.win_rate}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" label="操作">
+            <template slot-scope="scope">
+              <el-button type="primary" size="small" plain
+                         @click="buildModel(scope.$index+ (currentPage - 1) * pageSize, scope.row)">重建模型
+              </el-button>
+              <el-button type="danger" size="small" plain
+                         @click="removeModel(scope.$index+ (currentPage - 1) * pageSize, scope.row)">删除
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
         <div style="margin: 10px;overflow: hidden">
           <div style="float: right;">
-            <Page :total="data.length" :current="1" @on-change="changePage" show-total></Page>
+            <el-pagination layout="total,prev, pager, next" :page-size="pageSize" :current-page.sync="currentPage"
+                           :total="data.length" @current-change="changePage"></el-pagination>
           </div>
         </div>
       </i-col>
@@ -41,7 +87,7 @@
             returnModel: res.data.returnModel
           });
           this.data = this.$store.state.historyModels;
-          this.tableData = this.data.slice(0, 10);
+          this.tableData = this.data.slice(0, this.pageSize);
           this.historyModels = JSON.parse(JSON.stringify(this.$store.state.historyModels));
 //          this.$store.state.historyModels.forEach(item => {
 //            this.filterHistory.push({
@@ -67,88 +113,11 @@
         search: '',
         historyModelModal: false,
         historyModels: [],
-        pageSize: 10,
+        pageSize: 20,
         currentPage: 1,
         nest: [],
         data: [],
         tableData: [],
-        columns: [
-          {
-            title: '时间',
-            key: 'test_time',
-            align: 'center',
-            sortable: 'custom'
-          },
-          {
-            title: '模型名称',
-            key: 'model_name',
-            align: 'center',
-          }, {
-            title: '回测区间',
-            key: 'test_range',
-            align: 'center',
-          }, {
-            title: '总收益率',
-            key: 'sum_profit',
-            align: 'center',
-            sortable: 'custom'
-          },
-          {
-            title: '年化收益率（复利）',
-            key: 'year_profit',
-            align: 'center',
-            sortable: 'custom',
-//            width:'250'
-          },
-          {
-            title: '最大回撤',
-            key: 'max_back',
-            align: 'center',
-            sortable: 'custom'
-          }, {
-            title: '胜率',
-            key: 'win_rate',
-            align: 'center',
-            sortable: 'custom'
-          }, {
-            title: '空仓占比',
-            key: 'empty_rate',
-            align: 'center',
-            sortable: 'custom'
-          }, {
-            title: '操作',
-            key: 'action',
-            align: 'center',
-            render: (h, params) => {
-              return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-//                  size: 'large'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.show(params.index + (this.currentPage - 1) * 10)
-                    }
-                  }
-                }, '重建模型'),
-                h('Button', {
-                  props: {
-                    type: 'error',
-//                  size: 'small'
-                  },
-                  on: {
-                    click: () => {
-                      this.remove(params.index + (this.currentPage - 1) * 10)
-                    }
-                  }
-                }, '删除')
-              ]);
-            }
-          }]
       }
     },
     computed: {
@@ -179,27 +148,27 @@
           this.data = this.$store.state.historyModels;
           this.tableData = this.data.slice(0, 10);
         } else {
-          this.data = [];
-          for (let i = 0; i < arg.length; i++) {
-            this.data.push(this.historyModels.filter(item => {
-              return item.modelId === arg[i];
-            })[0]);
-          }
-          this.tableData = this.data.slice(0, 10);
+          let temp = [];
+          this.data.splice(0, this.data);
+
+          this.data = this.historyModels.filter(item => {
+            return item.model_name === arg;
+          });
+          this.tableData = this.data.slice(0, this.pageSize);
         }
       },
 //        重建模型
-      show (index) {
+      buildModel (index) {
         this.$store.state.andOrNot = 'customize';
         resolveIndicator(this.$store.state.selectedIndexs, this.data[index].model_para, this.$store.state.controller, this.$store.state.symbol);
         this.$router.push('/model');
       },
-      remove (index) {
+      removeModel (index) {
         getRemoteReqTodo('/stock/deletehistory', ['modelId'], [this.historyModels[index].modelId]).then(res => {
           let data = res.data;
           if (data['status'] === 'SUCCESS') {
             this.data.splice(index, 1);
-            this.tableData = this.data.slice((this.currentPage - 1) * 10, this.currentPage * 10);
+            this.tableData = this.data.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize);
           } else if (data['status'] === 'ERROR') {
             this.$Notice.error({
               title: data['message']
@@ -213,15 +182,15 @@
       },
       changePage (current) {
         this.currentPage = current;
-        this.tableData = this.data.slice((this.currentPage - 1) * 10, this.currentPage * 10);
+        this.tableData = this.data.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize);
       },
       sortChange(param){
-        if (param.order === 'desc') {
-          this.data.sort(descObj(param.key));
-          this.tableData = this.data.slice((this.currentPage - 1) * 10, this.currentPage * 10);
-        } else if (param.order === 'asc') {
-          this.data.sort(ascObj(param.key));
-          this.tableData = this.data.slice((this.currentPage - 1) * 10, this.currentPage * 10);
+        if (param.order === 'descending') {
+          this.data.sort(descObj(param.prop));
+          this.tableData = this.data.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize);
+        } else if (param.order === 'ascending') {
+          this.data.sort(ascObj(param.prop));
+          this.tableData = this.data.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize);
         } else {
           return true;
         }
@@ -232,11 +201,22 @@
 </script>
 <style scoped>
   span {
-    font-size: 1rem;
   }
 
   .s-history {
     margin-bottom: 1rem;
     text-align: right;
+  }
+
+  .above-zero {
+    color: #ff0000;
+  }
+
+  .equal-zero {
+    color: #000;
+  }
+
+  .bellow-zero {
+    color: #00c261;
   }
 </style>

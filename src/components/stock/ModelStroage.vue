@@ -2,23 +2,95 @@
   <Row type="flex" justify="center">
     <i-col span="24">
 
-      <el-table :height="800" :data="tableData" border style="width: 100%" @sort-change="sortChange">
+      <el-table :height="800" size="small" :data="tableData" style="width: 100%" @sort-change="sortChange">
         <el-table-column type="index" align="center" width="60"></el-table-column>
         <el-table-column align="center" prop="name" label="模型名称"></el-table-column>
-        <el-table-column align="center" :show-overflow-tooltip="true" prop="into_indicator"
-                         label="入市指标"></el-table-column>
-        <el-table-column align="center" :show-overflow-tooltip="true" prop="out_indicator"
-                         label="出市指标"></el-table-column>
-        <el-table-column align="center" :show-overflow-tooltip="true" prop="second_indicator"
-                         label="二次筛选指标"></el-table-column>
-        <el-table-column align="center" :show-overflow-tooltip="true" prop="wind_indicator"
-                         label="风控指标"></el-table-column>
+        <el-table-column align="center" prop="into_indicator"
+                         label="入市指标">
+          <template slot-scope="scope">
+            <el-tooltip placement="right" :enterable="false">
+              <div class="show-overflow">{{scope.row.into_indicator.join('')}}</div>
+              <div slot="content">
+                <ul>
+                  <li class="text-center" v-for="into in scope.row.into_indicator">
+                    {{into}}
+                  </li>
+                </ul>
+              </div>
+            </el-tooltip>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="out_indicator"
+                         label="出市指标">
+          <template slot-scope="scope">
+            <el-tooltip placement="right" :enterable="false">
+              <div class="show-overflow">{{scope.row.out_indicator.join('')}}</div>
+              <div slot="content">
+                <ul>
+                  <li class="text-center" v-for="out in scope.row.out_indicator">
+                    {{out}}
+                  </li>
+                </ul>
+              </div>
+            </el-tooltip>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="second_indicator"
+                         label="二次筛选指标">
+          <template slot-scope="scope">
+            <el-tooltip placement="right" :enterable="false">
+              <div class="show-overflow">{{scope.row.second_indicator.join('')}}</div>
+              <div slot="content">
+                <ul>
+                  <li class="text-center" v-for="second in scope.row.second_indicator">
+                    {{second}}
+                  </li>
+                </ul>
+              </div>
+            </el-tooltip>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="wind_indicator"
+                         label="风控指标">
+          <template slot-scope="scope">
+            <el-tooltip placement="right" :enterable="false">
+              <div class="show-overflow">{{scope.row.wind_indicator.join('')}}</div>
+              <div slot="content">
+                <ul>
+                  <li class="text-center" v-for="wind in scope.row.wind_indicator">
+                    {{wind}}
+                  </li>
+                </ul>
+              </div>
+            </el-tooltip>
+          </template>
+        </el-table-column>
         <el-table-column align="center" prop="test_range" label="回测区间"></el-table-column>
-        <el-table-column align="center" sortable prop="year_profit" width="250" label="年化收益率（复利）"></el-table-column>
-        <el-table-column align="center" sortable prop="max_back" label="最大回撤"></el-table-column>
-        <el-table-column align="center" sortable prop="win_rate" label="胜率"></el-table-column>
-        <el-table-column align="center" sortable prop="empty_rate" label="空仓占比"></el-table-column>
-        <el-table-column align="center" :show-overflow-tooltip="true" prop="remark" label="备注"></el-table-column>
+        <el-table-column align="center" sortable prop="year_profit" :width="200" label="年化收益率（复利）">
+          <template slot-scope="scope">
+            <span
+              :class="{'above-zero':(scope.row.year_profit>0),'equal-zero':(scope.row.year_profit===0),'bellow-zero':(scope.row.year_profit<0)}">{{scope.row.year_profit+"%"}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" sortable prop="max_back" label="最大回撤">
+          <template slot-scope="scope">
+            <span
+              :class="{'above-zero':(scope.row.max_back>0),'equal-zero':(scope.row.max_back===0),'bellow-zero':(scope.row.max_back<0)}">{{scope.row.max_back+"%"}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" sortable prop="win_rate" label="胜率">
+          <template slot-scope="scope">
+            <span
+              :class="{'above-zero':(scope.row.win_rate>0),'equal-zero':(scope.row.win_rate===0),'bellow-zero':(scope.row.win_rate<0)}">{{scope.row.win_rate+"%"}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" sortable prop="empty_rate" label="空仓占比">
+          <template slot-scope="scope">
+            <span
+              :class="{'above-zero':(scope.row.empty_rate>0),'equal-zero':(scope.row.empty_rate===0),'bellow-zero':(scope.row.empty_rate<0)}">{{scope.row.empty_rate+"%"}}</span>
+          </template>
+        </el-table-column>
+        <!--<el-table-column align="center" :show-overflow-tooltip="true" prop="remark" label="备注"></el-table-column>-->
         <el-table-column align="center" label="操作">
           <template slot-scope="scope">
             <el-button @click="rebuildModel(scope.$index)" type="text">重建模型</el-button>
@@ -102,15 +174,15 @@
                 name: modelPara.substring(modelPara.indexOf('[NAME]') + 6, modelPara.lastIndexOf('[NAME]')),
                 into_indicator: indicatorToDes(classifyIndicator(selectedIndexsTemp, 'A', 'intoMarket'), symbol.andOrNotIntoMarketLeft, symbol.andOrNotIntoMarketRight),
                 out_indicator: modelPara.indexOf('[SELL]') !== -1 ? indicatorToDes(classifyIndicator(selectedIndexsTemp, 'sell', 'outMarket'),
-                  symbol.andOrNotOutMarketLeft, symbol.andOrNotOutMarketRight) : '无',
+                  symbol.andOrNotOutMarketLeft, symbol.andOrNotOutMarketRight) : ['无'],
                 wind_indicator: modelPara.indexOf('[DAN_CON]') !== -1 ? indicatorToDes(classifyIndicator(selectedIndexsTemp, 'C', 'windCtrl'),
-                  symbol.andOrNotWindCtrlLeft, symbol.andOrNotWindCtrlRight) : '无',
+                  symbol.andOrNotWindCtrlLeft, symbol.andOrNotWindCtrlRight) : ['无'],
                 second_indicator: indicatorToDes(classifyIndicator(selectedIndexsTemp, 'B', 'second'), '', ''),
                 test_range:controller[1]+'~'+controller[2],
-                year_profit: report['score']+'%',
-                max_back: report['drop']+'%',
-                win_rate: report['win']+'%',
-                empty_rate: report['none_fate']+'%',
+                year_profit: report['score'],
+                max_back: report['drop'],
+                win_rate: report['win'],
+                empty_rate: report['none_fate'],
                 modelPara: modelPara
               });
               that.tableData = that.modelStorage;
@@ -124,9 +196,28 @@
         });
       }
     }
-
   }
 </script>
-<style>
+<style scoped>
+  .show-overflow {
+    /*width: 200px;*/
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .text-center{
+    text-align: center;
+  }
 
+  .above-zero {
+    color: #ff0000;
+  }
+
+  .equal-zero {
+    color: #000;
+  }
+
+  .bellow-zero {
+    color: #00c261;
+  }
 </style>

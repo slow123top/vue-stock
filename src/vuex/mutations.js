@@ -56,13 +56,6 @@ export const GET_HISTORYS = (state, payload) => {
         win_rate: statisticalInfo[3],
         empty_rate: statisticalInfo[4],
         year_profit: statisticalInfo[5],
-        cellClassName: {
-          sum_profit: Number(statisticalInfo[1].replace(/\%/g, '')) < 0 ? 'demo-table-bellow-zero' : (Number(statisticalInfo[1].replace(/\%/g, '')) === 0 ? 'demo-table-equal-zero' : 'demo-table-above-zero'),
-          max_back: Number(statisticalInfo[2].replace(/\%/g, '')) < 0 ? 'demo-table-bellow-zero' : (Number(statisticalInfo[2].replace(/\%/g, '')) === 0 ? 'demo-table-equal-zero' : 'demo-table-above-zero'),
-          win_rate: Number(statisticalInfo[3].replace(/\%/g, '')) < 0 ? 'demo-table-bellow-zero' : (Number(statisticalInfo[3].replace(/\%/g, '')) === 0 ? 'demo-table-equal-zero' : 'demo-table-above-zero'),
-          empty_rate: Number(statisticalInfo[4].replace(/\%/g, '')) < 0 ? 'demo-table-bellow-zero' : (Number(statisticalInfo[4].replace(/\%/g, '')) === 0 ? 'demo-table-equal-zero' : 'demo-table-above-zero'),
-          year_profit: Number(statisticalInfo[5].replace(/\%/g, '')) < 0 ? 'demo-table-bellow-zero' : (Number(statisticalInfo[5].replace(/\%/g, '')) === 0 ? 'demo-table-equal-zero' : 'demo-table-above-zero')
-        }
       });
     }
   }

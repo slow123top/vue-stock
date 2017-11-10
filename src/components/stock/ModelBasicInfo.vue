@@ -2,9 +2,76 @@
   <Row type="flex" justify="space-between" style="background:#f5f7f9;margin: 0 0 1rem 0">
     <i-col span="24" style="background: #fff;padding:1rem;border-radius: 10px;font-size: 1rem">
       <span class="title-name">模型信息</span>
-      <i-table border :columns="columns" :data="arrData"></i-table>
+      <el-table :data="arrData" style="width: 100%;" size="small">
+        <el-table-column align="center" prop="model_name" label="模型名称"></el-table-column>
+        <el-table-column align="center" prop="into_indicator" label="入市指标">
+          <template slot-scope="scope">
+            <el-tooltip placement="right" :enterable="false">
+              <div class="show-overflow">{{scope.row.into_indicator.join('')}}</div>
+              <div slot="content">
+                <ul>
+                  <li class="text-center" v-for="into in scope.row.into_indicator">
+                    {{into}}
+                  </li>
+                </ul>
+              </div>
+            </el-tooltip>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="out_indicator" label="出市指标">
+          <template slot-scope="scope">
+            <el-tooltip placement="right" :enterable="false">
+              <div class="show-overflow">{{scope.row.out_indicator.join('')}}</div>
+              <div slot="content">
+                <ul>
+                  <li class="text-center" v-for="out in scope.row.out_indicator">
+                    {{out}}
+                  </li>
+                </ul>
+              </div>
+            </el-tooltip>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="wind_indicator" label="风控指标">
+          <template slot-scope="scope">
+            <el-tooltip placement="right" :enterable="false">
+              <div class="show-overflow">{{scope.row.wind_indicator.join('')}}</div>
+              <div slot="content">
+                <ul>
+                  <li class="text-center" v-for="wind in scope.row.wind_indicator">
+                    {{wind}}
+                  </li>
+                </ul>
+              </div>
+            </el-tooltip>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="second_indicator" label="二次筛选指标">
+          <template slot-scope="scope">
+            <el-tooltip placement="right" :enterable="false">
+              <div class="show-overflow">{{scope.row.second_indicator.join('')}}</div>
+              <div slot="content">
+                <ul>
+                  <li class="text-center" v-for="second in scope.row.second_indicator">
+                    {{second}}
+                  </li>
+                </ul>
+              </div>
+            </el-tooltip>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="test_range" label="回测区间"></el-table-column>
+        <el-table-column align="center" prop="hold_date" label="持有期"></el-table-column>
+        <el-table-column align="center" prop="buy_rate" label="买入费率">
 
-      <!--<i-table border :columns="columns" :data="arrData"></i-table>-->
+        </el-table-column>
+        <el-table-column align="center" prop="sold_rate" label="卖出费率">
+
+        </el-table-column>
+        <el-table-column align="center" prop="model_pressure_rate" label="模型压力费率"></el-table-column>
+        <el-table-column align="center" prop="stop_profit" label="止盈"></el-table-column>
+        <el-table-column align="center" prop="stop_loss" label="止损"></el-table-column>
+      </el-table>
     </i-col>
     <i-col span="24" style="background: #fff;padding:1rem;border-radius: 10px">
 
@@ -58,10 +125,6 @@
     data() {
       return {
         arrData: this.data(),
-        intoMarketList: this.getIntoMarketList(),
-        outMarketList: this.getOutMarketList(),
-        windCtrlList: this.getWindCtrlList(),
-        secondList: this.getSecondList(),
         profitStyle: {
           equalZero: {
             'font-size':'1.2rem',
@@ -81,187 +144,6 @@
             'text-align':'center'
           }
         },
-        columns: [
-          {
-            "title": "模型名称",
-            "key": "model_name",
-            align: 'center'
-          },
-          {
-            "title": "回测区间",
-            "key": "test_range",
-            align: 'center'
-          },
-          {
-            "title": "持有期",
-            "key": "hold_date",
-            align: 'center',
-          },
-          {
-            "title": "买入费率",
-            "key": "buy_rate",
-            align: 'center',
-          },
-          {
-            "title": "卖出费率",
-            "key": "sold_rate",
-            align: 'center',
-          },
-          {
-            "title": "模型压力费率",
-            "key": "model_pressure_rate",
-            align: 'center',
-          },
-          {
-            "title": "最大每日持有股数",
-            "key": "max_hold",
-            width: '150',
-            align: 'center',
-          },
-          {
-            "title": "止盈",
-            "key": "stop_profit",
-            align: 'center',
-          },
-          {
-            "title": "止损",
-            "key": "stop_loss",
-            align: 'center',
-          },
-          {
-            "title": "入市指标",
-            "key": "model_indexs",
-            align: 'center',
-            render: (h) => {
-              return h('Poptip', {
-                props: {
-                  trigger: 'hover',
-                  placement: 'left'
-                }
-              }, [
-                h('div', {
-                  style: {
-                    width: '100px',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
-                  }
-                }, this.intoMarketList.join('')),
-                h('div', {
-                  slot: 'content'
-                }, [
-                  h('ul', this.intoMarketList.map(item => {
-                    return h('li', {
-                      style: {
-                        textAlign: 'center'
-                      }
-                    }, item)
-                  }))
-                ])
-              ]);
-            }
-          },
-          {
-            "title": "出市指标",
-            "key": "out_indicator",
-            align: 'center',
-            render: (h) => {
-              return h('Poptip', {
-                props: {
-                  trigger: 'hover',
-                  placement: 'left'
-                }
-              }, [
-                h('div', {
-                  style: {
-                    width: '100px',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
-                  }
-                }, this.outMarketList.join('')),
-                h('div', {
-                  slot: 'content'
-                }, [
-                  h('ul', this.outMarketList.map(item => {
-                    return h('li', {
-                      style: {
-                        textAlign: 'center'
-                      }
-                    }, item)
-                  }))
-                ])
-              ]);
-            }
-          },
-          {
-            "title": "风控指标",
-            "key": "wind_indicator",
-            align: 'center',
-            render: (h) => {
-              return h('Poptip', {
-                props: {
-                  trigger: 'hover',
-                  placement: 'left'
-                }
-              }, [
-                h('div', {
-                  style: {
-                    width: '100px',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
-                  }
-                }, this.windCtrlList.join('')),
-                h('div', {
-                  slot: 'content'
-                }, [
-                  h('ul', this.windCtrlList.map(item => {
-                    return h('li', {
-                      style: {
-                        textAlign: 'center'
-                      }
-                    }, item)
-                  }))
-                ])
-              ]);
-            }
-          },
-          {
-            "title": "二次筛选指标",
-            "key": "second_indicator",
-            align: 'center',
-            render: (h) => {
-              return h('Poptip', {
-                props: {
-                  trigger: 'hover',
-                  placement: 'left'
-                }
-              }, [
-                h('div', {
-                  style: {
-                    width: '100px',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
-                  }
-                }, this.secondList.join('')),
-                h('div', {
-                  slot: 'content'
-                }, [
-                  h('ul', this.secondList.map(item => {
-                    return h('li', {
-                      style: {
-                        textAlign: 'center'
-                      }
-                    }, item)
-                  }))
-                ])
-              ]);
-            }
-          }
-
-        ],
       }
     },
     methods: {
@@ -272,6 +154,10 @@
 //        返回表格内容
         dataTemp.push({
           model_name: this.modelName,
+          into_indicator:this.getIntoMarketList(),
+          out_indicator:this.getOutMarketList(),
+          wind_indicator:this.getWindCtrlList(),
+          second_indicator:this.getSecondList(),
           test_range: statisticalInfo[0][0] + '~' + statisticalInfo[0][1],
           hold_date: controller.holdDate,
           buy_rate: controller.buyRate + '‱',
@@ -332,6 +218,15 @@
     color: #000000;
   }
   .result-title{
+    text-align: center;
+  }
+  .show-overflow {
+    /*width: 200px;*/
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .text-center{
     text-align: center;
   }
 </style>

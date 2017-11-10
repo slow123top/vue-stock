@@ -13,7 +13,7 @@ export const generateUUID = () => {
 };
 //升序排序
 export const ascObj = function (field) {
-  return field === 'time' ? function (a, b) {
+  return field === 'time'||field === 'test_time' ? function (a, b) {
     return new Date(a[field]) - new Date(b[field]);
   } : function (a, b) {
     if (String(a[field]).indexOf('%') !== -1) {
@@ -25,7 +25,7 @@ export const ascObj = function (field) {
 };
 //降序排序
 export const descObj = function (field) {
-  return field === 'time' ? function (a, b) {
+  return field === 'time'||field === 'test_time' ? function (a, b) {
     return new Date(b[field]) - new Date(a[field]);
   } : function (a, b) {
     if (String(a[field]).indexOf('%') !== -1) {

@@ -729,7 +729,6 @@ export const classifyIndicator = (allIndicator, tag, logo) => {
 };
 //指标转化为详细描述信息
 export const indicatorToDes = (arr, leftSymbol, rightSymbol) => {
-  // console.log(arr);
   let modelInfo = [];
   let everyModelInfo = '';
   let everySelectedIndex = {};

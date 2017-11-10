@@ -12,14 +12,11 @@ function toQs(param) {
 const axiosInstance = axios.create({
   baseURL: 'https://www.qiantoulianghua.com',
   headers: {
-    //   'Content-Type': 'application/x-www-form-urlencoded',
-    //   "Access-Control-Allow-Origin": "*",
     "P3P": "CP='CAO PSA OUR'",
     'cache-control': 'no-cache'
-
   },
+  withCredentials: true,
   timeout: 30000,
-  withCredentials: true
 });
 //导出常量
 export const BASE_API_URL = 'https://www.qiantoulianghua.com';
