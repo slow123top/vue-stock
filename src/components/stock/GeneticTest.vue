@@ -23,7 +23,7 @@
       </i-form>
     </i-col>
     <i-col span="24">
-      <el-table :data="tableData" border size="small" style="width: 100%" :empty-text="dataText"
+      <el-table :data="tableData" v-loading="loading" element-loading-text="正在获取智能回测结果..." border size="small" style="width: 100%" :empty-text="dataText"
                 @sort-change="sortChange">
         <el-table-column type="index" align="center" :width="60"></el-table-column>
         <el-table-column align="center" prop="time" label="日期" v-if="buttonDisabled"></el-table-column>
@@ -148,10 +148,14 @@
         </el-table-column>
       </el-table>
       <div style="margin: 10px;overflow: hidden">
-        <Button type="primary" size="large" @click="exportData" :disabled="!status">
+        <!--<Button type="primary" size="large" @click="exportData" :disabled="!status">-->
+          <!--<Icon type="ios-download-outline"></Icon>-->
+          <!--导出-->
+        <!--</Button>-->
+        <a id="hrefToExportTable" style="position: absolute;left: -10px;top: -10px;width: 0px;height: 0px;"></a>
+        <Button type="primary" size="large" @click="exportExcelData" :disabled="!status">
           <Icon type="ios-download-outline"></Icon>
           导出
-
         </Button>
         <div style="float: right;">
           <el-pagination layout="total,prev, pager, next" :page-size="pageSize" :current-page.sync="currentPage"
@@ -179,18 +183,20 @@
     classifyIndicator
   } from '../../api/model'
   import {getRemoteReqTodo, postRemoteReqTodo} from '../../api/api'
+  import table2excel from '../../api/table2excel'
   import {ascObj, descObj, loginTimeoutPrompt, jumpLogin} from '../../api/tools'
   export default {
     mounted(){
       this.getGenetic();
-      this.$notify({
-        title: '温馨提示',
-        message: '您可以任意切换页面，智能回测运行不会受任何影响',
-        type: 'warning',
-      });
+//      this.$notify({
+//        title: '温馨提示',
+//        message: '您可以任意切换页面，智能回测运行不会受任何影响',
+//        type: 'warning',
+//      });
     },
     data() {
       return {
+        loading:true,
         temp: [],
         tableTemp: [],
         buttonDisabled: true,
@@ -208,7 +214,7 @@
             title: '时间',
             key: 'time',
             align: 'center',
-            sortable: true
+            sortable: 'custom'
           },
           {
             title: '入市指标',
@@ -238,24 +244,24 @@
             title: '年化收益率（复利）（%）',
             key: 'year_profit',
             align: 'center',
-            sortable: true,
+            sortable: 'custom',
             width: '250'
           },
           {
             title: '最大回撤（%）',
             key: 'max_back',
             align: 'center',
-            sortable: true
+            sortable: 'custom',
           }, {
             title: '胜率（%）',
             key: 'win_rate',
             align: 'center',
-            sortable: true
+            sortable: 'custom'
           }, {
             title: '空仓占比（%）',
             key: 'empty_rate',
             align: 'center',
-            sortable: true
+            sortable: 'custom'
           },
           {
             title: '持有期',
@@ -297,7 +303,10 @@
 //      某一页的遗传算法模型数据
       tableData(){
         return this.geneticModels.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize);
-      }
+      },
+//      tableTemp(){
+//        return [];
+//      }
     },
     methods: {
       getGenetic(){
@@ -318,10 +327,18 @@
           let data = res.data;
           if (data.status === 'SUCCESS') {
             that.geneticModels.splice(0, that.geneticModels.length);
+            that.tableTemp.splice(0, that.tableTemp.length);
             clearTimeout(that.geneticSetTime);
             that.buttonDisabled = false;
 //                结束状态
 //           获取报告  每隔4s请求一次
+            let controller = CONTROLLER(data.geneticModels[0].modelPara);
+            that.controller.push(controller[0]);
+            that.controller.push(controller[1] + '~' + controller[2]);
+            that.controller.push(controller[3]);
+            that.controller.push(controller[4]);
+            that.controller.push(controller[5]);
+            that.controller.push(controller[6]);
             if (data.geneticModels.length !== 0) {
               let statisticalInfo;
               data.geneticModels.forEach(function (geneticModel, index) {
@@ -344,17 +361,30 @@
                 });
               });
             }
+            this.geneticModels.forEach((item) => {
+              that.tableTemp.push({
+                time: item.time,
+                stock_index: item.stock_index.join(''),
+                second_index: item.second_index.join(''),
+                wind_index: item.wind_index.join(''),
+                out_index:item.out_index.join(''),
+                year_profit: item.year_profit,
+                max_back: item.max_back,
+                win_rate: item.win_rate,
+                empty_rate: item.empty_rate,
+                hold: that.controller[0],
+                test_range: that.controller[1],
+                buy_rate: that.controller[2],
+                sell_rate: that.controller[3],
+                pressure_rate: that.controller[4],
+                max_hold: that.controller[5]
+              });
+            });
             that.temp = that.geneticModels;
-//            that.tableTemp = that.temp.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize);
-            let controller = CONTROLLER(data.geneticModels[0].modelPara);
-            that.controller.push(controller[0]);
-            that.controller.push(controller[1] + '~' + controller[2]);
-            that.controller.push(controller[3]);
-            that.controller.push(controller[4]);
-            that.controller.push(controller[5]);
-            that.controller.push(controller[6]);
+
             that.modal = true;
             that.status = true;
+            this.loading = false;
           } else if (data.status === 'RUNNING') {
             clearTimeout(that.geneticSetTime);
             that.buttonDisabled = true;
@@ -384,6 +414,7 @@
             that.modal = true;
             that.geneticSetTime = setTimeout(
               that.getGenetic, 2000);
+            this.loading = false;
           } else if (data.status === '') {
 //            that.dataText = '暂无数据';
             that.$message.warning('您还没有进行过智能回测，暂无数据');
@@ -394,7 +425,7 @@
             clearTimeout(that.geneticSetTime);
             that.$message.error(data.message);
           }
-        }).catch(() => {
+        }).catch((e) => {
           that.$message.error('连接服务器异常，请您稍后重试');
         });
       },
@@ -430,6 +461,10 @@
           data: a
         })
       },
+      exportExcelData(){
+//        导出为excel表格数据
+        table2excel.transform(this.$refs.table, 'hrefToExportTable', 'excel表格数据');
+      },
       sortChange(param){
         if (param.order === 'descending') {
           this.geneticModels = this.geneticModels.sort(descObj(param.prop));
@@ -438,7 +473,7 @@
         } else {
           this.geneticModels = this.geneticModels.sort(descObj('time'));
         }
-      }
+      },
     }
 
   }

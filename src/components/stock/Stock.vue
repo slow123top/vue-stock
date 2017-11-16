@@ -1,6 +1,6 @@
 <template>
   <div style="width:100%;background:#f5f7f9">
-    <Affix :offset-top="100" style="position: absolute;z-index:999;">
+    <Affix :offset-top="100" style="position: absolute;z-index:20000;">
       <Tooltip placement="right-start" style="padding:0">
         <Button type="primary" icon="chevron-right"></Button>
         <div class="api" slot="content" style="font-size:14px;">
@@ -59,7 +59,9 @@
           return 'intelligent-test';
         } else if (this.$route.path === '/model/modelstorage') {
           return 'model-storage';
-        } else {
+        }  else if (this.$route.path === '/model/ruletalk') {
+          return 'rule-talk';
+        }else {
           return 'create-model';
         }
       },

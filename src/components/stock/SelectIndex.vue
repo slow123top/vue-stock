@@ -252,7 +252,7 @@
                 <ul class="selected-indexs"
                     style="width: 100%;height: 25rem;overflow: auto;font-size:0.875rem;padding:.5rem;color:#34495e">
                   <li v-for="(item,indexs) in $store.state.selectedIndexs" :key="indexs"
-                      :style="item.className === ''?style_ABC[item.selectModelClass]:style_ABC[item.className.substring(0,1)]">
+                      :style="item.className === ''?style_ABC[item.selectModelClass]:style_ABC[item.type.substring(0,1)]">
                     <Tooltip v-if="item.selectModelClass === 'intoMarket'" :content="'入市'+item.number" placement="top">
                       <span>{{item.modelName}}</span>
                     </Tooltip>
@@ -274,11 +274,11 @@
                     </Poptip>
                     <!-- {{$route.path}} -->
                     <span style="float: left">
-                      <Tooltip v-if="item.className.indexOf('A')!==-1" :content="'入市'+item.className" placement="top">
+                      <Tooltip v-if="item.type.indexOf('A')!==-1" :content="'入市'+item.className" placement="top">
                     <p v-if="item.className !== ''" style="width: 31rem;text-align: right">
                       {{item.message}}</p>
                     </Tooltip>
-                    <Tooltip v-else-if="item.className.indexOf('sell')!==-1"
+                    <Tooltip v-else-if="item.type.indexOf('sell')!==-1"
                              :content="'出市'+item.className.replace('sell','A')" placement="top">
                       <p v-if="item.className !== ''" style="width: 31rem;text-align: right">
                         {{item.message}}</p>
@@ -1739,24 +1739,26 @@
           'or': '|',
           'not': '$'
         };
+//        console.log(this.formValidate.selectedIndexs);
         let temp = this.formValidate.selectedIndexs.filter(function (item) {
-          return item.className.indexOf('A') !== -1 || (item.className === '' && item.selectModelClass === 'intoMarket');
+          return item.type.indexOf('A') !== -1 || (item.className === '' && item.selectModelClass === 'intoMarket');
         });
         if (this.$store.state.andOrNot !== 'customize') {
           for (let i = 0; i < temp.length; i++) {
             temp[i].nextRelationship = symbol[this.$store.state.andOrNot];
           }
-        } else {
-//            若中间有的框框为空  则默认为and
-          for (let i = 0; i < temp.length; i++) {
-            if (temp[i].nextRelationship === '') {
-              temp[i].nextRelationship = symbol['and'];
-            }
-          }
         }
-        let temp1 = JSON.parse(JSON.stringify(temp));
-        this.formValidate.intoMarketListTemp = temp1;
-        return temp1;
+//        else {
+////            若中间有的框框为空  则默认为and
+//          for (let i = 0; i < temp.length; i++) {
+//            if (temp[i].nextRelationship === '') {
+//              temp[i].nextRelationship = symbol['and'];
+//            }
+//          }
+//        }
+//        let temp1 = JSON.parse(JSON.stringify(temp));
+        this.formValidate.intoMarketListTemp = temp;
+        return temp;
       },
 //      已选出市指标列表
       outMarketList(){
@@ -1766,30 +1768,22 @@
           'not': '$'
         };
         var temp = this.formValidate.selectedIndexs.filter(function (item) {
-          return item.className.indexOf('sell') !== -1 || (item.className === '' && item.selectModelClass === 'outMarket');
+          return item.type.indexOf('sell') !== -1 || (item.className === '' && item.selectModelClass === 'outMarket');
         });
 //        console.log(this.formValidate.selectedIndexs);
         if (this.$store.state.andOrNot !== 'customize') {
           for (let i = 0; i < temp.length; i++) {
             temp[i].nextRelationship = symbol[this.$store.state.andOrNot];
           }
-        } else {
-//            若中间有的框框为空  则默认为and
-          for (let i = 0; i < temp.length; i++) {
-            if (temp[i].nextRelationship === '') {
-              temp[i].nextRelationship = symbol['and'];
-            }
-          }
         }
 //        犯了浅拷贝和赋值的错误
-        let temp1 = JSON.parse(JSON.stringify(temp));
+//        let temp1 = JSON.parse(JSON.stringify(temp));
 //        实现深拷贝
         for (let i = 0; i < temp.length; i++) {
-          temp1[i]['className'] = temp1[i]['className'].replace('sell', 'A');
+          temp[i]['className'] = temp[i]['className'].replace('sell', 'A');
         }
-        ;
-        this.formValidate.outMarketListTemp = temp1;
-        return temp1;
+        this.formValidate.outMarketListTemp = temp;
+        return temp;
       },
 //      已选风控指标列表
       windCtrlList(){
@@ -1799,18 +1793,11 @@
           'not': '$'
         };
         let temp = this.formValidate.selectedIndexs.filter(function (item) {
-          return item.className.indexOf('C') !== -1 || (item.className === '' && item.selectModelClass === 'windCtrl');
+          return item.type.indexOf('C') !== -1 || (item.className === '' && item.selectModelClass === 'windCtrl');
         });
         if (this.$store.state.andOrNot !== 'customize') {
           for (let i = 0; i < temp.length; i++) {
             temp[i].nextRelationship = symbol[this.$store.state.andOrNot];
-          }
-        } else {
-//            若中间有的框框为空  则默认为and
-          for (let i = 0; i < temp.length; i++) {
-            if (temp[i].nextRelationship === '') {
-              temp[i].nextRelationship = symbol['and'];
-            }
           }
         }
         this.formValidate.windCtrlListTemp = temp;
@@ -1819,7 +1806,7 @@
 //      已选二次筛选指标列表
       secondList(){
         let temp = this.formValidate.selectedIndexs.filter(function (item) {
-          return item.className.indexOf('B') !== -1;
+          return item.type.indexOf('B') !== -1;
         });
         this.formValidate.secondListTemp = temp;
         return temp;

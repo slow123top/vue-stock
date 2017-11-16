@@ -62,8 +62,8 @@
         </el-table-column>
         <el-table-column align="center" prop="test_range" label="回测区间"></el-table-column>
         <el-table-column align="center" prop="hold_date" label="持有期"></el-table-column>
+        <el-table-column align="center" prop="hold_stock" :width="200" label="最大每日持有股数"></el-table-column>
         <el-table-column align="center" prop="buy_rate" label="买入费率">
-
         </el-table-column>
         <el-table-column align="center" prop="sold_rate" label="卖出费率">
 
@@ -159,6 +159,7 @@
           wind_indicator:this.getWindCtrlList(),
           second_indicator:this.getSecondList(),
           test_range: statisticalInfo[0][0] + '~' + statisticalInfo[0][1],
+          hold_stock:controller.maxDailyHold,
           hold_date: controller.holdDate,
           buy_rate: controller.buyRate + '‱',
           sold_rate: controller.sellRate + '‱',

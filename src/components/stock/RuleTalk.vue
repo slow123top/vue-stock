@@ -1,7 +1,7 @@
 <template>
   <el-row type="flex" justify="center" style="width: 100%;">
     <el-col :span="24">
-      <el-table :data="currentRuleTalk" style="width: 100%;" size="small" border @sort-change="sortChange">
+      <el-table :data="currentRuleTalk" v-loading="loading"  element-loading-text="拼命加载中" style="width: 100%;" size="small" border @sort-change="sortChange">
         <el-table-column type="index" align="center" :width="60"></el-table-column>
         <el-table-column align="center" sortable="custom" prop="time" label="创建日期"></el-table-column>
         <el-table-column align="center" prop="modelStr" label="模型串" :show-overflow-tooltip="true"></el-table-column>
@@ -131,6 +131,7 @@
     },
     data(){
       return {
+        loading:true,
         currentRuleTalk: [],
         ruleTalk: [],
         pageSize: 20,
@@ -182,6 +183,7 @@
                 drop: report['drop'],
               });
             });
+            this.loading = false;
           } else if (res.data.status === 'USER_NOT_FOUND') {
             loginTimeoutPrompt(this);
           } else {

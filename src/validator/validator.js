@@ -52,16 +52,33 @@ function validator(regExp, min, max, errorMessage, canRunParam) {
 function lessEqualValidator(regExp, min, max, errorMessage, canRunParam) {
   return (rule, value, callback) => {
     if (value === '' || !new RegExp(regExp).test(value)) {
+      $('ul.selected-indexs>li').eq(store.state.currentInputIndex.parentIndex).css({
+        'margin-bottom': '2.5rem'
+      });
+      store.state.selectedIndexs[store.state.currentInputIndex.parentIndex].params[store.state.currentInputIndex.childIndex].errorType = 1;
       store.state.selectedIndexs[store.state.currentInputIndex.parentIndex].params[store.state.currentInputIndex.childIndex][canRunParam] = 0;
       callback(new Error(errorMessage));
     } else {
       if (value <= min || value > max) {
+        $('ul.selected-indexs>li').eq(store.state.currentInputIndex.parentIndex).css({
+          'margin-bottom': '2.5rem'
+        });
+        store.state.selectedIndexs[store.state.currentInputIndex.parentIndex].params[store.state.currentInputIndex.childIndex].errorType = 2;
         store.state.selectedIndexs[store.state.currentInputIndex.parentIndex].params[store.state.currentInputIndex.childIndex][canRunParam] = 0;
         min !== -Infinity && max !== Infinity ? callback(new Error('范围:' + min + '~' + max)) : callback(new Error('范围:大于' + min));
       } else {
+        store.state.selectedIndexs[store.state.currentInputIndex.parentIndex].params[store.state.currentInputIndex.childIndex].errorType = 0;
         canRunParam === 'canRun' ? store.state.selectedIndexs[store.state.currentInputIndex.parentIndex].params[store.state.currentInputIndex.childIndex][canRunParam] = 1 :
           store.state.controller[canRunParam] = 1;
         callback();
+        let errorMargin = store.state.selectedIndexs[store.state.currentInputIndex.parentIndex].params.every(function (item) {
+          return item.errorType !== 1 && item.errorType !== 2;
+        });
+        if (errorMargin) {
+          $('ul.selected-indexs>li').eq(store.state.currentInputIndex.parentIndex).css({
+            'margin-bottom': '1rem'
+          });
+        }
       }
     }
   }
@@ -97,7 +114,6 @@ function A_validator(regExp, min, max, errorMessage) {
             'margin-bottom': '1rem'
           });
         }
-        ;
       }
     }
   }
@@ -1183,7 +1199,7 @@ export const modelName_validator = (rule, value, callback) => {
 export const secondScreen_validator = A_validator(/^[1-9]\d*$/, 1, 1000, ['请输入数字(不含小数)', '数字应介于1~1000之间']);
 //C指标校验器
 export const windControl_validator = A_validator(/^[1-9]\d*$/, 2, Infinity, ['请输入数字(不含小数)', '数字应大于等于2']);
-export const C0004_validator = lessEqualValidator(/^(([1-9]\d*)(\.\d{1,2})?)$|(0\.0?([1-9]\d?))$/,0,Infinity,'请输入数字（>0）','canRun');
+export const C0004_validator = lessEqualValidator(/^(([1-9]\d*)(\.\d{1,2})?)$|(0\.0?([1-9]\d?))$/,0,Infinity,'请输入大于0的数字','canRun');
 //代码类即股票池类指标校验器
 export const stockPool_validator = A_validator(/^\d{0,6}$/, -Infinity, Infinity, ['请输入6位以内的数字串', '']);
 //上市日期类指标校验器

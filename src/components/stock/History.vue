@@ -1,11 +1,12 @@
 <template>
-  <transition name="el-zoom-in-top">
-    <Row type="flex" justify="center" v-show="historyModelModal"
+  <!--<transition name="el-zoom-in-top">-->
+    <Row type="flex" justify="center"
          style="min-height:45rem;padding: 1rem;background: #fff;border-radius: 10px">
       <i-col span="24">
         <div class="s-history">
-          <span>搜索历史回测模型（支持模糊搜索、多选）：</span>
-          <el-select size="large" v-model="search" filterable placeholder="请输入模型名称" @change="getFilterHistory"
+          <span>搜索历史回测模型（支持模糊搜索）：</span>
+          <el-select size="large" v-model="search" filterable placeholder="请输入模型名称" :clearable="true"
+                     @change="getFilterHistory"
                      style="width: 30rem">
             <el-option
               v-for="item in filterHistory"
@@ -15,7 +16,8 @@
             </el-option>
           </el-select>
         </div>
-        <el-table :data="tableData" style="width: 100%;" size="small" border @sort-change="sortChange">
+        <el-table :data="tableData" v-loading="loading" element-loading-text="正在获取单次回测记录..." style="width: 100%;"
+                  size="small" border @sort-change="sortChange">
           <el-table-column type="index" align="center" :width="60"></el-table-column>
           <el-table-column align="center" sortable="custom" prop="test_time" label="时间"></el-table-column>
           <el-table-column align="center" prop="model_name" label="模型名称"></el-table-column>
@@ -70,14 +72,15 @@
         </div>
       </i-col>
     </Row>
-  </transition>
+  <!--</transition>-->
 </template>
 <script>
   import {resolveIndicator} from '../../api/model'
   import {getRemoteReqTodo} from '../../api/api'
   import {ascObj, descObj, loginTimeoutPrompt, jumpLogin} from '../../api/tools'
+
   export default {
-    mounted(){
+    mounted() {
 //          若刷新页面
       getRemoteReqTodo('/stock/historymodels', [], []).then(res => {
         //首先清空我的模型  再重新获取
@@ -89,12 +92,7 @@
           this.data = this.$store.state.historyModels;
           this.tableData = this.data.slice(0, this.pageSize);
           this.historyModels = JSON.parse(JSON.stringify(this.$store.state.historyModels));
-//          this.$store.state.historyModels.forEach(item => {
-//            this.filterHistory.push({
-//              label: item.model_name,
-//              value: item.modelId
-//            });
-//          });
+          this.loading = false;
         } else if (res.data.status === 'ERROR') {
           this.$message.error(res.data.message);
         } else if (res.data.status === 'USER_NOT_FOUND') {
@@ -109,7 +107,7 @@
     },
     data() {
       return {
-//        filterHistory: [],
+        loading: true,
         search: '',
         historyModelModal: false,
         historyModels: [],
@@ -121,7 +119,7 @@
       }
     },
     computed: {
-      filterHistory(){
+      filterHistory() {
         let temp = [];
         this.$store.state.historyModels.forEach(item => {
           temp.push({
@@ -143,10 +141,10 @@
     methods: {
 
 //        筛选出搜索出的历史模型
-      getFilterHistory(arg){
+      getFilterHistory(arg) {
         if (arg.length === 0) {
           this.data = this.$store.state.historyModels;
-          this.tableData = this.data.slice(0, 10);
+          this.tableData = this.data.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize);
         } else {
           let temp = [];
           this.data.splice(0, this.data);
@@ -154,16 +152,16 @@
           this.data = this.historyModels.filter(item => {
             return item.model_name === arg;
           });
-          this.tableData = this.data.slice(0, this.pageSize);
+          this.tableData = this.data.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize);
         }
       },
 //        重建模型
-      buildModel (index) {
+      buildModel(index) {
         this.$store.state.andOrNot = 'customize';
         resolveIndicator(this.$store.state.selectedIndexs, this.data[index].model_para, this.$store.state.controller, this.$store.state.symbol);
         this.$router.push('/model');
       },
-      removeModel (index) {
+      removeModel(index) {
         getRemoteReqTodo('/stock/deletehistory', ['modelId'], [this.historyModels[index].modelId]).then(res => {
           let data = res.data;
           if (data['status'] === 'SUCCESS') {
@@ -180,11 +178,11 @@
           }
         })
       },
-      changePage (current) {
+      changePage(current) {
         this.currentPage = current;
         this.tableData = this.data.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize);
       },
-      sortChange(param){
+      sortChange(param) {
         if (param.order === 'descending') {
           this.data.sort(descObj(param.prop));
           this.tableData = this.data.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize);

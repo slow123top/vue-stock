@@ -37,9 +37,9 @@
         <ModelFundsBack :chartDrop="$store.state.model.report['charts_holdings_info']"
                         v-if="resultRadio==='modelFundsBack'"></ModelFundsBack>
         <HoldReport :chartsHoldingsInfo="$store.state.model.report['charts_holdings_info']"
-                    v-show="resultRadio==='holdReport'"></HoldReport>
-        <YearMonth :tableProfitInfo="$store.state.model.report['table_profit_info']" v-show="resultRadio==='yearMonth'"></YearMonth>
-        <NewSelect :newDaySelect="$store.state.model.report['new_day_select']" v-show="resultRadio==='newSelect'"></NewSelect>
+                    v-if="resultRadio==='holdReport'"></HoldReport>
+        <YearMonth :tableProfitInfo="$store.state.model.report['table_profit_info']" v-if="resultRadio==='yearMonth'"></YearMonth>
+        <NewSelect :newDaySelect="$store.state.model.report['new_day_select']" v-if="resultRadio==='newSelect'"></NewSelect>
       </i-col>
     </Row>
   </div>

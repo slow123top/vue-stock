@@ -8,7 +8,6 @@ import {
   A0005_M1M2validator,
   positiveIntegerValidator,
   A0031_M1M2validator,
-  A0036_M1M2validator,
   A0034_validator,
   A0038_validator,
   A0041_M1M2validator,
@@ -1045,7 +1044,7 @@ export const MY_MODEL_INDEXS = {
       value: 70,
       // validatePositiveNumber
       validator: [{
-        validator: A0036_M1M2validator,
+        validator: C0004_validator,
         trigger: 'blur'
       }]
     }]
@@ -1070,7 +1069,7 @@ export const MY_MODEL_INDEXS = {
       label: 'M1',
       value: 30,
       validator: [{
-        validator: A0036_M1M2validator,
+        validator: C0004_validator,
         trigger: 'blur'
       }]
     }]
@@ -3043,7 +3042,7 @@ export const createModelIndexs = {
       value: 70,
       // validatePositiveNumber
       validator: [{
-        validator: A0036_M1M2validator,
+        validator:C0004_validator,
         trigger: 'blur'
       }]
     }]
@@ -3068,7 +3067,7 @@ export const createModelIndexs = {
       label: 'M1',
       value: 30,
       validator: [{
-        validator: A0036_M1M2validator,
+        validator: C0004_validator,
         trigger: 'blur'
       }]
     }]
