@@ -35,10 +35,12 @@ Date.prototype.format = function (fmt) { //author: meizz
 function validator(regExp, min, max, errorMessage, canRunParam) {
   return (rule, value, callback) => {
     if (value === '' || !new RegExp(regExp).test(value)) {
+      canRunParam === 'canRun' ? store.state.selectedIndexs[store.state.currentInputIndex.parentIndex].params[store.state.currentInputIndex.childIndex][canRunParam]=0:
       store.state.controller[canRunParam] = 0;
       callback(new Error(errorMessage));
     } else {
       if (value < min || value > max) {
+        canRunParam === 'canRun' ? store.state.selectedIndexs[store.state.currentInputIndex.parentIndex].params[store.state.currentInputIndex.childIndex][canRunParam]=0:
         store.state.controller[canRunParam] = 0;
         min !== -Infinity && max !== Infinity ? callback(new Error('范围:' + min + '~' + max)) : callback(new Error('范围:大于等于' + min));
       } else {
@@ -1181,7 +1183,7 @@ export const sellRate_validator = validator(/^(([1-9]\d*)|0)(\.\d{1,2})?$/, -Inf
 //模型压力费率校验器
 export const pressureRate_validator = validator(/^(([1-9]\d*)|0)(\.\d{1,2})?$/, -Infinity, Infinity, '请输入>=0的小数,保留1~2位', 'pressureRateCanRun');
 //最大每日持股数校验器
-export const maxHold_validator = validator(/^[1-9]\d*$/, 1, 20, '请输入数字(不含小数)', 'maxHoldCanRun');
+export const maxHold_validator = validator(/^[1-9]\d*$/, 1, 200, '请输入数字(不含小数)', 'maxHoldCanRun');
 //止盈止损的校验器
 export const stopProfit_validator = validator(/^(([1-9]\d*)|0)(\.\d{1,2})?$/, 0, 1000, '请输入>=0的小数,保留1~2位', 'stopProfitCanRun');
 export const stopLoss_validator = validator(/^(([1-9]\d*)|0)(\.\d{1,2})?$/, 0, 1000, '请输入>=0的小数,保留1~2位', 'stopLossCanRun');
@@ -1200,6 +1202,8 @@ export const secondScreen_validator = A_validator(/^[1-9]\d*$/, 1, 1000, ['请�
 //C指标校验器
 export const windControl_validator = A_validator(/^[1-9]\d*$/, 2, Infinity, ['请输入数字(不含小数)', '数字应大于等于2']);
 export const C0004_validator = lessEqualValidator(/^(([1-9]\d*)(\.\d{1,2})?)$|(0\.0?([1-9]\d?))$/,0,Infinity,'请输入大于0的数字','canRun');
+//C0005指标校验器
+export const C0005_validator = validator(/^[1-9]\d*$/, 1, 1000, '请输入数字(不含小数)', 'canRun');
 //代码类即股票池类指标校验器
 export const stockPool_validator = A_validator(/^\d{0,6}$/, -Infinity, Infinity, ['请输入6位以内的数字串', '']);
 //上市日期类指标校验器

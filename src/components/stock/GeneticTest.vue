@@ -23,7 +23,8 @@
       </i-form>
     </i-col>
     <i-col span="24">
-      <el-table :data="tableData" v-loading="loading" element-loading-text="正在获取智能回测结果..." border size="small" style="width: 100%" :empty-text="dataText"
+      <el-table :data="tableData" v-loading="loading" element-loading-text="正在获取智能回测结果..." border size="small"
+                style="width: 100%" :empty-text="dataText"
                 @sort-change="sortChange">
         <el-table-column type="index" align="center" :width="60"></el-table-column>
         <el-table-column align="center" prop="time" label="日期" v-if="buttonDisabled"></el-table-column>
@@ -149,13 +150,17 @@
       </el-table>
       <div style="margin: 10px;overflow: hidden">
         <!--<Button type="primary" size="large" @click="exportData" :disabled="!status">-->
-          <!--<Icon type="ios-download-outline"></Icon>-->
-          <!--导出-->
+        <!--<Icon type="ios-download-outline"></Icon>-->
+        <!--导出-->
         <!--</Button>-->
         <a id="hrefToExportTable" style="position: absolute;left: -10px;top: -10px;width: 0px;height: 0px;"></a>
-        <Button type="primary" size="large" @click="exportExcelData" :disabled="!status">
-          <Icon type="ios-download-outline"></Icon>
-          导出
+        <Button type="primary" size="large" :loading="exportLoading" @click="exportData" :disabled="!status" >
+          导出为csv
+        </Button>
+        <Button type="primary" size="large" :loading="exportLoading" @click="exportExcelData" :disabled="!status" >
+          <!--<Icon type="ios-download-outline"></Icon>-->
+          <span v-if="!exportLoading">导出为excel</span>
+          <span v-else>正在导出</span>
         </Button>
         <div style="float: right;">
           <el-pagination layout="total,prev, pager, next" :page-size="pageSize" :current-page.sync="currentPage"
@@ -185,18 +190,15 @@
   import {getRemoteReqTodo, postRemoteReqTodo} from '../../api/api'
   import table2excel from '../../api/table2excel'
   import {ascObj, descObj, loginTimeoutPrompt, jumpLogin} from '../../api/tools'
+
   export default {
-    mounted(){
+    mounted() {
       this.getGenetic();
-//      this.$notify({
-//        title: '温馨提示',
-//        message: '您可以任意切换页面，智能回测运行不会受任何影响',
-//        type: 'warning',
-//      });
     },
     data() {
       return {
-        loading:true,
+        loading: true,
+        exportLoading: false,
         temp: [],
         tableTemp: [],
         buttonDisabled: true,
@@ -297,11 +299,11 @@
       }
     },
     computed: {
-      sortAble(){
+      sortAble() {
         return this.buttonDisabled;
       },
 //      某一页的遗传算法模型数据
-      tableData(){
+      tableData() {
         return this.geneticModels.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize);
       },
 //      tableTemp(){
@@ -309,7 +311,7 @@
 //      }
     },
     methods: {
-      getGenetic(){
+      getGenetic() {
         const that = this;
         getRemoteReqTodo('/stock/genetic/getgeneticreport', [], []).then(res => {
           //首先清空我的模型  再重新获取
@@ -361,27 +363,7 @@
                 });
               });
             }
-            this.geneticModels.forEach((item) => {
-              that.tableTemp.push({
-                time: item.time,
-                stock_index: item.stock_index.join(''),
-                second_index: item.second_index.join(''),
-                wind_index: item.wind_index.join(''),
-                out_index:item.out_index.join(''),
-                year_profit: item.year_profit,
-                max_back: item.max_back,
-                win_rate: item.win_rate,
-                empty_rate: item.empty_rate,
-                hold: that.controller[0],
-                test_range: that.controller[1],
-                buy_rate: that.controller[2],
-                sell_rate: that.controller[3],
-                pressure_rate: that.controller[4],
-                max_hold: that.controller[5]
-              });
-            });
             that.temp = that.geneticModels;
-
             that.modal = true;
             that.status = true;
             this.loading = false;
@@ -429,20 +411,20 @@
           that.$message.error('连接服务器异常，请您稍后重试');
         });
       },
-      changePage (current) {
+      changePage(current) {
         this.currentPage = current;
       },
-      exportData(){
+      exportData() {
 //          导出所有数据
         const that = this;
         let a = [];
         this.geneticModels.forEach((item) => {
           a.push({
             time: item.time,
-            stock_index: item.stock_index.join('').replace(/\,/g, ''),
-            second_index: item.second_index.join('').replace(/\,/g, ''),
-            wind_index: item.wind_index === '无' ? '无' : item.wind_index.join('').replace(/\,/g, ''),
-            out_index: item.out_index === '无' ? '无' : item.out_index.join('').replace(/\,/g, ''),
+            stock_index: item.stock_index.join('').replace(/\,/g, '、'),
+            second_index: item.second_index.join('').replace(/\,/g, '、'),
+            wind_index: item.wind_index.join('').replace(/\,/g, '、'),
+            out_index: item.out_index.join('').replace(/\,/g, '、'),
             year_profit: item.year_profit,
             max_back: item.max_back,
             win_rate: item.win_rate,
@@ -461,11 +443,37 @@
           data: a
         })
       },
-      exportExcelData(){
+      exportExcelData() {
 //        导出为excel表格数据
-        table2excel.transform(this.$refs.table, 'hrefToExportTable', 'excel表格数据');
+
+        let that = this;
+        this.tableTemp.splice(0, this.tableTemp.length);
+        this.geneticModels.forEach((item) => {
+          that.tableTemp.push({
+            time: item.time,
+            stock_index: item.stock_index.join(''),
+            second_index: item.second_index.join(''),
+            wind_index: item.wind_index.join(''),
+            out_index: item.out_index.join(''),
+            year_profit: item.year_profit,
+            max_back: item.max_back,
+            win_rate: item.win_rate,
+            empty_rate: item.empty_rate,
+            hold: that.controller[0],
+            test_range: that.controller[1],
+            buy_rate: that.controller[2],
+            sell_rate: that.controller[3],
+            pressure_rate: that.controller[4],
+            max_hold: that.controller[5]
+          });
+        });
+
+        this.$nextTick(() => {
+          table2excel.transform(this.$refs.table, 'hrefToExportTable', 'excel表格数据');
+        });
+
       },
-      sortChange(param){
+      sortChange(param) {
         if (param.order === 'descending') {
           this.geneticModels = this.geneticModels.sort(descObj(param.prop));
         } else if (param.order === 'ascending') {
@@ -485,7 +493,8 @@
     white-space: nowrap;
     text-overflow: ellipsis;
   }
-  .text-center{
+
+  .text-center {
     text-align: center;
   }
 

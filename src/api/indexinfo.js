@@ -30,7 +30,8 @@ import {
   stockPool_validator,
   secondScreen_validator,
   windControl_validator,
-  C0004_validator
+  C0004_validator,
+  C0005_validator
 } from '../validator/validator'
 
 export const MY_MODEL_INDEXS = {
@@ -1718,7 +1719,7 @@ export const MY_MODEL_INDEXS = {
   'B0011': {
     message: '规则议会--二次筛选函数',
     params: [],
-    rule:1
+    rule: 1
   },
   'C0001': {
     message: 'M指数位于N日均线以下/上才允许买，否则空仓',
@@ -1859,7 +1860,7 @@ export const MY_MODEL_INDEXS = {
     message: '千投定制风控函数--大盘股综合分析',
     params: []
   },
-  'C0004':{
+  'C0004': {
     message: '熔断机制：当原模型小于M%才允许交易',
     params: [{
       label: 'M',
@@ -1868,6 +1869,38 @@ export const MY_MODEL_INDEXS = {
         validator: C0004_validator,
         trigger: 'blur'
       }]
+    }]
+  },
+
+  'C0005': {
+    message: '熔断机制：当原模型资产净值处于N日均线之下/上时才允许交易',
+    params: [{
+      label: 'N',
+      value: 15,
+      validator: [{
+        validator: C0005_validator,
+        trigger: 'blur'
+      }]
+    }],
+    radios: [{
+      value: '1',
+      threeFlag: false,
+      label1: '下',
+      value1: '0',
+      label2: '上',
+      value2: '1'
+    }]
+  },
+  'C0006': {
+    message: '关闭/启动对冲机制-通过股指期货市场对冲沪深300指数（简易测试版）',
+    params:[],
+    radios: [{
+      value: '1',
+      threeFlag: false,
+      label1: '关闭',
+      value1: '0',
+      label2: '启动',
+      value2: '1'
     }]
   }
 };
@@ -3042,7 +3075,7 @@ export const createModelIndexs = {
       value: 70,
       // validatePositiveNumber
       validator: [{
-        validator:C0004_validator,
+        validator: C0004_validator,
         trigger: 'blur'
       }]
     }]
@@ -3709,7 +3742,7 @@ export const createModelIndexs = {
 
 
   ],
-  customMadeWindControl:[
+  customMadeWindControl: [
     {
       number: 'C0002',
       message: '千投定制风控函数--小盘股综合分析',
@@ -3732,10 +3765,43 @@ export const createModelIndexs = {
           trigger: 'blur'
         }]
       }],
+    },
+    {
+      number: 'C0005',
+      message: '熔断机制：当原模型资产净值处于N日均线之下/上时才允许交易',
+      params: [{
+        label: 'N',
+        value: 15,
+        validator: [{
+          validator: C0005_validator,
+          trigger: 'blur'
+        }]
+      }],
+      radios: [{
+        value: '1',
+        threeFlag: false,
+        label1: '下',
+        value1: '0',
+        label2: '上',
+        value2: '1'
+      }]
+    },
+    {
+      number: 'C0006',
+      message: '关闭/启动对冲机制-通过股指期货市场对冲沪深300指数（简易测试版）',
+      params:[],
+      radios: [{
+        value: '1',
+        threeFlag: false,
+        label1: '关闭',
+        value1: '0',
+        label2: '启动',
+        value2: '1'
+      }]
     }
   ],
-  ruleWindControl:[],
-  customMadeSecondaryScreen:[
+  ruleWindControl: [],
+  customMadeSecondaryScreen: [
     {
       number: 'B0008',
       message: '千投定制二次筛选--K线分析法',
@@ -3752,10 +3818,10 @@ export const createModelIndexs = {
       params: []
     }
   ],
-  ruleSecondaryScreen:[{
-      number: 'B0011',
-      message: '规则议会---二次筛选函数',
-      params: [],
-      rule:1
-    }]
+  ruleSecondaryScreen: [{
+    number: 'B0011',
+    message: '规则议会---二次筛选函数',
+    params: [],
+    rule: 1
+  }]
 }

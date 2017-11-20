@@ -1748,14 +1748,14 @@
             temp[i].nextRelationship = symbol[this.$store.state.andOrNot];
           }
         }
-//        else {
-////            若中间有的框框为空  则默认为and
-//          for (let i = 0; i < temp.length; i++) {
-//            if (temp[i].nextRelationship === '') {
-//              temp[i].nextRelationship = symbol['and'];
-//            }
-//          }
-//        }
+        else {
+//            若中间有的框框为空  则默认为and
+          for (let i = 0; i < temp.length; i++) {
+            if (temp[i].nextRelationship === '') {
+              temp[i].nextRelationship = symbol['and'];
+            }
+          }
+        }
 //        let temp1 = JSON.parse(JSON.stringify(temp));
         this.formValidate.intoMarketListTemp = temp;
         return temp;
@@ -1774,6 +1774,13 @@
         if (this.$store.state.andOrNot !== 'customize') {
           for (let i = 0; i < temp.length; i++) {
             temp[i].nextRelationship = symbol[this.$store.state.andOrNot];
+          }
+        }else {
+//            若中间有的框框为空  则默认为and
+          for (let i = 0; i < temp.length; i++) {
+            if (temp[i].nextRelationship === '') {
+              temp[i].nextRelationship = symbol['and'];
+            }
           }
         }
 //        犯了浅拷贝和赋值的错误
@@ -1798,6 +1805,13 @@
         if (this.$store.state.andOrNot !== 'customize') {
           for (let i = 0; i < temp.length; i++) {
             temp[i].nextRelationship = symbol[this.$store.state.andOrNot];
+          }
+        }else {
+//            若中间有的框框为空  则默认为and
+          for (let i = 0; i < temp.length; i++) {
+            if (temp[i].nextRelationship === '') {
+              temp[i].nextRelationship = symbol['and'];
+            }
           }
         }
         this.formValidate.windCtrlListTemp = temp;
